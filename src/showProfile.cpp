@@ -4,18 +4,16 @@ using namespace std;
 
 void showProfile() {
 
-    int totalLength = 0, adj, additionalDividerWidth = 7; 
-
-    size_t sideNav, maxSizeCredential, maxSizeHeight, spacingMenu;
-
     vector<string> navigation, compiledSideNav, compiledBanner, compiledContent;
 
     pair<string, string> credential = getCredentials();
 
+    int totalLength = 0, adj; 
+
+    size_t sideNav, maxSizeCredential, maxSizeHeight, spacingMenu;
+
     system("cls");
     SetConsoleOutputCP(CP_UTF8);
-
-    totalLength = 0;
 
     if(accountType == "Super Admin") {
         navigation = sideNavSuperAdmin;
@@ -148,20 +146,25 @@ void showProfile() {
 
         } else if (i == adj + 4 || i == adj + 5) {
             int endSpacing = (totalLength - maxSizeCredential) / 2;
-            int startSpacing = endSpacing + (totalLength - maxSizeCredential) % 2;
+            int startSpacing = endSpacing + ((totalLength - maxSizeCredential) % 2);
 
             output << setw(startSpacing + 3) << left << "┃";
 
             if (i == adj + 4) {
-                output << "Username: " + credential.first;
+                temp = "Username: " + credential.first;
 
             } else {
-                output << "Password: " + credential.second;
+                temp = "Password: ";
 
-                endSpacing += abs(static_cast<int>(credential.first.length() - credential.second.length()));
+                for (char& c : credential.second) {
+                    temp += '*';
+                }
             }
 
-            output << setw(endSpacing + 3) << right  << "┃";
+            output << temp;
+
+            output << setw((totalLength - (startSpacing + temp.length())) + 3) << right  << "┃";
+            temp = "";
 
         } else if (i < maxSizeHeight - 3) { // Add spacings
             output << setw(totalLength + 3) << left << "┃" << "┃";

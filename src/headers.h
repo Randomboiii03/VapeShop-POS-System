@@ -33,8 +33,6 @@ struct Product {
 };
 
 extern vector<Account> superadmin;
-extern vector<Account> admins;
-extern vector<Account> users;
 
 extern vector<Product> products;
 

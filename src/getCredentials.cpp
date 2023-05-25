@@ -4,6 +4,9 @@ using namespace std;
 
 pair<string, string> getCredentials() {
 
+    vector<Account> admins = readFromFile("accounts/admins.txt");
+    vector<Account> users = readFromFile("accounts/users.txt");
+
     vector<Account> accounts;
     string username, password;
 

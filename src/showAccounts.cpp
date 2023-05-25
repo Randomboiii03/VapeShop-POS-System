@@ -8,13 +8,13 @@ void showAccounts() {
     vector<Account> admins = readFromFile("accounts/admins.txt");
     vector<Account> users = readFromFile("accounts/users.txt");
 
-    int totalLength = 0, adj, additionalDividerWidth = 7;
-    size_t sideNav, maxSizeHeight, spacingMenu;
-
     vector<Account> accounts;
     vector<int> maxLengths;
 
     vector<string> navigation, compiledSideNav, compiledBanner, compiledContent;
+
+    int totalLength = 0, adj, additionalDividerWidth = 7;
+    size_t sideNav, maxSizeHeight, spacingMenu;
 
     system("cls");
     SetConsoleOutputCP(CP_UTF8);
