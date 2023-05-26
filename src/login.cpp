@@ -105,10 +105,10 @@ void login() {
         cout << setw(totalLength + 3) << left << "┃" << "┃" << endl;
     }
 
-    int spacing = (totalLength + 3) / 3; // Spacing before entering credentials for login
+    int spacing = (totalLength + 6) / 3; // Spacing before entering credentials for login
 
     cout << setw(spacing) << left << "┃" << "Username: ";
-    getline(cin, username);
+    cin >> username;
 
 
     cout << setw(spacing) << left << "┃" << "Password: ";
@@ -177,8 +177,8 @@ void login() {
 
         cout << setw(startSpacing + 3) << left << "" << temp;
 
-        cin.clear();
-        cin.ignore(LONG_MAX, '\n');
+        // cin.clear();
+        // cin.ignore(LONG_MAX, '\n');
 
         Sleep(2000);
 

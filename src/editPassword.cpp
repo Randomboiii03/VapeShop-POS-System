@@ -20,12 +20,12 @@ void editPassword(int accNumber, string function) {
     system("cls");
     SetConsoleOutputCP(CP_UTF8);
 
-    // Compile both admin and user accounts into one vector
-    if (accountType == "Admin") {
+    // Check accountType to find filename (database)
+    if (getAccountType(accNumber) == "Admin") {
         accounts.insert(accounts.end(), admins.begin(), admins.end());
         filename = "accounts/admins.txt";
 
-    } else if (accountType == "User") {
+    } else if (getAccountType(accNumber) == "User") {
         accounts.insert(accounts.end(), users.begin(), users.end());
         filename = "accounts/users.txt";
     }

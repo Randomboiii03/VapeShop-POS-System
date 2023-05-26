@@ -13,8 +13,10 @@ void showAccounts() {
 
     vector<string> navigation, compiledSideNav, compiledBanner, compiledContent;
 
-    int totalLength = 0, adj, additionalDividerWidth = 6;
+    int totalLength = 0, adj, additionalDividerWidth = 6, endSpacing, startSpacing, num;
     size_t sideNav, maxSizeHeight, spacingMenu;
+
+    string temp;
 
     system("cls");
     SetConsoleOutputCP(CP_UTF8);
@@ -79,7 +81,7 @@ void showAccounts() {
         ostringstream output;
         string temp = "";
 
-        int endSpacing = 0, startSpacing = 0;
+        endSpacing = 0, startSpacing = 0;
 
         int bannerSize = banner[1].length();
 
@@ -232,8 +234,8 @@ void showAccounts() {
                 options = "[U] Edit Username        [X] Edit Password        [K] Edit Status";
             }
 
-            int endSpacing = (totalLength - options.length()) / 2;
-            int startSpacing = endSpacing + (totalLength - options.length()) % 2;
+            endSpacing = (totalLength - options.length()) / 2;
+            startSpacing = endSpacing + (totalLength - options.length()) % 2;
 
             output << setw(startSpacing + 3) << left << "┃" << options;
             output << setw(endSpacing + 3) << right  << "┃";
@@ -281,28 +283,70 @@ void showAccounts() {
 
         char ch = getch();
 
-        if (ch == 'm' && !isOpen) { // Open menu
-            isOpen = true;
+        try {
+
+            if (ch == 'm' && !isOpen) { // Open menu
+                isOpen = true;
+                showAccounts();
+
+            } else if (ch == 27 && isOpen) { // Close menu
+                isOpen = false;
+                showAccounts();
+
+            } else if (ch == 'q') {
+                // searchAccount();
+
+            } else if (ch == '+') {
+                // addAccount();
+
+            } else if (ch == 'u' || ch == 'x' || ch == 'k' || ch == 'd') {
+                int spacing = (totalLength + 3) / 2; // Spacing before entering credentials for login
+
+                cout << setw(spacing) << left << "" << "Choose no.: ";
+                cin >> temp;
+
+                num = stoi(temp);
+
+                isOpen = false;
+
+                if (num > accounts.size() || num < 0) { // Not in range of accounts, return error message
+                    temp = "Invalid input. Please enter a valid integer.";
+
+                    endSpacing = (totalLength - temp.length()) / 2 ;
+                    startSpacing = endSpacing + ((totalLength - temp.length()) % 2);
+
+                    cout << setw(startSpacing + 3) << left << "" << temp << endl;
+
+                    Sleep(2000);
+                    showAccounts();
+                    
+                } else if (ch == 'u') { // Edit username
+                    editUsername(accounts[num].accountNumber, "showAccounts");
+
+                } else if (ch == 'x') { // Edit password
+                    editPassword(accounts[num].accountNumber, "showAccounts");
+
+                } else if (ch == 'k') { // Edit status
+                    // editStatus(accounts[num].accountNumber);
+
+                } else if (ch == 'd') { // Delete account
+                    // deleteAccount(accounts[num].accountNumber);
+                }
+                
+            } else {
+                menus(ch);
+            }
+
+        } catch (const exception&) { // Not a integer, catch error
+            temp = "Invalid input. Please enter a valid integer.";
+
+            endSpacing = (totalLength - temp.length()) / 2 ;
+            startSpacing = endSpacing + ((totalLength - temp.length()) % 2);
+
+            cout << setw(startSpacing + 3) << left << "" << temp << endl;
+
+            Sleep(2000);
             showAccounts();
-
-        } else if (ch == 27 && isOpen) { // Close menu
-            isOpen = false;
-            showAccounts();
-
-        } else if (ch == 'q') {
-
-        } else if (ch == '+') {
-
-        } else if (ch == 'd') {
-
-        } else if (ch == 'u') {
-
-        } else if (ch == 'x') {
-
-        } else if (ch == 'k') {
-
-        } else {
-            menus(ch);
         }
     }
 }

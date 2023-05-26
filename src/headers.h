@@ -14,6 +14,7 @@
 #include <sstream>
 #include <regex>
 #include <limits>
+#include <stdexcept>
 
 using namespace std;
 
@@ -57,6 +58,7 @@ void writeToFile(const string& filename, const vector<Account>& accounts);
 vector<Account> readFromFile(const string& filename);
 void showProfile();
 pair<string, string> getCredentials(int accNumber);
+string getAccountType (int accNumber);
 void editUsername(int accNumber, string function);
 void editPassword(int accNumber, string function);
 bool validateUsername(const string& username);
