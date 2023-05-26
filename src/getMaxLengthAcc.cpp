@@ -33,7 +33,7 @@ int getMaxLengthAcc(const vector<Account>& data, int additionalDividerWidth, siz
     // Check for the header width
     switch (columnIndex) {
         case 0:
-            max_length = max(max_length, static_cast<int>(string("Account Number").length()));
+            max_length = max(max_length, static_cast<int>(string("No.").length()));
             break;
         case 1:
             max_length = max(max_length, static_cast<int>(string("Account Type").length()));

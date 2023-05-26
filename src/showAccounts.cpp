@@ -13,7 +13,7 @@ void showAccounts() {
 
     vector<string> navigation, compiledSideNav, compiledBanner, compiledContent;
 
-    int totalLength = 0, adj, additionalDividerWidth = 7;
+    int totalLength = 0, adj, additionalDividerWidth = 6;
     size_t sideNav, maxSizeHeight, spacingMenu;
 
     system("cls");
@@ -34,6 +34,8 @@ void showAccounts() {
         navigation = sideNavAdmin;
 
         accounts = users;
+
+        additionalDividerWidth += 3;
 
         // Doesn't include accountType in displaying
         maxLengths = {getMaxLengthAcc(accounts, additionalDividerWidth, 0), getMaxLengthAcc(accounts, additionalDividerWidth, 2), getMaxLengthAcc(accounts, additionalDividerWidth, 3), getMaxLengthAcc(accounts, additionalDividerWidth, 4)};
@@ -176,36 +178,36 @@ void showAccounts() {
             int a = 0;
 
             if (i == adj + 1) { // Add header
-                output << "┃       ";
+                output << "┃" << setw(additionalDividerWidth) << right << "";
 
-                output << setw(maxLengths[a]) << left << "Account Number" << "┃       ";
+                output << setw(maxLengths[a]) << left << "No." << "┃" << setw(additionalDividerWidth) << right << "";
                 a++;
             
                 if (accountType == "Super Admin") {
-                    output << setw(maxLengths[a]) << left << "Account Type" << "┃       ";
+                    output << setw(maxLengths[a]) << left << "Account Type" << "┃" << setw(additionalDividerWidth) << right << "";
                     a++;
                 }
 
-                output << setw(maxLengths[a]) << left << "Username" << "┃       ";
+                output << setw(maxLengths[a]) << left << "Username" << "┃" << setw(additionalDividerWidth) << right << "";
                 a++;
-                output << setw(maxLengths[a]) << left << "Password" << "┃       ";
+                output << setw(maxLengths[a]) << left << "Password" << "┃" << setw(additionalDividerWidth) << right << "";
                 a++;
                 output << setw(maxLengths[a]) << left << "Status" << "┃";
 
             } else if (i - (adj + 3) < accounts.size()) { // Add accounts
-                output << "┃       ";
+                output << "┃" << setw(additionalDividerWidth) << right << "";
                 
-                output << setw(maxLengths[a]) << left << accounts[i - (adj + 3)].accountNumber << "┃       ";
+                output << setw(maxLengths[a]) << left << to_string(i - (adj + 3)) << "┃" << setw(additionalDividerWidth) << right << "";
                 a++;
 
                 if (accountType == "Super Admin") {                
-                    output << setw(maxLengths[a]) << left << accounts[i - (adj + 3)].accountType << "┃       ";
+                    output << setw(maxLengths[a]) << left << accounts[i - (adj + 3)].accountType << "┃" << setw(additionalDividerWidth) << right << "";
                     a++;
                 }
 
-                output << setw(maxLengths[a]) << left << accounts[i - (adj + 3)].username << "┃       ";
+                output << setw(maxLengths[a]) << left << accounts[i - (adj + 3)].username << "┃" << setw(additionalDividerWidth) << right << "";
                 a++;
-                output << setw(maxLengths[a]) << left << accounts[i - (adj + 3)].password << "┃       ";
+                output << setw(maxLengths[a]) << left << accounts[i - (adj + 3)].password << "┃" << setw(additionalDividerWidth) << right << "";
                 a++;
                 output << setw(maxLengths[a]) << left << (accounts[i - (adj + 3)].isActive ? "Active" : "Banned/Disabled") << "┃";
 
