@@ -118,7 +118,6 @@ void editUsername(int accNumber, string function) {
     cout << credential.first << endl;
 
     cout << setw(spacing) << left << "┃" << "New Username: ";
-
     cin >> username;
 
     // Spacing
@@ -161,7 +160,7 @@ void editUsername(int accNumber, string function) {
             temp = "New username is the same as the current username.";
 
         } else if (!validateUsername(username)) { // If wrong format is inputted
-            temp = "Invalid username. It must contain 3-16 char long and alphanumeric, underscore, or hyphen.";
+            temp = "Invalid username. It should be 3 to 16 characters long and ";
 
         } else if (!isUsernameAvailable(username)) { // If wrong format is inputted
             temp = "Username is not available. Please choose a different username.";
@@ -174,7 +173,11 @@ void editUsername(int accNumber, string function) {
         endSpacing = (totalLength - temp.length()) / 2 ;
         startSpacing = endSpacing + ((totalLength - temp.length()) % 2);
 
-        cout << setw(startSpacing + 3) << left << "" << temp;
+        cout << setw(startSpacing + 3) << left << "" << temp << endl;
+
+        if (!validateUsername(username)) { // Continuation of response
+            cout << setw(startSpacing + 10) << left << "" << "may contain alphanumeric, underscore, or hyphen.";
+        }
 
         if (isValid) {
 
@@ -183,8 +186,8 @@ void editUsername(int accNumber, string function) {
                     account.username = username;
                 }
             }
-
-            writeToFile(filename, accounts);
+            
+            writeToFile(filename, accounts); // Save new username
         }
 
         Sleep(2000);

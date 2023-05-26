@@ -5,6 +5,7 @@ using namespace std;
 bool validateUsername(const string& username) {
     // Regular expression pattern for username validation
     regex pattern("^[a-zA-Z0-9_-]{6,16}$");
+    
     return regex_match(username, pattern);
 }
 
@@ -31,6 +32,7 @@ bool isUsernameAvailable(const string& username) {
 
 bool validatePassword(const string& password) {
     // Regular expression pattern for password validation
-    regex pattern("^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})");
+    regex pattern("^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[_!@#$%^&*]).{8,}$");
+    
     return regex_match(password, pattern);
 }

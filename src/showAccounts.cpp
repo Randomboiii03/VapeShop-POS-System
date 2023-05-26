@@ -283,7 +283,7 @@ void showAccounts() {
             isOpen = true;
             showAccounts();
 
-        } else if (ch == 27 && isOpen) { // Close Menu
+        } else if (ch == 27 && isOpen) { // Close menu
             isOpen = false;
             showAccounts();
 

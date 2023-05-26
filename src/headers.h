@@ -58,6 +58,7 @@ vector<Account> readFromFile(const string& filename);
 void showProfile();
 pair<string, string> getCredentials(int accNumber);
 void editUsername(int accNumber, string function);
+void editPassword(int accNumber, string function);
 bool validateUsername(const string& username);
 bool validatePassword(const string& password);
 bool isUsernameAvailable(const string& username);

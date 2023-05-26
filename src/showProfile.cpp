@@ -151,13 +151,19 @@ void showProfile() {
             output << setw(startSpacing + 3) << left << "┃";
 
             if (i == adj + 4) {
-                temp = "Username: " + credential.first;
+                temp = "Username: " + credential.first; // Add username
 
             } else {
-                temp = "Password: ";
+                temp = "Password: "; 
 
-                for (char& c : credential.second) {
-                    temp += '*';
+                for (size_t j = 0; j < credential.second.length(); j++) {
+
+                    if (j == credential.second.length() - 1) { // Add last character of password
+                        temp += credential.second[j];
+                        
+                    } else { // Add password as asterisks
+                        temp += '*';
+                    } 
                 }
             }
 
@@ -232,15 +238,17 @@ void showProfile() {
             isOpen = true;
             showProfile();
 
-        } else if (ch == 27 && isOpen) { // Close Menu
+        } else if (ch == 27 && isOpen) { // Close menu
             isOpen = false;
             showProfile();
 
-        } else if (ch == 'u') {
+        } else if (ch == 'u') { // Edit username
             isOpen = false;
             editUsername(accountNumber, "showProfile");
 
-        } else if (ch == 'x') {
+        } else if (ch == 'x') { // Edit password
+             isOpen = false;
+             editPassword(accountNumber, "showProfile");
 
         } else {
             menus(ch);
