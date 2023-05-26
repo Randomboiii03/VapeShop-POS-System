@@ -10,7 +10,7 @@ vector<Account> superadmin = {
 string accountType = "";
 int accountNumber;
 
-bool isOpen = true;
+bool isOpen = false;
 
 vector<string> sideNavUser;
 vector<string> sideNavAdmin;

@@ -2,7 +2,7 @@
 
 using namespace std;
 
-pair<string, string> getCredentials() {
+pair<string, string> getCredentials(int accNumber) {
 
     vector<Account> admins = readFromFile("accounts/admins.txt");
     vector<Account> users = readFromFile("accounts/users.txt");
@@ -16,7 +16,7 @@ pair<string, string> getCredentials() {
     accounts.insert(accounts.end(), users.begin(), users.end());
 
     for (auto& account : accounts) {
-        if (accountNumber == account.accountNumber) {
+        if (accNumber == account.accountNumber) {
             username = account.username;
             password = account.password;
         }

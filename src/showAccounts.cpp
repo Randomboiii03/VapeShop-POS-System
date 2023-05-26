@@ -279,11 +279,11 @@ void showAccounts() {
 
         char ch = getch();
 
-        if (ch == 'm' && !isOpen) {
+        if (ch == 'm' && !isOpen) { // Open menu
             isOpen = true;
             showAccounts();
 
-        } else if (ch == 27 && isOpen) {
+        } else if (ch == 27 && isOpen) { // Close Menu
             isOpen = false;
             showAccounts();
 

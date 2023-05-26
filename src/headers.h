@@ -12,6 +12,8 @@
 #include <utility>
 #include <cmath>
 #include <sstream>
+#include <regex>
+#include <limits>
 
 using namespace std;
 
@@ -54,7 +56,10 @@ int getMaxLengthAcc(const vector<Account>& data, int additionalDividerWidth, siz
 void writeToFile(const string& filename, const vector<Account>& accounts);
 vector<Account> readFromFile(const string& filename);
 void showProfile();
-pair<string, string> getCredentials();
-
+pair<string, string> getCredentials(int accNumber);
+void editUsername(int accNumber, string function);
+bool validateUsername(const string& username);
+bool validatePassword(const string& password);
+bool isUsernameAvailable(const string& username);
 
 #endif

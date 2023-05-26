@@ -2,8 +2,8 @@
 
 using namespace std;
 
-void login() {
-    
+void editUsername(int accNumber, string function) {
+
     // Read txt file everytime function called/loaded
     vector<Account> admins = readFromFile("accounts/admins.txt");
     vector<Account> users = readFromFile("accounts/users.txt");
@@ -12,16 +12,23 @@ void login() {
 
     int totalLength = 0, endSpacing, startSpacing;
 
-    string username, password, temp;
+    pair<string, string> credential = getCredentials(accNumber);
+
+    string username, filename, temp;
     bool isValid = false;
 
     system("cls");
     SetConsoleOutputCP(CP_UTF8);
 
     // Compile both admin and user accounts into one vector
-    accounts.insert(accounts.end(), superadmin.begin(), superadmin.end());
-    accounts.insert(accounts.end(), admins.begin(), admins.end());
-    accounts.insert(accounts.end(), users.begin(), users.end());
+    if (accountType == "Admin") {
+        accounts.insert(accounts.end(), admins.begin(), admins.end());
+        filename = "accounts/admins.txt";
+
+    } else if (accountType == "User") {
+        accounts.insert(accounts.end(), users.begin(), users.end());
+        filename = "accounts/users.txt";
+    }
 
     totalLength = banner[1].length() + 10; // Total size of content w/o sideNav
     
@@ -36,7 +43,7 @@ void login() {
 
         if (i <= banner.size()) {
             if (i == banner.size()) { // Get new bannerSize for title
-                temp = "LOGIN";
+                temp = "EDIT USERNAME";
                 bannerSize = temp.length();
                 temp = "";
             } 
@@ -74,7 +81,7 @@ void login() {
                 output << setw(startSpacing + 3) << left << "┃";
 
                 if (i == banner.size()) {
-                    output << "LOGIN";
+                    output << "EDIT USERNAME";
 
                 } else {
                     output << banner[i];
@@ -107,12 +114,12 @@ void login() {
 
     int spacing = (totalLength + 3) / 3; // Spacing before entering credentials for login
 
-    cout << setw(spacing) << left << "┃" << "Username: ";
-    getline(cin, username);
+    cout << setw(spacing) << left << "┃" << "Old Username: ";
+    cout << credential.first << endl;
 
+    cout << setw(spacing) << left << "┃" << "New Username: ";
 
-    cout << setw(spacing) << left << "┃" << "Password: ";
-    cin >> password;
+    cin >> username;
 
     // Spacing
     for (size_t i = 0; i < 3; i++) {
@@ -127,7 +134,7 @@ void login() {
 
     cout << "┫" << endl;
 
-    temp = "[1] Submit          [0] Clear";
+    temp = "[1] Save          [0] Cancel";
 
     endSpacing = (totalLength - temp.length()) / 2 ;
     startSpacing = endSpacing + ((totalLength - temp.length()) % 2);
@@ -147,29 +154,21 @@ void login() {
     
     char ch = getch();
 
-    // User submit to login
+    // User save changes to username
     if (ch == '1') {
 
-        for (auto& account : accounts) {
+        if (credential.first == username) { // If same username is inputted
+            temp = "New username is the same as the current username.";
 
-            if (username == account.username && password == account.password) {
-                if (!account.isActive) { // If account is banned/disabled
-                    temp = "Account is banned/disabled";
-                    break;
+        } else if (!validateUsername(username)) { // If wrong format is inputted
+            temp = "Invalid username. It must contain 3-16 char long and alphanumeric, underscore, or hyphen.";
 
-                } else { // Credentials match and active status
-                    isValid = true;
-                    accountNumber = account.accountNumber;
-                    accountType = account.accountType;
+        } else if (!isUsernameAvailable(username)) { // If wrong format is inputted
+            temp = "Username is not available. Please choose a different username.";
 
-                    temp = account.accountType + " successfully login!";
-                    break;
-                }
-            }
-        }
-
-        if (!isValid && temp == "") { // No match credentials
-            temp = "Wrong username or password!";
+        } else {
+            temp = "Username changed successfully!";
+            isValid = true;
         }
 
         endSpacing = (totalLength - temp.length()) / 2 ;
@@ -177,16 +176,24 @@ void login() {
 
         cout << setw(startSpacing + 3) << left << "" << temp;
 
-        Sleep(2000);
+        if (isValid) {
 
-        if (!isValid) { // No match credentials or account is banned/disabled
-            login();
+            for (auto& account : accounts) {
+                if (accNumber == account.accountNumber) {
+                    account.username = username;
+                }
+            }
 
-        } else {
-            showProfile();
+            writeToFile(filename, accounts);
         }
 
-    } else { // Clear inputs and go back to login
-        login();
+        Sleep(2000);
+    } 
+
+    if (function == "showProfile") {
+        showProfile();
+
+    } else if (function == "showAccounts") {
+        showAccounts();
     }
 }

@@ -6,7 +6,7 @@ void showProfile() {
 
     vector<string> navigation, compiledSideNav, compiledBanner, compiledContent;
 
-    pair<string, string> credential = getCredentials();
+    pair<string, string> credential = getCredentials(accountNumber);
 
     int totalLength = 0, adj; 
 
@@ -173,10 +173,10 @@ void showProfile() {
             string options = "";
 
             if (isOpen) {
-                options = "[Esc] Close Menu        [U] Edit Username        [X] Edit Password        [K] Edit Status";
+                options = "[Esc] Close Menu        [U] Edit Username        [X] Edit Password";
 
             } else {
-                options = "[M] Menu        [U] Edit Username        [X] Edit Password        [K] Edit Status";
+                options = "[M] Menu        [U] Edit Username        [X] Edit Password";
             }
 
             int endSpacing = (totalLength - options.length()) / 2;
@@ -228,15 +228,17 @@ void showProfile() {
 
         char ch = getch();
 
-        if (ch == 'm' && !isOpen) {
+        if (ch == 'm' && !isOpen) { // Open menu
             isOpen = true;
             showProfile();
 
-        } else if (ch == 27 && isOpen) {
+        } else if (ch == 27 && isOpen) { // Close Menu
             isOpen = false;
             showProfile();
 
         } else if (ch == 'u') {
+            isOpen = false;
+            editUsername(accountNumber, "showProfile");
 
         } else if (ch == 'x') {
 
