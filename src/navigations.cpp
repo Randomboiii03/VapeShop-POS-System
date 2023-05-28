@@ -51,10 +51,10 @@ void navigations()
     sideNavSuperAdmin.push_back("┃                                               ");
     sideNavSuperAdmin.push_back("┃                                               ");
     sideNavSuperAdmin.push_back("┃                                               ");
-    sideNavSuperAdmin.push_back("┃     █▀ █ ▀█   █▀▄ █ █▄ █   ▄▀▀ ▄▀▄ █▀▄ ██▀    ");
-    sideNavSuperAdmin.push_back("┃     █▄ █ ▄█   █▀  █ █ ▀█   ▀▄▄ ▀▄▀ █▄▀ █▄▄    ");
-    sideNavSuperAdmin.push_back("┃                                               ");
-    sideNavSuperAdmin.push_back("┃                                               ");
+    // sideNavSuperAdmin.push_back("┃     █▀ █ ▀█   █▀▄ █ █▄ █   ▄▀▀ ▄▀▄ █▀▄ ██▀    ");
+    // sideNavSuperAdmin.push_back("┃     █▄ █ ▄█   █▀  █ █ ▀█   ▀▄▄ ▀▄▀ █▄▀ █▄▄    ");
+    // sideNavSuperAdmin.push_back("┃                                               ");
+    // sideNavSuperAdmin.push_back("┃                                               ");
     sideNavSuperAdmin.push_back("┃       █▀ █   ▀█  █   ▄▀▄ ▄▀  ▄▀▄ █ █ ▀█▀      ");
     sideNavSuperAdmin.push_back("┃       █▄ █▄▄ ▄█  █▄▄ ▀▄▀ ▀▄█ ▀▄▀ ▀▄█  █       ");
 

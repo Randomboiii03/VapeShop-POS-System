@@ -6,7 +6,7 @@ void login()
 {
     vector<Account> accounts;
 
-    int totalLength = 0, endSpacing, startSpacing, bannerSize;
+    int totalLength = 0, bannerSize, endSpacing, startSpacing;
 
     string pinCode, temp;
     bool isValid = false;
@@ -35,7 +35,6 @@ void login()
             {
                 temp = "LOGIN";
                 bannerSize = temp.length();
-                temp = "";
             }
 
             endSpacing = (totalLength - bannerSize) / 2;
@@ -52,7 +51,6 @@ void login()
 
             if (i == 0 || i == banner.size() - 1) // Add additional horizontal outline before and after of banner
             {
-
                 for (size_t j = 0; j < startSpacing; j++)
                 {
                     temp += "━";
@@ -91,20 +89,20 @@ void login()
             }
         }
 
-        if (temp == "")
+        if (temp == "") // Compile non-outline
         {
             temp = output.str();
             output = ostringstream();
         }
 
-        cout << temp << endl;
+        cout << temp << endl; // Display banner
     }
 
     totalLength = banner[1].length() + 10;
 
     cout << "┣";
 
-    for (size_t j = 0; j < totalLength; j++) // Print outline after title
+    for (size_t j = 0; j < totalLength; j++) // Display outline after title
     {
         cout << "━";
     }
@@ -123,8 +121,7 @@ void login()
          << "Enter Pin Code: ";
     cin >> pinCode;
 
-    // Spacing
-    for (size_t i = 0; i < 3; i++)
+    for (size_t i = 0; i < 3; i++) // Spacing
     {
         cout << setw(totalLength + 3) << left << ""
              << "" << endl;
@@ -132,8 +129,8 @@ void login()
 
     cout << "┣";
 
-    for (size_t j = 0; j < totalLength; j++)
-    { // Print outline after inputs
+    for (size_t j = 0; j < totalLength; j++) // Display outline after inputs
+    {
         cout << "━";
     }
 
@@ -168,10 +165,8 @@ void login()
     {
         if (ch == '1') // User submit to login
         {
-
             for (auto &account : accounts)
             {
-
                 if (stoi(pinCode) == account.pinCode)
                 {
                     isValid = true;
@@ -181,9 +176,9 @@ void login()
                 }
             }
 
-            if (!isValid)
-            { // No match credentials
-                temp = "Wrong pin code!";
+            if (!isValid) // Wrong PIN code
+            {
+                temp = "Wrong PIN code!";
                 tries++;
             }
 
@@ -194,7 +189,7 @@ void login()
 
             Sleep(2000);
 
-            if (isValid)
+            if (isValid) // Login
             {
                 if (accountType == "Developer")
                 {
@@ -205,7 +200,7 @@ void login()
                     // Go to admin ui
                 }
             }
-            else // Wrong pinCode
+            else // Wrong PIN code
             {
                 if (tries <= 5)
                 {

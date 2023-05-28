@@ -70,5 +70,6 @@ void menus(char ch);
 // bool isUsernameAvailable(const string& username);
 int generateDeveloperPin();
 int getPinCode();
+void showPinCode();
 
 #endif

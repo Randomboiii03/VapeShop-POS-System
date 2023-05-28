@@ -25,5 +25,6 @@ void menus(char ch)
     else if (ch == 'i' && isOpen && accountType != "User") // Pincode
     { 
         isOpen = false;
+        showPinCode();
     }
 }
