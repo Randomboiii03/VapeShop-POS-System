@@ -1,4 +1,4 @@
-#include "headers.h"
+#include "globalUtils.h"
 
 using namespace std;
 
@@ -141,7 +141,7 @@ void showPinCode()
     for (size_t i = adj; i < maxSizeHeight; i++) // Compile content
     {
         temp = "";
-        // temp += i + "-" + to_string((maxSizeHeight - compiledBanner.size()) / 2);
+        
         if (i == adj || i == maxSizeHeight - 3) // Add divider between title and PIN code, and between PIN code and options
         {
             temp += "┣";
@@ -165,7 +165,7 @@ void showPinCode()
             {
                 temp = "PIN Code: ";
 
-                for (size_t j = 0; j < pin.length(); j++)
+                for (size_t j = 0; j < pin.length(); j++) // Encrypt PIN code
                 {
                     if (j < pin.length() - 1)
                     {

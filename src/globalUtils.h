@@ -1,5 +1,5 @@
-#ifndef HEADERS_H
-#define HEADERS_H
+#ifndef GLOBALUTILS_H
+#define GLOBALUTILS_H
 
 #include <iostream>
 #include <string>
