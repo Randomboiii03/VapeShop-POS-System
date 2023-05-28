@@ -56,6 +56,9 @@ extern int tries;
 
 // Global related functions
 void navigationUtils();
+vector<string> navigationDisplay(vector<string> navigation, size_t maxSizeHeight, size_t sideNav, int paddingLeft);
+void bannerUtils();
+string bannerDisplay(int count, int bannerSize, int totalLength, string title);
 void globalMenu(char ch);
 string addSpacingWithOutline(int totalLength);
 string addSpacingWithoutOutline(int times, int totalLength);

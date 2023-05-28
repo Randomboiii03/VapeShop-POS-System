@@ -23,7 +23,11 @@ string addSpacingWithoutOutline(int times, int totalLength)
 
     for (size_t i = 0; i < times; i++) // Spaces
     {
-        output << setw(totalLength + 3) << left << "" << endl;
+        output << setw(totalLength + 3) << left << "";
+
+        if (times > 1) {
+            output << endl;
+        }
     }
 
     temp = output.str();

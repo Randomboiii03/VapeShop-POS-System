@@ -10,7 +10,7 @@ vector<Account> admin = {
     {"Admin", getPinCode()},
 };
 
-string accountType = "User";
+string accountType = "Admin";
 int tries = 0;
 
 bool isOpen = false;
@@ -20,7 +20,9 @@ vector<string> sideNavUser, sideNavAdmin, sideNavSuperAdmin, banner;
 int main()
 {
     navigationUtils();
-    pinCodeDisplay();
+    bannerUtils();
+
+    pinCodeLogin();
 
     return 0;
 }

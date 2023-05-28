@@ -9,8 +9,6 @@ void pinCodeEditor()
     string oldPinCode, pinCode, newPinCode, temp;
     bool isValid = false;
 
-    ostringstream output;
-
     Padding padding;
 
     system("cls");
@@ -21,65 +19,8 @@ void pinCodeEditor()
     
     for (size_t i = 0; i <= banner.size(); i++)
     {
-        temp = "";
-
-        if (i <= banner.size())
-        {
-            if (i == banner.size()) // Get new bannerSize for title
-            {
-                temp = "CHANGE PIN CODE";
-                bannerSize = temp.length();
-                temp = "";
-            }
-
-            padding = centerPadding(totalLength, bannerSize, 2); // Get left and right padding
-
-            if (i == 0) // Add corner outline when menu !isOpen
-            {
-                temp += "┏";
-            }
-            else if (i == banner.size() - 1) // Add custom vertical divider
-            {
-                temp += "┣";
-            }
-
-            if (i == 0 || i == banner.size() - 1) // Add additional horizontal outline before and after of banner
-            {
-                temp += addSpacingWithOutline(padding.paddingLeft) + banner[i] + addSpacingWithOutline(padding.paddingRight);
-
-                if (i == 0)
-                {
-                    temp += "┓";
-                }
-                else
-                {
-                    temp += "┫";
-                }
-            }
-            else // Add spacing before and after of banner < totalLength of accounts, and title
-            {
-                output << setw(padding.paddingLeft + 3) << left << "┃";
-
-                if (i == banner.size())
-                {
-                    output << "CHANGE PIN CODE";
-                }
-                else
-                {
-                    output << banner[i];
-                }
-
-                output << setw(padding.paddingRight + 3) << right << "┃";
-            }
-        }
-
-        if (temp == "") // Compile non-outline
-        {
-            temp = output.str();
-            output = ostringstream();
-        }
-
-        cout << temp << endl; // Display banner
+        temp = bannerDisplay(i, bannerSize, totalLength, "CHANGE PIN CODE"); // Display banner
+        cout << temp << endl;
     }
 
     totalLength = banner[1].length() + 10;
@@ -88,7 +29,7 @@ void pinCodeEditor()
 
     cout << addSpacingWithoutOutline(3, totalLength);
 
-    int spacing = (totalLength + 3) / 3; // Spacing before entering credentials for login
+    int spacing = (totalLength + 3) / 3; // Spacing before inputs
 
     cout << setw(spacing) << left << "" << "Old Pin Code: ";
     cin >> oldPinCode;
@@ -128,6 +69,10 @@ void pinCodeEditor()
             {
                 temp = "Old PIN code is incorrect. PIN code not changed.";
             }
+            else if (oldPinCode != pinCode)
+            {
+                temp = "PIN code is already used. PIN code not changed.";
+            }
             else if (pinCode != newPinCode)
             {
                 temp = "New PIN code and confirmation do not match. PIN code not changed.";
@@ -161,10 +106,15 @@ void pinCodeEditor()
                     cout << setw(padding.paddingLeft + 3) << left << "" << temp;
 
                     saveExpectedTime(calculateExpectedTime()); // Save the expected time after one hour of current time
-                    Sleep(2000);
-                }
 
-                pinCodeEditor();
+                    Sleep(2000);
+                    pinCodeDisplay();
+                }
+                else 
+                {
+                    pinCodeEditor();
+                }
+                
             }
         }
         else // Cancel editing

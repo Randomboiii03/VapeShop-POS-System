@@ -6,12 +6,14 @@ void pinCodeLogin()
 {
     vector<Account> accounts;
 
-    int totalLength = 0, bannerSize, endSpacing, startSpacing;
+    int totalLength = 0, bannerSize;
 
     string pinCode, temp;
+    ostringstream output;
+
     bool isValid = false;
 
-    ostringstream output;
+    Padding padding;
 
     system("cls");
     SetConsoleOutputCP(CP_UTF8);
@@ -25,76 +27,7 @@ void pinCodeLogin()
 
     for (size_t i = 0; i <= banner.size(); i++)
     {
-        temp = "";
-
-        endSpacing = 0, startSpacing = 0;
-
-        if (i <= banner.size())
-        {
-            if (i == banner.size()) // Get new bannerSize for title
-            {
-                temp = "LOGIN";
-                bannerSize = temp.length();
-            }
-
-            endSpacing = (totalLength - bannerSize) / 2;
-            startSpacing = endSpacing + ((totalLength - bannerSize) % 2);
-
-            if (i == 0) // Add corner outline when menu !isOpen
-            {
-                temp += "┏";
-            }
-            else if (i == banner.size() - 1) // Add custom vertical divider
-            {
-                temp += "┣";
-            }
-
-            if (i == 0 || i == banner.size() - 1) // Add additional horizontal outline before and after of banner
-            {
-                for (size_t j = 0; j < startSpacing; j++)
-                {
-                    temp += "━";
-                }
-
-                temp += banner[i];
-
-                for (size_t j = 0; j < endSpacing; j++)
-                {
-                    temp += "━";
-                }
-
-                if (i == 0)
-                {
-                    temp += "┓";
-                }
-                else
-                {
-                    temp += "┫";
-                }
-            }
-            else // Add spacing before and after of banner < totalLength of accounts, and title
-            {
-                output << setw(startSpacing + 3) << left << "┃";
-
-                if (i == banner.size())
-                {
-                    output << "LOGIN";
-                }
-                else
-                {
-                    output << banner[i];
-                }
-
-                output << setw(endSpacing + 3) << right << "┃";
-            }
-        }
-
-        if (temp == "") // Compile non-outline
-        {
-            temp = output.str();
-            output = ostringstream();
-        }
-
+        temp = bannerDisplay(i, bannerSize, totalLength, "PIN CODE LOGIN"); // Display banner
         cout << temp << endl; // Display banner
     }
 
@@ -138,15 +71,14 @@ void pinCodeLogin()
 
     temp = "[1] Submit";
 
-    endSpacing = (totalLength - 20) / 3;
-    startSpacing = endSpacing + ((totalLength - 20) % 3);
+    padding = centerPadding(totalLength, 20, 3);
 
-    cout << setw(startSpacing + 3) << left << "┃" << temp;
+    cout << setw(padding.paddingLeft + 3) << left << "┃" << temp;
 
     temp = "[0] Cancel";
 
-    cout << setw(startSpacing + 3) << left << "" << temp;
-    cout << setw(endSpacing) << right << "┃" << endl;
+    cout << setw(padding.paddingLeft + 3) << left << "" << temp;
+    cout << setw(padding.paddingRight) << right << "┃" << endl;
 
     cout << "┗";
 
@@ -165,8 +97,11 @@ void pinCodeLogin()
     {
         if (ch == '1') // User submit to login
         {
+            stoi(pinCode); // Check if integer
+            
             for (auto &account : accounts)
             {
+                
                 if (pinCode == account.pinCode)
                 {
                     isValid = true;
@@ -182,29 +117,28 @@ void pinCodeLogin()
                 tries++;
             }
 
-            endSpacing = (totalLength - temp.length()) / 2;
-            startSpacing = endSpacing + ((totalLength - temp.length()) % 2);
-
-            cout << setw(startSpacing + 3) << left << "" << temp;
+            padding = centerPadding(totalLength, temp.length(), 2);
+            cout << setw(padding.paddingLeft + 3) << left << "" << temp;
 
             Sleep(2000);
 
             if (isValid) // Login
             {
-                if (accountType == "Developer")
-                {
-                    // Go to developer ui
-                }
-                else if (accountType == "Admin")
-                {
-                    // Go to admin ui
-                }
+                pinCodeDisplay();
             }
             else // Wrong PIN code
             {
-                if (tries <= 5)
+                if (tries >= 5)
                 {
-                    // Go back
+                    temp = "Maximum login attempts reached. Please wait for one hour before trying again.";
+
+                    padding = centerPadding(totalLength, temp.length(), 2);
+                    cout << setw(padding.paddingLeft + 3) << left << "" << temp;
+
+                    saveExpectedTime(calculateExpectedTime()); // Save the expected time after one hour of current time
+
+                    Sleep(2000);
+                    // Go back function
                 }
                 else
                 {
@@ -214,17 +148,15 @@ void pinCodeLogin()
         }
         else // Cancel
         {
-            // Go back
+            // Go back function
         }
     }
     catch (const exception &) // Catch error
     {
         temp = "Invalid input. Please enter a valid PIN code.";
 
-        endSpacing = (totalLength - temp.length()) / 2;
-        startSpacing = endSpacing + ((totalLength - temp.length()) % 2);
-
-        cout << setw(startSpacing + 3) << left << "" << temp << endl;
+        padding = centerPadding(totalLength, temp.length(), 2);
+        cout << setw(padding.paddingLeft + 3) << left << "" << temp << endl;
 
         Sleep(2000);
         pinCodeLogin();
