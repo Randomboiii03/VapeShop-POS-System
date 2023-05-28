@@ -2,23 +2,19 @@
 
 using namespace std;
 
-void navigations() {
-
+void navigations()
+{
     system("cls");
     SetConsoleOutputCP(CP_UTF8);
-    
+
     // Insert sideNavUser
     sideNavUser.push_back("┃           ▀▀  █▄ ▄█ ██▀ █▄ █ █ █ ▀▀           ");
     sideNavUser.push_back("┃               █ ▀ █ █▄▄ █ ▀█ ▀▄█              ");
     sideNavUser.push_back("┃                                               ");
     sideNavUser.push_back("┃                                               ");
     sideNavUser.push_back("┃                                               ");
-    sideNavUser.push_back("┃      █▀ █▀▄ ▀█  █▀▄ █▀▄ ▄▀▄ █▀ █ █   ██▀      ");
-    sideNavUser.push_back("┃      █▄ █▀  ▄█  █▀  █▀▄ ▀▄▀ █▀ █ █▄▄ █▄▄      ");
-    sideNavUser.push_back("┃                                               ");
-    sideNavUser.push_back("┃                                               ");
     sideNavUser.push_back("┃   █▀ █▀▄ ▀█  █▀▄ █▀▄ ▄▀▄ █▀▄ █ █ ▄▀▀ ▀█▀ ▄▀▀  ");
-    sideNavUser.push_back("┃   █▄ █▀▄ ▄█  █▀  █▀▄ ▀▄▀ █▄▀ ▀▄█ ▀▄▄  █  ▄██  ");
+    sideNavUser.push_back("┃   █▄ █▀  ▄█  █▀  █▀▄ ▀▄▀ █▄▀ ▀▄█ ▀▄▄  █  ▄██  ");
     sideNavUser.push_back("┃                                               ");
     sideNavUser.push_back("┃                                               ");
     sideNavUser.push_back("┃           █▀ ▄▀▀ ▀█  ▄▀▀ ▄▀▄ █▀▄ ▀█▀          ");
@@ -34,20 +30,16 @@ void navigations() {
     sideNavAdmin.push_back("┃                                               ");
     sideNavAdmin.push_back("┃                                               ");
     sideNavAdmin.push_back("┃                                               ");
-    sideNavAdmin.push_back("┃      █▀ █▀▄ ▀█  █▀▄ █▀▄ ▄▀▄ █▀ █ █   ██▀      ");
-    sideNavAdmin.push_back("┃      █▄ █▀  ▄█  █▀  █▀▄ ▀▄▀ █▀ █ █▄▄ █▄▄      ");
-    sideNavAdmin.push_back("┃                                               ");
-    sideNavAdmin.push_back("┃                                               ");
-    sideNavAdmin.push_back("┃  █▀ ▄▀▄ ▀█  ▄▀▄ ▄▀▀ ▄▀▀ ▄▀▄ █ █ █▄ █ ▀█▀ ▄▀▀  ");
-    sideNavAdmin.push_back("┃  █▄ █▀█ ▄█  █▀█ ▀▄▄ ▀▄▄ ▀▄▀ ▀▄█ █ ▀█  █  ▄██  ");
-    sideNavAdmin.push_back("┃                                               ");
-    sideNavAdmin.push_back("┃                                               ");
     sideNavAdmin.push_back("┃   █▀ █▀▄ ▀█  █▀▄ █▀▄ ▄▀▄ █▀▄ █ █ ▄▀▀ ▀█▀ ▄▀▀  ");
-    sideNavAdmin.push_back("┃   █▄ █▀▄ ▄█  █▀  █▀▄ ▀▄▀ █▄▀ ▀▄█ ▀▄▄  █  ▄██  ");
+    sideNavAdmin.push_back("┃   █▄ █▀  ▄█  █▀  █▀▄ ▀▄▀ █▄▀ ▀▄█ ▀▄▄  █  ▄██  ");
     sideNavAdmin.push_back("┃                                               ");
     sideNavAdmin.push_back("┃                                               ");
     sideNavAdmin.push_back("┃         █▀ ▄▀▀ ▀█  ▄▀▀ ▄▀▄ █   ██▀ ▄▀▀        ");
     sideNavAdmin.push_back("┃         █▄ ▄██ ▄█  ▄██ █▀█ █▄▄ █▄▄ ▄██        ");
+    sideNavAdmin.push_back("┃                                               ");
+    sideNavAdmin.push_back("┃                                               ");
+    sideNavAdmin.push_back("┃     █▀ █ ▀█   █▀▄ █ █▄ █   ▄▀▀ ▄▀▄ █▀▄ ██▀    ");
+    sideNavAdmin.push_back("┃     █▄ █ ▄█   █▀  █ █ ▀█   ▀▄▄ ▀▄▀ █▄▀ █▄▄    ");
     sideNavAdmin.push_back("┃                                               ");
     sideNavAdmin.push_back("┃                                               ");
     sideNavAdmin.push_back("┃       █▀ █   ▀█  █   ▄▀▄ ▄▀  ▄▀▄ █ █ ▀█▀      ");
@@ -59,12 +51,8 @@ void navigations() {
     sideNavSuperAdmin.push_back("┃                                               ");
     sideNavSuperAdmin.push_back("┃                                               ");
     sideNavSuperAdmin.push_back("┃                                               ");
-    sideNavSuperAdmin.push_back("┃      █▀ █▀▄ ▀█  █▀▄ █▀▄ ▄▀▄ █▀ █ █   ██▀      ");
-    sideNavSuperAdmin.push_back("┃      █▄ █▀  ▄█  █▀  █▀▄ ▀▄▀ █▀ █ █▄▄ █▄▄      ");
-    sideNavSuperAdmin.push_back("┃                                               ");
-    sideNavSuperAdmin.push_back("┃                                               ");
-    sideNavSuperAdmin.push_back("┃  █▀ ▄▀▄ ▀█  ▄▀▄ ▄▀▀ ▄▀▀ ▄▀▄ █ █ █▄ █ ▀█▀ ▄▀▀  ");
-    sideNavSuperAdmin.push_back("┃  █▄ █▀█ ▄█  █▀█ ▀▄▄ ▀▄▄ ▀▄▀ ▀▄█ █ ▀█  █  ▄██  ");
+    sideNavSuperAdmin.push_back("┃     █▀ █ ▀█   █▀▄ █ █▄ █   ▄▀▀ ▄▀▄ █▀▄ ██▀    ");
+    sideNavSuperAdmin.push_back("┃     █▄ █ ▄█   █▀  █ █ ▀█   ▀▄▄ ▀▄▀ █▄▀ █▄▄    ");
     sideNavSuperAdmin.push_back("┃                                               ");
     sideNavSuperAdmin.push_back("┃                                               ");
     sideNavSuperAdmin.push_back("┃       █▀ █   ▀█  █   ▄▀▄ ▄▀  ▄▀▄ █ █ ▀█▀      ");
@@ -80,5 +68,4 @@ void navigations() {
     banner.push_back(".▀   . ▀  •▀▀ ▀▀  .▀   .▀  ▀ ▀█▄▀▪ ▀▀▀• ▀▀▀ ·▀▀▀  ▀▀▀   . ▀   ▀  ▀ .▀    ▀█▄▀▪.▀  ▀  •▀▀ ▀▀");
     banner.push_back("                                                                                           ");
     banner.push_back("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-    
 }

@@ -2,31 +2,28 @@
 
 using namespace std;
 
-void menus(char ch) {
-
-    if (ch == 'l' && isOpen) { // Logout
+void menus(char ch)
+{
+    if (ch == 'l' && isOpen) // Logout
+    {
         isOpen = false;
         accountType = "";
-        accountNumber = -1;
-
-    } else if (ch == 'p' && isOpen) { // Profile
+        int pinCode = 0;
+    }
+    else if (ch == 'p' && isOpen && accountType != "Developer") // Product
+    {
         isOpen = false;
-        showProfile();
-
-    } else if (ch == 'a' && isOpen && accountType != "User") { // Accounts
+    }
+    else if (ch == 'c' && isOpen && accountType == "User") // Cart
+    {
         isOpen = false;
-        showAccounts();
-
-    } else if (ch == 's' && isOpen && accountType != "Super Admin") { // Services
-        isOpen = false; 
-        
-
-    } else if (ch == 'b' && isOpen && accountType == "User") { // Booking List
+    }
+    else if (ch == 's' && isOpen && accountType == "Admin") // Sales
+    {
         isOpen = false;
-        
-
-    } else if (ch == 'e' && isOpen && accountType == "Admin") { //Sales
+    }
+    else if (ch == 'i' && isOpen && accountType != "User") // Pincode
+    { 
         isOpen = false;
-
     }
 }

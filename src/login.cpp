@@ -2,194 +2,236 @@
 
 using namespace std;
 
-void login() {
-    
-    // Read txt file everytime function called/loaded
-    vector<Account> admins = readFromFile("accounts/admins.txt");
-    vector<Account> users = readFromFile("accounts/users.txt");
-
+void login()
+{
     vector<Account> accounts;
 
-    int totalLength = 0, endSpacing, startSpacing;
+    int totalLength = 0, endSpacing, startSpacing, bannerSize;
 
-    string username, password, temp;
+    string pinCode, temp;
     bool isValid = false;
+
+    ostringstream output;
 
     system("cls");
     SetConsoleOutputCP(CP_UTF8);
 
-    // Compile both admin and user accounts into one vector
-    accounts.insert(accounts.end(), superadmin.begin(), superadmin.end());
-    accounts.insert(accounts.end(), admins.begin(), admins.end());
-    accounts.insert(accounts.end(), users.begin(), users.end());
+    // Compile both developer and admin accounts into one vector
+    accounts.insert(accounts.end(), developer.begin(), developer.end());
+    accounts.insert(accounts.end(), admin.begin(), admin.end());
 
-    totalLength = banner[1].length() + 10; // Total size of content w/o sideNav
-    
-    for (size_t i = 0; i <= banner.size(); i++) {
+    bannerSize = banner[1].length();
+    totalLength = bannerSize + 10; // Total size of content w/o sideNav
 
-        ostringstream output;
+    for (size_t i = 0; i <= banner.size(); i++)
+    {
         temp = "";
 
         endSpacing = 0, startSpacing = 0;
 
-        int bannerSize = banner[1].length();
-
-        if (i <= banner.size()) {
-            if (i == banner.size()) { // Get new bannerSize for title
+        if (i <= banner.size())
+        {
+            if (i == banner.size()) // Get new bannerSize for title
+            {
                 temp = "LOGIN";
                 bannerSize = temp.length();
                 temp = "";
-            } 
+            }
 
-            endSpacing = (totalLength - bannerSize) / 2 ;
+            endSpacing = (totalLength - bannerSize) / 2;
             startSpacing = endSpacing + ((totalLength - bannerSize) % 2);
 
-            if (i == 0) { // Add corner outline when menu !isOpen
+            if (i == 0) // Add corner outline when menu !isOpen
+            {
                 temp += "┏";
-
-            } else if (i == banner.size() - 1) { // Add custom vertical divider
+            }
+            else if (i == banner.size() - 1) // Add custom vertical divider
+            {
                 temp += "┣";
             }
 
-            if (i == 0 || i == banner.size() - 1) { // Add additional horizontal outline before and after of banner
+            if (i == 0 || i == banner.size() - 1) // Add additional horizontal outline before and after of banner
+            {
 
-                for (size_t j = 0; j < startSpacing; j++) {
+                for (size_t j = 0; j < startSpacing; j++)
+                {
                     temp += "━";
                 }
 
                 temp += banner[i];
 
-                for (size_t j = 0; j < endSpacing; j++) {
+                for (size_t j = 0; j < endSpacing; j++)
+                {
                     temp += "━";
                 }
 
-                if (i == 0) {
+                if (i == 0)
+                {
                     temp += "┓";
-
-                } else {
+                }
+                else
+                {
                     temp += "┫";
                 }
-
-            } else { // Add spacing before and after of banner < totalLength of accounts, and title
+            }
+            else // Add spacing before and after of banner < totalLength of accounts, and title
+            {
                 output << setw(startSpacing + 3) << left << "┃";
 
-                if (i == banner.size()) {
+                if (i == banner.size())
+                {
                     output << "LOGIN";
-
-                } else {
+                }
+                else
+                {
                     output << banner[i];
                 }
 
-                output << setw(endSpacing + 3) << right  << "┃"; 
+                output << setw(endSpacing + 3) << right << "┃";
             }
         }
 
-        if (temp == "") {
+        if (temp == "")
+        {
             temp = output.str();
             output = ostringstream();
         }
 
         cout << temp << endl;
     }
-    
+
+    totalLength = banner[1].length() + 10;
+
     cout << "┣";
 
-    for (size_t j = 0; j < totalLength; j++) { // Print outline after title
+    for (size_t j = 0; j < totalLength; j++) // Print outline after title
+    {
         cout << "━";
     }
 
     cout << "┫" << endl;
 
-    // Spacing
-    for (size_t i = 0; i < 3; i++) {
-        cout << setw(totalLength + 3) << left << "┃" << "┃" << endl;
+    for (size_t i = 0; i < 3; i++) // Spacing
+    {
+        cout << setw(totalLength + 3) << left << ""
+             << "" << endl;
     }
 
-    int spacing = (totalLength + 6) / 3; // Spacing before entering credentials for login
+    int spacing = (totalLength + 3) / 3; // Spacing before entering credentials for login
 
-    cout << setw(spacing) << left << "┃" << "Username: ";
-    cin >> username;
-
-
-    cout << setw(spacing) << left << "┃" << "Password: ";
-    cin >> password;
+    cout << setw(spacing) << left << ""
+         << "Enter Pin Code: ";
+    cin >> pinCode;
 
     // Spacing
-    for (size_t i = 0; i < 3; i++) {
-        cout << setw(totalLength + 3) << left << "┃" << "┃" << endl;
+    for (size_t i = 0; i < 3; i++)
+    {
+        cout << setw(totalLength + 3) << left << ""
+             << "" << endl;
     }
 
     cout << "┣";
 
-    for (size_t j = 0; j < totalLength; j++) { // Print outline after inputs
+    for (size_t j = 0; j < totalLength; j++)
+    { // Print outline after inputs
         cout << "━";
     }
 
     cout << "┫" << endl;
 
-    temp = "[1] Submit          [0] Clear";
+    temp = "[1] Submit";
 
-    endSpacing = (totalLength - temp.length()) / 2 ;
-    startSpacing = endSpacing + ((totalLength - temp.length()) % 2);
+    endSpacing = (totalLength - 20) / 3;
+    startSpacing = endSpacing + ((totalLength - 20) % 3);
 
     cout << setw(startSpacing + 3) << left << "┃" << temp;
-    cout << setw(endSpacing + 3) << right << "┃" << endl;
+
+    temp = "[0] Cancel";
+
+    cout << setw(startSpacing + 3) << left << "" << temp;
+    cout << setw(endSpacing) << right << "┃" << endl;
 
     cout << "┗";
 
-    for (size_t j = 0; j < totalLength; j++) {
+    for (size_t j = 0; j < totalLength; j++)
+    {
         cout << "━";
     }
 
     cout << "┛" << endl;
 
     temp = "";
-    
+
     char ch = getch();
 
-    // User submit to login
-    if (ch == '1') {
+    try
+    {
+        if (ch == '1') // User submit to login
+        {
 
-        for (auto& account : accounts) {
+            for (auto &account : accounts)
+            {
 
-            if (username == account.username && password == account.password) {
-                if (!account.isActive) { // If account is banned/disabled
-                    temp = "Account is banned/disabled";
-                    break;
-
-                } else { // Credentials match and active status
+                if (stoi(pinCode) == account.pinCode)
+                {
                     isValid = true;
-                    accountNumber = account.accountNumber;
                     accountType = account.accountType;
-
-                    temp = account.accountType + " successfully login!";
+                    temp = accountType + " successfully login!";
                     break;
                 }
             }
-        }
 
-        if (!isValid && temp == "") { // No match credentials
-            temp = "Wrong username or password!";
-        }
+            if (!isValid)
+            { // No match credentials
+                temp = "Wrong pin code!";
+                tries++;
+            }
 
-        endSpacing = (totalLength - temp.length()) / 2 ;
+            endSpacing = (totalLength - temp.length()) / 2;
+            startSpacing = endSpacing + ((totalLength - temp.length()) % 2);
+
+            cout << setw(startSpacing + 3) << left << "" << temp;
+
+            Sleep(2000);
+
+            if (isValid)
+            {
+                if (accountType == "Developer")
+                {
+                    // Go to developer ui
+                }
+                else if (accountType == "Admin")
+                {
+                    // Go to admin ui
+                }
+            }
+            else // Wrong pinCode
+            {
+                if (tries <= 5)
+                {
+                    // Go back
+                }
+                else
+                {
+                    login();
+                }
+            }
+        }
+        else // Cancel
+        {
+            // Go back
+        }
+    }
+    catch (const exception &) // Not an integer, catch error
+    {
+        temp = "Invalid input. Please enter a valid integer.";
+
+        endSpacing = (totalLength - temp.length()) / 2;
         startSpacing = endSpacing + ((totalLength - temp.length()) % 2);
 
-        cout << setw(startSpacing + 3) << left << "" << temp;
-
-        // cin.clear();
-        // cin.ignore(LONG_MAX, '\n');
+        cout << setw(startSpacing + 3) << left << "" << temp << endl;
 
         Sleep(2000);
-
-        if (!isValid) { // No match credentials or account is banned/disabled
-            login();
-
-        } else {
-            showProfile();
-        }
-
-    } else { // Clear inputs and go back to login
         login();
     }
 }

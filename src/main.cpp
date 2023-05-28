@@ -2,22 +2,26 @@
 
 using namespace std;
 
-vector<Account> superadmin = {
-    {0, "Super Admin", "super_admin", "super69", true},
+vector<Account> developer = {
+    {"Developer", generateDeveloperPin()},
 };
 
+vector<Account> admin = {
+    {"Admin", getPinCode()},
+};
 
-string accountType = "";
-int accountNumber;
-
+string accountType = "User";
 bool isOpen = false;
+
+int tries = 0;
 
 vector<string> sideNavUser;
 vector<string> sideNavAdmin;
 vector<string> sideNavSuperAdmin;
 vector<string> banner;
 
-int main() {
+int main()
+{
 
     navigations();
     login();

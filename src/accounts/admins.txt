@@ -1,2 +1,0 @@
-1 Admin admin123 Passw0rd! 1
-2 Admin admin admin123 1
