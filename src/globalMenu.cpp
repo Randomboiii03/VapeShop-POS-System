@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void menus(char ch)
+void globalMenu(char ch)
 {
     if (ch == 'l' && isOpen) // Logout
     {
@@ -25,6 +25,6 @@ void menus(char ch)
     else if (ch == 'i' && isOpen && accountType != "User") // Pincode
     { 
         isOpen = false;
-        showPinCode();
+        pinCodeDisplay();
     }
 }

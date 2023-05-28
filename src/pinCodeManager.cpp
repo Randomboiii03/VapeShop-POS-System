@@ -2,7 +2,7 @@
 
 using namespace std;
 
-// Get PIN code
+// Get PIN code of admin
 int getPinCode()
 {
     ifstream inputFile("datas/pinCode.txt"); // Open the input file
@@ -22,7 +22,7 @@ int getPinCode()
     return pinCode;
 }
 
-// Change PIN code
+// Change PIN code of admin
 void changePinCode(int newPinCode)
 {
     ofstream outputFile("datas/pinCode.txt");

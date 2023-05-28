@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int generateDeveloperPin()
+int devPinGenerator()
 {
     time_t now = time(nullptr);
     tm *timeinfo = localtime(&now); // Get current date

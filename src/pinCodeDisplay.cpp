@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void showPinCode()
+void pinCodeDisplay()
 {
     vector<string> navigation, compiledSideNav, compiledBanner, compiledContent;
 
@@ -267,16 +267,16 @@ void showPinCode()
         if (ch == 'm' && !isOpen) // Open menu
         {
             isOpen = true;
-            showPinCode();
+            pinCodeDisplay();
         }
         else if (ch == 27 && isOpen) // Close menu
         {
             isOpen = false;
-            showPinCode();
+            pinCodeDisplay();
         }
         else
         {
-            menus(ch);
+            globalMenu(ch);
         }
     }
 }

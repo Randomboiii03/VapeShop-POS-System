@@ -3,7 +3,7 @@
 using namespace std;
 
 vector<Account> developer = {
-    {"Developer", generateDeveloperPin()},
+    {"Developer", devPinGenerator()},
 };
 
 vector<Account> admin = {
@@ -15,16 +15,13 @@ bool isOpen = false;
 
 int tries = 0;
 
-vector<string> sideNavUser;
-vector<string> sideNavAdmin;
-vector<string> sideNavSuperAdmin;
-vector<string> banner;
+vector<string> sideNavUser, sideNavAdmin, sideNavSuperAdmin, banner;
 
 int main()
 {
 
-    navigations();
-    login();
+    navigationUtils();
+    pinCodeLogin();
 
     return 0;
 }

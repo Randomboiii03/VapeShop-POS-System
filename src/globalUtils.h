@@ -9,11 +9,7 @@
 #include <algorithm>
 #include <conio.h>
 #include <fstream>
-// #include <utility>
-// #include <cmath>
 #include <sstream>
-// #include <regex>
-// #include <limits>
 #include <stdexcept>
 #include <ctime>
 #include <bitset>
@@ -37,39 +33,38 @@ struct Product
     bool isAvailable;
 };
 
+// Account related variables
 extern vector<Account> developer;
 extern vector<Account> admin;
 
+// Product related variable
 extern vector<Product> products;
 
-extern vector<string> sideNavUser;
-extern vector<string> sideNavAdmin;
-extern vector<string> sideNavSuperAdmin;
-extern vector<string> banner;
-
-extern string accountType;
-extern int tries;
-// extern int accountNumber;
-
+// Vector navigationUtils related variables
+extern vector<string> sideNavUser, sideNavAdmin, sideNavSuperAdmin, banner;
 extern bool isOpen;
 
-void login();
-void navigations();
-// void showAccounts();
-void menus(char ch);
-// int getMaxLengthAcc(const vector<Account>& data, int additionalDividerWidth, size_t columnIndex);
-// void writeToFile(const string& filename, const vector<Account>& accounts);
-// vector<Account> readFromFile(const string& filename);
-// void showProfile();
-// pair<string, string> getCredentials(int accNumber);
-// string getAccountType (int accNumber);
-// void editUsername(int accNumber, string function);
-// void editPassword(int accNumber, string function);
-// bool validateUsername(const string& username);
-// bool validatePassword(const string& password);
-// bool isUsernameAvailable(const string& username);
-int generateDeveloperPin();
+// Security related variables
+extern string accountType;
+extern int tries;
+
+// Global related functions
+void navigationUtils();
+void globalMenu(char ch);
+
+// Security related functions
+void saveExpectedTime(time_t expectedTime);
+time_t loadExpectedTime();
+time_t calculateExpectedTime();
+bool checkTimeMatches(time_t currentTime, time_t expectedTime);
+
+// PIN code related functions
+int devPinGenerator();
 int getPinCode();
-void showPinCode();
+void changePinCode(int newPinCode);
+
+void pinCodeLogin();
+void pinCodeDisplay();
+
 
 #endif

@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void navigations()
+void navigationUtils()
 {
     system("cls");
     SetConsoleOutputCP(CP_UTF8);

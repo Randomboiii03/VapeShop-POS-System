@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void login()
+void pinCodeLogin()
 {
     vector<Account> accounts;
 
@@ -208,7 +208,7 @@ void login()
                 }
                 else
                 {
-                    login();
+                    pinCodeLogin();
                 }
             }
         }
@@ -227,6 +227,6 @@ void login()
         cout << setw(startSpacing + 3) << left << "" << temp << endl;
 
         Sleep(2000);
-        login();
+        pinCodeLogin();
     }
 }
