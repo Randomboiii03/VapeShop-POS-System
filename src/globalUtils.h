@@ -20,7 +20,7 @@ using namespace std;
 struct Account
 {
     string accountType;
-    int pinCode;
+    string pinCode;
 };
 
 struct Product
@@ -31,6 +31,12 @@ struct Product
     string productDesc;
     double price;
     bool isAvailable;
+};
+
+struct Padding
+{
+    int paddingLeft;
+    int paddingRight;
 };
 
 // Account related variables
@@ -51,6 +57,9 @@ extern int tries;
 // Global related functions
 void navigationUtils();
 void globalMenu(char ch);
+string addSpacingWithOutline(int totalLength);
+string addSpacingWithoutOutline(int times, int totalLength);
+Padding centerPadding(int totalLength, int otherLength, int divisor);
 
 // Security related functions
 void saveExpectedTime(time_t expectedTime);
@@ -59,9 +68,10 @@ time_t calculateExpectedTime();
 bool checkTimeMatches(time_t currentTime, time_t expectedTime);
 
 // PIN code related functions
-int devPinGenerator();
-int getPinCode();
-void changePinCode(int newPinCode);
+string devPinGenerator();
+string getPinCode();
+void changePinCode(string newPinCode);
+void pinCodeEditor();
 
 void pinCodeLogin();
 void pinCodeDisplay();

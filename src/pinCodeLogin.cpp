@@ -167,7 +167,7 @@ void pinCodeLogin()
         {
             for (auto &account : accounts)
             {
-                if (stoi(pinCode) == account.pinCode)
+                if (pinCode == account.pinCode)
                 {
                     isValid = true;
                     accountType = account.accountType;
@@ -217,9 +217,9 @@ void pinCodeLogin()
             // Go back
         }
     }
-    catch (const exception &) // Not an integer, catch error
+    catch (const exception &) // Catch error
     {
-        temp = "Invalid input. Please enter a valid integer.";
+        temp = "Invalid input. Please enter a valid PIN code.";
 
         endSpacing = (totalLength - temp.length()) / 2;
         startSpacing = endSpacing + ((totalLength - temp.length()) % 2);

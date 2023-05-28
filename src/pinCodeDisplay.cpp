@@ -155,11 +155,8 @@ void pinCodeDisplay()
         }
         else if (i == ((maxSizeHeight - adj - 4) / 2) + adj) // Add PIN Code details
         {
-            pin = to_string(admin[0].pinCode);
+            pin = admin[0].pinCode;
             temp = "Admin PIN Code: " + pin;
-
-            endSpacing = (totalLength - temp.length()) / 2;
-            startSpacing = endSpacing + ((totalLength - temp.length()) % 2);
 
             if (accountType != "Developer")
             {
@@ -177,6 +174,9 @@ void pinCodeDisplay()
                     }
                 }
             }
+
+            endSpacing = (totalLength - temp.length()) / 2;
+            startSpacing = endSpacing + ((totalLength - temp.length()) % 2);
 
             output << setw(startSpacing + 3) << left << "┃" << temp;
             output << setw(endSpacing + 3) << right << "┃";
@@ -273,6 +273,11 @@ void pinCodeDisplay()
         {
             isOpen = false;
             pinCodeDisplay();
+        }
+        else if (ch == 'x') // Change PIN code
+        {
+            isOpen = false;
+            pinCodeEditor();
         }
         else
         {

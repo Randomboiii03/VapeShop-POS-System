@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int devPinGenerator()
+string devPinGenerator()
 {
     time_t now = time(nullptr);
     tm *timeinfo = localtime(&now); // Get current date
@@ -25,7 +25,7 @@ int devPinGenerator()
 
     int binaryDay = stoi(binaryNumber.to_string()); // Convert binaryNumber > string > integer
 
-    int devPinCode = currenDate + binaryDay; // Add currentDate to binaryDay to get the devPinCode
+    string devPinCode = to_string(currenDate + binaryDay); // Add currentDate to binaryDay to get the devPinCode
 
     return devPinCode;
 }

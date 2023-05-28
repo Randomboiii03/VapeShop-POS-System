@@ -3,10 +3,10 @@
 using namespace std;
 
 // Get PIN code of admin
-int getPinCode()
+string getPinCode()
 {
-    ifstream inputFile("datas/pinCode.txt"); // Open the input file
-    int pinCode;
+    ifstream inputFile("databaseFolder/pinCode.txt"); // Open the input file
+    string pinCode;
 
     if (inputFile.is_open())
     {
@@ -23,9 +23,9 @@ int getPinCode()
 }
 
 // Change PIN code of admin
-void changePinCode(int newPinCode)
+void changePinCode(string newPinCode)
 {
-    ofstream outputFile("datas/pinCode.txt");
+    ofstream outputFile("databaseFolder/pinCode.txt");
 
     admin[0].pinCode = newPinCode;
 
@@ -33,7 +33,6 @@ void changePinCode(int newPinCode)
     {
         outputFile << newPinCode; // Write the new PIN code to the file
         outputFile.close();       // Close the file
-        cout << "PIN code changed successfully." << endl;
     }
     else
     {

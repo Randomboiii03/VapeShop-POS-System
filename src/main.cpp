@@ -11,17 +11,16 @@ vector<Account> admin = {
 };
 
 string accountType = "User";
-bool isOpen = false;
-
 int tries = 0;
+
+bool isOpen = false;
 
 vector<string> sideNavUser, sideNavAdmin, sideNavSuperAdmin, banner;
 
 int main()
 {
-
     navigationUtils();
-    pinCodeLogin();
+    pinCodeDisplay();
 
     return 0;
 }

@@ -19,10 +19,10 @@ void navigationUtils()
     sideNavUser.push_back("┃                                               ");
     sideNavUser.push_back("┃           █▀ ▄▀▀ ▀█  ▄▀▀ ▄▀▄ █▀▄ ▀█▀          ");
     sideNavUser.push_back("┃           █▄ ▀▄▄ ▄█  ▀▄▄ █▀█ █▀▄  █           ");
-    sideNavUser.push_back("┃                                               ");
-    sideNavUser.push_back("┃                                               ");
-    sideNavUser.push_back("┃       █▀ █   ▀█  █   ▄▀▄ ▄▀  ▄▀▄ █ █ ▀█▀      ");
-    sideNavUser.push_back("┃       █▄ █▄▄ ▄█  █▄▄ ▀▄▀ ▀▄█ ▀▄▀ ▀▄█  █       ");
+    // sideNavUser.push_back("┃                                               ");
+    // sideNavUser.push_back("┃                                               ");
+    // sideNavUser.push_back("┃       █▀ █   ▀█  █   ▄▀▄ ▄▀  ▄▀▄ █ █ ▀█▀      ");
+    // sideNavUser.push_back("┃       █▄ █▄▄ ▄█  █▄▄ ▀▄▀ ▀▄█ ▀▄▀ ▀▄█  █       ");
 
     // Insert sideNavAdmin
     sideNavAdmin.push_back("┃           ▀▀  █▄ ▄█ ██▀ █▄ █ █ █ ▀▀           ");
