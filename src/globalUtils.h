@@ -39,6 +39,12 @@ struct Padding
     int paddingRight;
 };
 
+struct ExpectedTimeData
+{
+    time_t expectedTime;
+    int tries;
+};
+
 // Account related variables
 extern vector<Account> developer;
 extern vector<Account> admin;
@@ -66,9 +72,9 @@ Padding centerPadding(int totalLength, int otherLength, int divisor);
 
 // Security related functions
 void saveExpectedTime(time_t expectedTime);
-time_t loadExpectedTime();
+ExpectedTimeData loadExpectedTime();
 time_t calculateExpectedTime();
-bool checkTimeMatches(time_t currentTime, time_t expectedTime);
+void checkTime(time_t expectedTime);
 
 // PIN code related functions
 string devPinGenerator();
@@ -78,6 +84,5 @@ void pinCodeEditor();
 
 void pinCodeLogin();
 void pinCodeDisplay();
-
 
 #endif

@@ -5,11 +5,11 @@ using namespace std;
 // Writes the expected time to a text file named "expecteTime.txt"
 void saveExpectedTime(time_t expectedTime)
 {
-    ofstream outputFile("databaseFolder/expecteTime.txt");
+    ofstream outputFile("databaseFolder/expectedTime.txt");
 
     if (outputFile.is_open())
     {
-        outputFile << expectedTime;
+        outputFile << expectedTime << " " << tries;
         outputFile.close();
     }
     else
@@ -19,14 +19,15 @@ void saveExpectedTime(time_t expectedTime)
 }
 
 // Reads the expected time from the file
-time_t loadExpectedTime()
+ExpectedTimeData loadExpectedTime()
 {
-    ifstream inputFile("databaseFolder/expecteTime.txt");
-    time_t expectedTime = 0;
+    ExpectedTimeData data;
+
+    ifstream inputFile("databaseFolder/expectedTime.txt");
 
     if (inputFile.is_open())
     {
-        inputFile >> expectedTime;
+        inputFile >> data.expectedTime >> data.tries;
         inputFile.close();
     }
     else
@@ -34,7 +35,7 @@ time_t loadExpectedTime()
         cerr << "Failed to load expected time." << endl;
     }
 
-    return expectedTime;
+    return data;
 }
 
 // Calculates the expected time by adding one hour to the current time
@@ -46,10 +47,13 @@ time_t calculateExpectedTime()
 }
 
 // Compare the current time and expected time
-bool checkTimeMatches(time_t currentTime, time_t expectedTime)
+void checkTime(time_t expectedTime)
 {
-    tm *tm1 = localtime(&currentTime);
-    tm *tm2 = localtime(&expectedTime);
+    time_t currentTime = time(nullptr);
 
-    return (tm1->tm_hour == tm2->tm_hour) && (tm1->tm_min == tm2->tm_min) && (tm1->tm_sec == tm2->tm_sec);
+    if (currentTime >= expectedTime)
+    {
+        tries = 0;
+        saveExpectedTime(currentTime);
+    }
 }

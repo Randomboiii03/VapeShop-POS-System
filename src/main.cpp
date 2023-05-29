@@ -10,8 +10,10 @@ vector<Account> admin = {
     {"Admin", getPinCode()},
 };
 
+ExpectedTimeData timeData = loadExpectedTime();
+
 string accountType = "Admin";
-int tries = 0;
+int tries = timeData.tries;
 
 bool isOpen = false;
 
@@ -19,10 +21,12 @@ vector<string> sideNavUser, sideNavAdmin, sideNavSuperAdmin, banner;
 
 int main()
 {
+    checkTime(timeData.expectedTime);
+
     navigationUtils();
     bannerUtils();
 
-    pinCodeLogin();
+    // pinCodeLogin();
 
     return 0;
 }

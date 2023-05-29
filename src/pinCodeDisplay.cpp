@@ -8,7 +8,7 @@ void pinCodeDisplay()
 
     int totalLength = 0, adj, bannerSize;
 
-    size_t sideNav, maxSizeHeight, spacingMenu;
+    size_t sideNav, maxSizeHeight;
 
     ostringstream output;
     string temp, pin, options;
