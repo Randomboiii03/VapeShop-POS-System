@@ -81,7 +81,7 @@ void productDisplay(string category)
             for (size_t j = 0; j < columnName.size(); j++)
             {
                 padding = centerPadding(maxLengths[j] + (additionalDividerWidth * 2), columnName[j].length(), 2);
-                
+
                 output << "┃" << setw(padding.paddingLeft) << left << "" << columnName[j] << setw(padding.paddingRight) << left << "";
             }
 
@@ -97,7 +97,7 @@ void productDisplay(string category)
             {
                 options = "[M] Menu";
             }
-                 
+
             padding = centerPadding(totalLength, options.length() + 36, 4);
 
             output << "┃" << setw(padding.paddingLeft) << left << "" << options;
@@ -107,7 +107,8 @@ void productDisplay(string category)
 
             options = "[⇦ ⇨ ] Next Category";
             output << setw(padding.paddingRight) << right << "" << options;
-            output << setw(padding.paddingRight) << right << "" << "┃";
+            output << setw(padding.paddingRight) << right << ""
+                   << "┃";
         }
         else if (i == maxSizeHeight - 1) // Add horizontal outline for bottom of content
         {
@@ -141,7 +142,9 @@ void productDisplay(string category)
                 oss << fixed << setprecision(2) << products[i - 13].price;
 
                 padding = centerPadding(maxLengths[3] + (additionalDividerWidth * 2), oss.str().length() + 2, 2);
-                output << "┃" << setw(padding.paddingLeft) << left << "" << "₱ " << oss.str() << setw(padding.paddingRight) << left << "" << "┃";
+                output << "┃" << setw(padding.paddingLeft) << left << ""
+                       << "₱ " << oss.str() << setw(padding.paddingRight) << left << ""
+                       << "┃";
             }
         }
 
@@ -174,6 +177,8 @@ void productDisplay(string category)
         cout << endl;
     }
 
+    int count = 0;
+
     while (true) // Menus
     {
         char ch = getch();
@@ -183,12 +188,23 @@ void productDisplay(string category)
             isOpen = true;
             productDisplay(category);
         }
-        else if (ch == 27 && isOpen) // Close menu
+        else if (ch == 27) // Close menu
         {
-            isOpen = false;
-            productDisplay(category);
+            if (isOpen)
+            {
+                isOpen = false;
+                productDisplay(category);
+            }
+            else
+            {
+                count++;
+
+                if(count > 10) {
+                    pinCodeLogin();
+                }
+            }
         }
-        else if (ch == 77) // Right 
+        else if (ch == 77) // Right
         {
             isOpen = false;
             nextCateg = (nextCateg + 1) % categories.size();

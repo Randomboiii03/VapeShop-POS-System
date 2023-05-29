@@ -50,7 +50,7 @@ void pinCodeDisplay()
     for (size_t i = adj; i < maxSizeHeight; i++) // Compile content
     {
         temp = "";
-        
+
         if (i == adj || i == maxSizeHeight - 3) // Add divider between title and PIN code, and between PIN code and options
         {
             temp += "┣" + addSpacingWithOutline(totalLength) + "┫";
@@ -88,21 +88,21 @@ void pinCodeDisplay()
         {
             if (isOpen)
             {
-                options = "[Esc] Close Menu    ";
+                options = "[Esc] Close Menu";
             }
             else
             {
                 options = "[M] Menu";
             }
 
-            padding = centerPadding(totalLength,  options.length() + 19, 3);
+            padding = centerPadding(totalLength, options.length() + 19, 3);
 
-            output << setw(padding.paddingLeft + 2) << left << "┃" << options;
+            output << "┃" << setw(padding.paddingLeft) << left << "" << options;
 
             options = "[X] Change PIN Code";
 
-            output << setw(padding.paddingLeft + 2) << left << "" << options;
-            output << setw(padding.paddingRight) << right << "┃";
+            output << setw(padding.paddingRight) << left << "" << options;
+            output << setw(padding.paddingRight) << right << "" << "┃";
         }
         else if (i == maxSizeHeight - 1) // Add horizontal outline for bottom of content
         {
