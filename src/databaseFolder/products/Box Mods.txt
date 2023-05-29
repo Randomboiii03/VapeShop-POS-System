@@ -1,0 +1,35 @@
+1, Box Mods, Vaporesso, Vaporesso GEN FIT 40W , , 10, 100, 1
+1, Box Mods, Innokin, Innokin GoZee 60W , , 10, 100, 1
+1, Box Mods, Innokin, Innokin Kroma 217 100W, , 10, 100, 1
+1, Box Mods, Innokin, Innokin Coolfire Z80 , , 10, 100, 1
+1, Box Mods, Innokin, Innokin COolfire Z50W, , 10, 100, 1
+1, Box Mods, Innokin, Innokin ADEPT, , 10, 100, 1
+1, Box Mods, Innokin, Innokin Kroma-R, , 10, 100, 1
+1, Box Mods, SMOK, SMOK Mag-18 230W, , 10, 100, 1
+1, Box Mods, Geek Vape, Geek Vape Z200W, , 10, 100, 1
+1, Box Mods, Geek Vape, Geek Vape L200 Classic 200W, , 10, 100, 1
+1, Box Mods, Geek Vape, Geek Vape T200 Aegis Touch, , 10, 100, 1
+1, Box Mods, Geek Vape, Geek Vape Max100(Aegis Max 2) 100W, , 10, 100, 1
+1, Box Mods, Geek Vape, Geek Vape M100 Aegis Mini 2, , 10, 100, 1
+1, Box Mods, Geek Vape, Geek Vape S100 Aegis Solo 2 , , 10, 100, 1
+1, Box Mods, Geek Vape, Geek Vape Z50W Box Mod, , 10, 100, 1
+1, Box Mods, Geek Vape, Geek Vape L200 Aegis Legend 200W, , 10, 100, 1
+1, Box Mods, Geek Vape, Geek Vape Aegis X 200W Box Mod, , 10, 100, 1
+1, Box Mods, Eleaf Istick, Eleaf IStick l80, , 10, 100, 1
+1, Box Mods, Eleaf Istick, Eleaf IStick Power Mono 80W, , 10, 100, 1
+1, Box Mods, Eleaf Istick, Eleaf IStick Pico 2 , , 10, 100, 1
+1, Box Mods, Eleaf Istick, Eleaf IStick 2 25W , , 10, 100, 1
+1, Box Mods, Eleaf Istick, Eleaf IStick Power 2C 160W, , 10, 100, 1
+1, Box Mods, Eleaf Istick, Eleaf IStick RIM C 80W, , 10, 100, 1
+1, Box Mods, Eleaf Istick, Eleaf IStick 20W , , 10, 100, 1
+1, Box Mods, Eleaf Istick, Eleaf IStick Mini 20W, , 10, 100, 1
+1, Box Mods, Eleaf Istick, Eleaf IStick 40W TC, , 10, 100, 1
+1, Box Mods, Eleaf Istick, Eleaf IStick 10W, , 10, 100, 1
+1, Box Mods, Dovpo, Dovpo Themis 220W, , 10, 100, 1
+1, Box Mods, Dovpo, Dovpo MVP 220W, , 10, 100, 1
+1, Box Mods, Dovpo, Dovpo X Across PUMP SQUONKER, , 10, 100, 1
+1, Box Mods, Dovpo, Dovpo RIVA 200, , 10, 100, 1
+1, Box Mods, Dovpo, Dovpo RIVA DNA250C, , 10, 100, 1
+1, Box Mods, Dovpo, Dovpo  ODIN 100W, , 10, 100, 1
+1, Box Mods, Dovpo, Dovpo ODIN Mini DNA75C, , 10, 100, 1
+1, Box Mods, Dovpo, Dovpo ODIC 200W, , 10, 100, 1

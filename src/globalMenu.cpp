@@ -7,7 +7,7 @@ void globalMenu(char ch)
     if (ch == 'l' && isOpen) // Logout
     {
         isOpen = false;
-        accountType = "";
+        accountType = "User";
         int pinCode = 0;
     }
     else if (ch == 'p' && isOpen && accountType != "Developer") // Product

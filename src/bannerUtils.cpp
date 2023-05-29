@@ -34,7 +34,14 @@ string bannerDisplay(int count, int bannerSize, int totalLength, string title)
 
         if (count == 0) // Add corner outline when menu !isOpen
         {
-            temp += "┏";
+            if (isOpen)
+            {
+                temp += "┳";
+            }
+            else
+            {
+                temp += "┏";
+            }
         }
         else if (count == banner.size() - 1) // Add custom vertical divider
         {

@@ -32,7 +32,7 @@ To install and run the VapeShop POS System, please follow these steps:
 4. Compile the code using the following command:
 
 ```terminal
-cd "\src"; if ($?) { g++ *.cpp -o main } ; if ($?) { .\main }
+cd "src\"; if ($?) { g++ *.cpp -o main } ; if ($?) { .\main }
 ```
 
 5. Run the executable.

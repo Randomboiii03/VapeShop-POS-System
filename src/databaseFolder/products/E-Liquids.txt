@@ -1,0 +1,27 @@
+1, E-Liquids, RELX, RELX Artisan, , 10, 100, 1
+1, E-Liquids, MRKT PLCE , MRKT PLCE Salt Fuji Pear Mangoberry, , 10, 100, 1
+1, E-Liquids, MRKT PLCE, MRKT PLCE Salt Iced Fuji Pear Mangoberry, , 10, 100, 1
+1, E-Liquids, MRKT PLCE, MRKT PLCE Salt Iced Blue Punchberry, , 10, 100, 1
+1, E-Liquids, MRKT PLCE, MRKT PLCE E-LIQUID STRAWBERRY BISCOTTI, , 10, 100, 1
+1, E-Liquids, One Hit Wonder, One Hit Wonder Mini Muffin Man Apple & Cinnamon, , 10, 100, 1
+1, E-Liquids, One Hit Wonder, One Hit Wonder Mini Muffin Man Strawberry & Cinnamon, , 10, 100, 1
+1, E-Liquids, Cloud Nurdz, Cloud Nurdz TFN Iced Srawberry Mango, , 10, 100, 1
+1, E-Liquids, Cloud Nurdz, Cloud Nurdz TFN Iced Aloe Mango, , 10, 100, 1
+1, E-Liquids, 7 Daze, 7 Daze Glacial Mint, , 10, 100, 1
+1, E-Liquids, 7 Daze, 7 Daze Salt Series Glacial Mint(, , 10, 100, 1
+1, E-Liquids, 7 Daze, 7 Daze Fusion Iced TFN Salt Watermelon Apple, , 10, 100, 1
+1, E-Liquids, 7 Daze, 7 Daze Fusion Icedd TFN Strawberry Banana, , 10, 100, 1
+1, E-Liquids, 7 Daze, 7 Daze Fusion Icedd TFN Salt Kiwi Passionfruit, , 10, 100, 1
+1, E-Liquids, 7 Daze, 7 Daze Fusion Icedd TFN Salt Kiwi Passionfruit Guava, , 10, 100, 1
+1, E-Liquids, Pod Juice, Pod Juice Clear Sapphire, , 10, 100, 1
+1, E-Liquids, Pod Juice, Pod Juice Salt Clear Sapphire, , 10, 100, 1
+1, E-Liquids, Hi-Drip , Hi-Drip Salt White Peach Strawberry Melon, , 10, 100, 1
+1, E-Liquids, Hi-Drip, Hi-Drip Salt White Peach Strawberry Ice, , 10, 100, 1
+1, E-Liquids, Skwezed, Skwezed Watermelon Strawberry Salt Nic, , 10, 100, 1
+1, E-Liquids, Skwezed, Skwezed Watermelon White Grape Salt Nic , , 10, 100, 1
+1, E-Liquids, Skwezed, Skwezed Watermelon Green Apple Ice Salt, , 10, 100, 1
+1, E-Liquids, Skwezed, Skwezed Watermelon White Grape Ice Salt, , 10, 100, 1
+1, E-Liquids, Skwezed, Skwezed Watermelon Strawberry Ice, , 10, 100, 1
+1, E-Liquids, Skwezed, Skwezed Watermelon Strawberry, , 10, 100, 1
+1, E-Liquids, SadBoy, SadBoy E-Liquids Fruit Line Rainbow Blood Ice, , 10, 100, 1
+1, E-Liquids, SadBoy, SadBoy E-Liquids Fruit Line Punch Berry Ice, , 10, 100, 1

@@ -12,12 +12,15 @@ vector<Account> admin = {
 
 ExpectedTimeData timeData = loadExpectedTime();
 
-string accountType = "Admin";
+string accountType = "User";
 int tries = timeData.tries;
 
 bool isOpen = false;
 
 vector<string> sideNavUser, sideNavAdmin, sideNavSuperAdmin, banner;
+
+vector<string> categories = getCategories("databaseFolder/products");
+int nextCateg = 0;
 
 int main()
 {
@@ -26,7 +29,7 @@ int main()
     navigationUtils();
     bannerUtils();
 
-    // pinCodeLogin();
+    productDisplay(categories[nextCateg]);
 
     return 0;
 }

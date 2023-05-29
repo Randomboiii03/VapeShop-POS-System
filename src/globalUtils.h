@@ -14,6 +14,8 @@
 #include <ctime>
 #include <bitset>
 #include <chrono>
+#include <algorithm>
+#include <filesystem>
 
 using namespace std;
 
@@ -27,9 +29,11 @@ struct Product
 {
     int productNumber;
     string category;
+    string brandName;
     string productName;
     string productDesc;
     double price;
+    int stock;
     bool isAvailable;
 };
 
@@ -49,8 +53,9 @@ struct ExpectedTimeData
 extern vector<Account> developer;
 extern vector<Account> admin;
 
-// Product related variable
-extern vector<Product> products;
+// Product related variables
+extern vector<string> categories;
+extern int nextCateg;
 
 // Vector navigationUtils related variables
 extern vector<string> sideNavUser, sideNavAdmin, sideNavSuperAdmin, banner;
@@ -84,5 +89,13 @@ void pinCodeEditor();
 
 void pinCodeLogin();
 void pinCodeDisplay();
+
+// Product related functions
+void productDisplay(string categ);
+
+void saveProductsByCategory(const vector<Product> &products, const string &category);
+vector<Product> loadProductsByCategory(const string &category);
+vector<string> getCategories(const string &folderPath);
+int getMaxLengthProduct(const vector<Product> &data, size_t columnIndex, string columnName);
 
 #endif
