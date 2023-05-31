@@ -13,6 +13,7 @@ void globalMenu(char ch)
     else if (ch == 'p' && isOpen && accountType != "Developer") // Product
     {
         isOpen = false;
+        productDisplay(categories[nextCateg]);
     }
     else if (ch == 'c' && isOpen && accountType == "User") // Cart
     {

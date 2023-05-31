@@ -148,7 +148,7 @@ void pinCodeLogin()
         }
         else // Cancel
         {
-            // Go back function
+            productDisplay(categories[nextCateg]);
         }
     }
     catch (const exception &) // Catch error

@@ -12,7 +12,7 @@ vector<Account> admin = {
 
 ExpectedTimeData timeData = loadExpectedTime();
 
-string accountType = "User";
+string accountType = "Admin";
 int tries = timeData.tries;
 
 bool isOpen = false;
