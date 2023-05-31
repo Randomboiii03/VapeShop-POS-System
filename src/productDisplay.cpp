@@ -219,7 +219,11 @@ void productDisplay(string category)
         else if (ch == 'v') // View product
         {
             isOpen = false;
-            // HELP
+            int productIndex;
+            cout<<"Choose product Number: ";
+            cin>>productIndex;
+            showproduct(category, productIndex);
+
         }
         else
         {
