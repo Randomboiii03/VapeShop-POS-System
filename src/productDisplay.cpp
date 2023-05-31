@@ -110,12 +110,33 @@ void productDisplay(string category)
                 options = "[M] Menu";
             }
 
-            padding = centerPadding(totalLength, options.length() + 36, 4);
+            if (accountType == "User")
+            {
+                padding = centerPadding(totalLength, options.length() + 17 + 19, 4);
+            }
+            else if (accountType == "Admin")
+            {
+                padding = centerPadding(totalLength, options.length() + 28 + 19 + 16, 5);
+            }
 
             output << "┃" << setw(padding.paddingLeft) << left << "" << options;
 
-            options = "[V] View Product";
+            if (accountType == "User") // View product option
+            {
+                options = "[V] View Product";
+            }
+            else if (accountType == "Admin") // View/Edit/Delete product option
+            {
+                options = "[V] View/Edit/Delete Product";
+            }
+
             output << setw(padding.paddingRight) << right << "" << options;
+
+            if (accountType == "Admin") // Add product option
+            {
+                options = "[A] Add Product";
+                output << setw(padding.paddingRight) << right << "" << options;
+            }
 
             options = "[⇦ ⇨ ] Next Category";
             output << setw(padding.paddingRight) << right << "" << options;
@@ -246,7 +267,19 @@ void productDisplay(string category)
 
                     if (count >= 10)
                     {
-                        pinCodeLogin();
+                        ExpectedTimeData timeData = loadExpectedTime();
+
+                        if (tries >= 5 && !checkTime(timeData.expectedTime))
+                        {
+                            temp = "Maximum login attempts reached. Please wait for one hour before trying again.";
+
+                            padding = centerPadding(totalLength, temp.length(), 2);
+                            cout << setw(padding.paddingLeft + 3) << left << "" << temp << endl;
+                        }
+                        else if (checkTime(timeData.expectedTime))
+                        {
+                            pinCodeLogin();
+                        }
                     }
                 }
             }
@@ -270,13 +303,17 @@ void productDisplay(string category)
                 }
                 else
                 {
-                    padding = centerPadding(totalLength, temp.length(),2);
+                    padding = centerPadding(totalLength, temp.length(), 2);
                 }
-                
+
                 cout << setw(padding.paddingLeft) << "" << temp;
                 cin >> temp;
 
                 productView(category, stoi(temp));
+            }
+            else if (ch == 'a') // Add product
+            {
+                // Add product
             }
             else
             {
@@ -289,7 +326,6 @@ void productDisplay(string category)
         temp = "Invalid input. Please enter a valid PIN code.";
 
         padding = centerPadding(totalLength, temp.length(), 2);
-
         cout << setw(padding.paddingLeft + 3) << left << "" << temp << endl;
 
         Sleep(2000);

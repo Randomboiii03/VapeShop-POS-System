@@ -47,7 +47,7 @@ time_t calculateExpectedTime()
 }
 
 // Compare the current time and expected time
-void checkTime(time_t expectedTime)
+bool checkTime(time_t expectedTime)
 {
     time_t currentTime = time(nullptr);
 
@@ -55,5 +55,8 @@ void checkTime(time_t expectedTime)
     {
         tries = 0;
         saveExpectedTime(currentTime);
+        return true;
     }
+    
+    return false;
 }

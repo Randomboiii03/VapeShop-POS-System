@@ -128,12 +128,9 @@ void productView(string category, int prodIndex)
             }
             else if (accountType == "Admin")
             {
-                padding = centerPadding(totalLength, options.length() + 15 + 16 + 18, 5);
+                padding = centerPadding(totalLength, options.length() + 16 + 18, 4);
 
                 output << "┃" << setw(padding.paddingLeft) << left << "" << options;
-
-                options = "[A] Add Product";
-                output << setw(padding.paddingRight) << left << "" << options;
 
                 options = "[E] Edit Product";
                 output << setw(padding.paddingRight) << left << "" << options;
@@ -206,28 +203,27 @@ void productView(string category, int prodIndex)
             isOpen = false;
             productView(category, prodIndex);
         }
-        else if (ch == 'a')
+        else if (accountType == "User")
         {
-            if (accountType == "User")
+            if (ch == 'a')
             {
                 // Add to cart
             }
-            else if (accountType == "Admin")
+            else if (ch == 'b')
             {
-                // Add product
+                // Buy now
             }
         }
-        else if (ch == 'b' && accountType == "User")
+        else if (accountType == "Admin")
         {
-            // Buy now
-        }
-        else if (ch == 'e' && accountType == "Admin")
-        {
-            // Edit product
-        }
-        else if (ch == 'd' && accountType == "Admin")
-        {
-            // Delete product
+            if (ch == 'e')
+            {
+                // Edit product
+            }
+            else if (ch == 'd')
+            {
+                // Delete product
+            }
         }
         else
         {

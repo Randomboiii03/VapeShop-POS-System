@@ -82,7 +82,7 @@ Padding centerPadding(int totalLength, int otherLength, int divisor);
 void saveExpectedTime(time_t expectedTime);
 ExpectedTimeData loadExpectedTime();
 time_t calculateExpectedTime();
-void checkTime(time_t expectedTime);
+bool checkTime(time_t expectedTime);
 
 // PIN code related functions
 string devPinGenerator();

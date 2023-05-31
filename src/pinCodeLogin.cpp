@@ -136,12 +136,12 @@ void pinCodeLogin()
                     cout << setw(padding.paddingLeft + 3) << left << "" << temp;
 
                     saveExpectedTime(calculateExpectedTime()); // Save the expected time after one hour of current time
-
                     Sleep(2000);
-                    // Go back function
+                    productDisplay(categories[nextCateg]);
                 }
                 else
                 {
+                    saveExpectedTime(calculateExpectedTime());
                     pinCodeLogin();
                 }
             }
