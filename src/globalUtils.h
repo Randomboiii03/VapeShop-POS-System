@@ -92,6 +92,7 @@ void pinCodeDisplay();
 
 // Product related functions
 void productDisplay(string categ);
+void showproduct(string category, int productIndex);
 
 void saveProductsByCategory(const vector<Product> &products, const string &category);
 vector<Product> loadProductsByCategory(const string &category);

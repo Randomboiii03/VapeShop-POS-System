@@ -66,5 +66,6 @@
         "thread": "cpp",
         "filesystem": "cpp",
         "list": "cpp"
-    }
+    },
+    "cmake.configureOnOpen": false
 }
