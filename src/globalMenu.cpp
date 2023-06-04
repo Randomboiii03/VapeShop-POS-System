@@ -13,7 +13,7 @@ void globalMenu(char ch)
     else if (ch == 'p' && isOpen && accountType != "Developer") // Product
     {
         isOpen = false;
-        productDisplay(categories[nextCateg]);
+        productDisplay();
     }
     else if (ch == 'c' && isOpen && accountType == "User") // Cart
     {
@@ -26,6 +26,6 @@ void globalMenu(char ch)
     else if (ch == 'i' && isOpen && accountType != "User") // Pincode
     { 
         isOpen = false;
-        pinCodeDisplay();
+        // pinCodeDisplay();
     }
 }

@@ -23,7 +23,7 @@ string addSpacingWithoutOutline(int times, int totalLength)
 
     for (size_t i = 0; i < times; i++) // Spaces
     {
-        output << setw(totalLength + 3) << left << "";
+        output << setw(totalLength) << left << "";
 
         if (times > 1) {
             output << endl;
@@ -31,6 +31,18 @@ string addSpacingWithoutOutline(int times, int totalLength)
     }
 
     temp = output.str();
+
+    return temp;
+}
+
+string addNRepeat(string text, int length)
+{
+    string temp = "";
+    
+    for (int i = 0; i < length; i++)
+    {
+        temp += text;
+    }
 
     return temp;
 }
@@ -43,4 +55,19 @@ Padding centerPadding(int totalLength, int otherLength, int divisor)
     padding.paddingLeft = padding.paddingRight + ((totalLength - otherLength) % divisor);
 
     return padding;
+}
+
+void centerText(string text, int textLength)
+{
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+    int maxWidth = csbi.dwMaximumWindowSize.X;
+
+    SHORT centerX = (maxWidth - textLength) / 2;
+    SHORT centerY = csbi.dwCursorPosition.Y;
+
+    COORD pos = {centerX, centerY};
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+
+    cout << text << endl;
 }

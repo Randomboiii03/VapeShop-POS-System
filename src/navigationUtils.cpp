@@ -7,81 +7,74 @@ void navigationUtils()
     system("cls");
     SetConsoleOutputCP(CP_UTF8);
 
-    // Insert sideNavUser
-    sideNavUser.push_back("┃           ▀▀  █▄ ▄█ ██▀ █▄ █ █ █ ▀▀           ");
-    sideNavUser.push_back("┃               █ ▀ █ █▄▄ █ ▀█ ▀▄█              ");
-    sideNavUser.push_back("┃                                               ");
-    sideNavUser.push_back("┃                                               ");
-    sideNavUser.push_back("┃                                               ");
-    sideNavUser.push_back("┃   █▀ █▀▄ ▀█  █▀▄ █▀▄ ▄▀▄ █▀▄ █ █ ▄▀▀ ▀█▀ ▄▀▀  ");
-    sideNavUser.push_back("┃   █▄ █▀  ▄█  █▀  █▀▄ ▀▄▀ █▄▀ ▀▄█ ▀▄▄  █  ▄██  ");
-    sideNavUser.push_back("┃                                               ");
-    sideNavUser.push_back("┃                                               ");
-    sideNavUser.push_back("┃           █▀ ▄▀▀ ▀█  ▄▀▀ ▄▀▄ █▀▄ ▀█▀          ");
-    sideNavUser.push_back("┃           █▄ ▀▄▄ ▄█  ▀▄▄ █▀█ █▀▄  █           ");
-    // sideNavUser.push_back("┃                                               ");
-    // sideNavUser.push_back("┃                                               ");
-    // sideNavUser.push_back("┃       █▀ █   ▀█  █   ▄▀▄ ▄▀  ▄▀▄ █ █ ▀█▀      ");
-    // sideNavUser.push_back("┃       █▄ █▄▄ ▄█  █▄▄ ▀▄▀ ▀▄█ ▀▄▀ ▀▄█  █       ");
+    // Insert navUser
+    navUser.push_back("           ▀▀  █▄ ▄█ ██▀ █▄ █ █ █ ▀▀           ");
+    navUser.push_back("               █ ▀ █ █▄▄ █ ▀█ ▀▄█              ");
+    navUser.push_back("                                               ");
+    navUser.push_back("                                               ");
+    navUser.push_back("                                               ");
+    navUser.push_back("   █▀ █▀▄ ▀█  █▀▄ █▀▄ ▄▀▄ █▀▄ █ █ ▄▀▀ ▀█▀ ▄▀▀  ");
+    navUser.push_back("   █▄ █▀  ▄█  █▀  █▀▄ ▀▄▀ █▄▀ ▀▄█ ▀▄▄  █  ▄██  ");
+    navUser.push_back("                                               ");
+    navUser.push_back("                                               ");
+    navUser.push_back("           █▀ ▄▀▀ ▀█  ▄▀▀ ▄▀▄ █▀▄ ▀█▀          ");
+    navUser.push_back("           █▄ ▀▄▄ ▄█  ▀▄▄ █▀█ █▀▄  █           ");
 
-    // Insert sideNavAdmin
-    sideNavAdmin.push_back("┃           ▀▀  █▄ ▄█ ██▀ █▄ █ █ █ ▀▀           ");
-    sideNavAdmin.push_back("┃               █ ▀ █ █▄▄ █ ▀█ ▀▄█              ");
-    sideNavAdmin.push_back("┃                                               ");
-    sideNavAdmin.push_back("┃                                               ");
-    sideNavAdmin.push_back("┃                                               ");
-    sideNavAdmin.push_back("┃   █▀ █▀▄ ▀█  █▀▄ █▀▄ ▄▀▄ █▀▄ █ █ ▄▀▀ ▀█▀ ▄▀▀  ");
-    sideNavAdmin.push_back("┃   █▄ █▀  ▄█  █▀  █▀▄ ▀▄▀ █▄▀ ▀▄█ ▀▄▄  █  ▄██  ");
-    sideNavAdmin.push_back("┃                                               ");
-    sideNavAdmin.push_back("┃                                               ");
-    sideNavAdmin.push_back("┃         █▀ ▄▀▀ ▀█  ▄▀▀ ▄▀▄ █   ██▀ ▄▀▀        ");
-    sideNavAdmin.push_back("┃         █▄ ▄██ ▄█  ▄██ █▀█ █▄▄ █▄▄ ▄██        ");
-    sideNavAdmin.push_back("┃                                               ");
-    sideNavAdmin.push_back("┃                                               ");
-    sideNavAdmin.push_back("┃     █▀ █ ▀█   █▀▄ █ █▄ █   ▄▀▀ ▄▀▄ █▀▄ ██▀    ");
-    sideNavAdmin.push_back("┃     █▄ █ ▄█   █▀  █ █ ▀█   ▀▄▄ ▀▄▀ █▄▀ █▄▄    ");
-    sideNavAdmin.push_back("┃                                               ");
-    sideNavAdmin.push_back("┃                                               ");
-    sideNavAdmin.push_back("┃       █▀ █   ▀█  █   ▄▀▄ ▄▀  ▄▀▄ █ █ ▀█▀      ");
-    sideNavAdmin.push_back("┃       █▄ █▄▄ ▄█  █▄▄ ▀▄▀ ▀▄█ ▀▄▀ ▀▄█  █       ");
+    // Insert navAdmin
+    navAdmin.push_back("           ▀▀  █▄ ▄█ ██▀ █▄ █ █ █ ▀▀           ");
+    navAdmin.push_back("               █ ▀ █ █▄▄ █ ▀█ ▀▄█              ");
+    navAdmin.push_back("                                               ");
+    navAdmin.push_back("                                               ");
+    navAdmin.push_back("                                               ");
+    navAdmin.push_back("   █▀ █▀▄ ▀█  █▀▄ █▀▄ ▄▀▄ █▀▄ █ █ ▄▀▀ ▀█▀ ▄▀▀  ");
+    navAdmin.push_back("   █▄ █▀  ▄█  █▀  █▀▄ ▀▄▀ █▄▀ ▀▄█ ▀▄▄  █  ▄██  ");
+    navAdmin.push_back("                                               ");
+    navAdmin.push_back("                                               ");
+    navAdmin.push_back("         █▀ ▄▀▀ ▀█  ▄▀▀ ▄▀▄ █   ██▀ ▄▀▀        ");
+    navAdmin.push_back("         █▄ ▄██ ▄█  ▄██ █▀█ █▄▄ █▄▄ ▄██        ");
+    navAdmin.push_back("                                               ");
+    navAdmin.push_back("                                               ");
+    navAdmin.push_back("     █▀ █ ▀█   █▀▄ █ █▄ █   ▄▀▀ ▄▀▄ █▀▄ ██▀    ");
+    navAdmin.push_back("     █▄ █ ▄█   █▀  █ █ ▀█   ▀▄▄ ▀▄▀ █▄▀ █▄▄    ");
+    navAdmin.push_back("                                               ");
+    navAdmin.push_back("                                               ");
+    navAdmin.push_back("       █▀ █   ▀█  █   ▄▀▄ ▄▀  ▄▀▄ █ █ ▀█▀      ");
+    navAdmin.push_back("       █▄ █▄▄ ▄█  █▄▄ ▀▄▀ ▀▄█ ▀▄▀ ▀▄█  █       ");
 
-    // Insert sideNavSuperAdmin
-    sideNavSuperAdmin.push_back("┃           ▀▀  █▄ ▄█ ██▀ █▄ █ █ █ ▀▀           ");
-    sideNavSuperAdmin.push_back("┃               █ ▀ █ █▄▄ █ ▀█ ▀▄█              ");
-    sideNavSuperAdmin.push_back("┃                                               ");
-    sideNavSuperAdmin.push_back("┃                                               ");
-    sideNavSuperAdmin.push_back("┃                                               ");
-    // sideNavSuperAdmin.push_back("┃     █▀ █ ▀█   █▀▄ █ █▄ █   ▄▀▀ ▄▀▄ █▀▄ ██▀    ");
-    // sideNavSuperAdmin.push_back("┃     █▄ █ ▄█   █▀  █ █ ▀█   ▀▄▄ ▀▄▀ █▄▀ █▄▄    ");
-    // sideNavSuperAdmin.push_back("┃                                               ");
-    // sideNavSuperAdmin.push_back("┃                                               ");
-    sideNavSuperAdmin.push_back("┃       █▀ █   ▀█  █   ▄▀▄ ▄▀  ▄▀▄ █ █ ▀█▀      ");
-    sideNavSuperAdmin.push_back("┃       █▄ █▄▄ ▄█  █▄▄ ▀▄▀ ▀▄█ ▀▄▀ ▀▄█  █       ");
+    // Insert navDeveloper
+    navDeveloper.push_back("           ▀▀  █▄ ▄█ ██▀ █▄ █ █ █ ▀▀           ");
+    navDeveloper.push_back("               █ ▀ █ █▄▄ █ ▀█ ▀▄█              ");
+    navDeveloper.push_back("                                               ");
+    navDeveloper.push_back("                                               ");
+    navDeveloper.push_back("                                               ");
+    navDeveloper.push_back("       █▀ █   ▀█  █   ▄▀▄ ▄▀  ▄▀▄ █ █ ▀█▀      ");
+    navDeveloper.push_back("       █▄ █▄▄ ▄█  █▄▄ ▀▄▀ ▀▄█ ▀▄▀ ▀▄█  █       ");
 }
 
-vector<string> navigationDisplay(vector<string> navigation, size_t maxSizeHeight, size_t sideNav, int paddingLeft)
+vector<string> navigationDisplay(vector<string> navigation, int maxHeight)
 {
-    vector<string> compiledSideNav;
+    vector<string> newNavigation;
+    Padding padding = centerPadding(maxHeight, navigation.size(), 2);
 
-    for (size_t i = 0; i < maxSizeHeight; i++) // Compile newSideNav
+    for (size_t i = 0; i < maxHeight; i++)
     {
-        if (i == 0) // Compile top outline
+        if (i == 0) // Top outline display
         {
-            compiledSideNav.push_back("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+            newNavigation.push_back(olTLCorner() + addNRepeat(olHLine(), navigation[2].length()));
         }
-        else if (i - paddingLeft - 1 < sideNav) // Compile sideNav
+        else if (i == maxHeight - 1) // Bottom outline display
         {
-            compiledSideNav.push_back(navigation[i - paddingLeft - 1]);
+            newNavigation.push_back(olBLCorner() + addNRepeat(olHLine(), navigation[2].length()));
         }
-        else if (i == maxSizeHeight - 1) // Compile bottom outline
+        else if (i - padding.paddingLeft - 1 < navigation.size()) // Navigation display
         {
-            compiledSideNav.push_back("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+            newNavigation.push_back(olVLine() + navigation[i - padding.paddingLeft - 1]);
         }
-        else // Compile spacing for sideNav < content
+        else // Spacer display
         {
-            compiledSideNav.push_back("┃                                               ");
+            newNavigation.push_back(olVLine() + addNRepeat(" ", navigation[2].length()));
         }
     }
 
-    return compiledSideNav;
+    return newNavigation;
 }

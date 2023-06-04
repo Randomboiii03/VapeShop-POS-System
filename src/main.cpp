@@ -15,9 +15,9 @@ ExpectedTimeData timeData = loadExpectedTime();
 string accountType = "Admin";
 int tries = timeData.tries;
 
-bool isOpen = false;
+bool isOpen = true;
 
-vector<string> sideNavUser, sideNavAdmin, sideNavSuperAdmin, banner;
+vector<string> navUser, navAdmin, navDeveloper, banner;
 
 vector<string> categories = getCategories("databaseFolder/products");
 int nextCateg = 0;
@@ -29,7 +29,7 @@ int main()
     navigationUtils();
     bannerUtils();
 
-    productDisplay(categories[nextCateg]);
+    productDisplay();
 
     return 0;
 }

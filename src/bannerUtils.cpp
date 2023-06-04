@@ -5,7 +5,7 @@ using namespace std;
 void bannerUtils()
 {
     // Insert banner
-    banner.push_back("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+    banner.push_back("                                                                                           ");
     banner.push_back("                                                                                           ");
     banner.push_back(" ▄▄▄· ▌ ▐·▐▄• ▄    ▄▄▄·▄▄▄         ▐▄▄▄▄▄▄ . ▄▄· ▄▄▄▄▄   ▌ ▐· ▄▄▄·  ▄▄▄·      ▄▄▄    ▐▄• ▄ ");
     banner.push_back("▐█ ▄█▪█·█▌ █▌█▌▪  ▐█ ▄█▀▄ █· ▄█▀▄  ▪·██▀▄.▀·▐█ ▌▪•██    ▪█·█▌▐█ ▀█ ▐█ ▄█ ▄█▀▄ ▀▄ █·   █▌█▌▪");
@@ -13,76 +13,57 @@ void bannerUtils()
     banner.push_back("▐█▪·• ███ ▪▐█·█▌  ▐█▪·•▐█•█▌▐█▌.▐▌▐▌▐█▌▐█▄▄▌▐███▌ ▐█▌·   ███ ▐█▪ ▐▌▐█▪·•▐█▌.▐▌▐█•█▌  ▪▐█·█▌");
     banner.push_back(".▀   . ▀  •▀▀ ▀▀  .▀   .▀  ▀ ▀█▄▀▪ ▀▀▀• ▀▀▀ ·▀▀▀  ▀▀▀   . ▀   ▀  ▀ .▀    ▀█▄▀▪.▀  ▀  •▀▀ ▀▀");
     banner.push_back("                                                                                           ");
-    banner.push_back("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+    banner.push_back("");
 }
 
-string bannerDisplay(int count, int bannerSize, int totalLength, string title)
+vector<string> bannerDisplay(int maxWidth, int bannerWidth, string title)
 {
-    string temp = "";
-    ostringstream output;
+    vector<string> newBanner;
+    string temp;
 
     Padding padding;
 
-    if (count <= banner.size())
+    for (int i = 0; i <= banner.size() + 1; i++)
     {
-        if (count == banner.size()) // Get new bannerSize for title
-        {
-            bannerSize = title.length();
-        }
-
-        padding = centerPadding(totalLength, bannerSize, 2); // Get left and right padding
-
-        if (count == 0) // Add corner outline when menu !isOpen
+        if (i == 0) // Top outline display
         {
             if (isOpen)
             {
-                temp += "┳";
+                temp = olTHDivider();
             }
             else
             {
-                temp += "┏";
+                temp = olTLCorner();
             }
-        }
-        else if (count == banner.size() - 1) // Add custom vertical divider
-        {
-            temp += "┣";
-        }
 
-        if (count == 0 || count == banner.size() - 1) // Add additional horizontal outline before and after of banner
+            temp += addNRepeat(olHLine(), maxWidth) + olTRCorner();
+        }
+        else if (i == banner.size() - 1 || i == banner.size() + 1) // Bottom outline display
         {
-            temp += addSpacingWithOutline(padding.paddingLeft) + banner[count] + addSpacingWithOutline(padding.paddingRight);
-
-            if (count == 0)
+            if (isOpen)
             {
-                temp += "┓";
+                temp = olLVDivider();
             }
             else
             {
-                temp += "┫";
+                temp = olLVDivider();
             }
+
+            temp += addNRepeat(olHLine(), maxWidth) + olRVDivider();
         }
-        else // Add spacing before and after of banner < totalLength of accounts, and title
+        else if (i == banner.size()) // Title display
         {
-            output << setw(padding.paddingLeft + 3) << left << "┃";
-
-            if (count == banner.size())
-            {
-                output << title;
-            }
-            else
-            {
-                output << banner[count];
-            }
-
-            output << setw(padding.paddingRight + 3) << right << "┃";
+            padding = centerPadding(maxWidth, title.length(), 2);
+            temp = olVLine() + addNRepeat(" ", padding.paddingLeft) + title + addNRepeat(" ", padding.paddingRight) + olVLine();
         }
+        else // Banner display
+        {
+            padding = centerPadding(maxWidth, (bannerWidth - 10), 2);
+            temp = olVLine() + addNRepeat(" ", padding.paddingLeft) + banner[i] + addNRepeat(" ", padding.paddingRight) + olVLine();
+        }
+
+        newBanner.push_back(temp);
     }
 
-    if (temp == "") // Compile non-outline
-    {
-        temp = output.str();
-        output = ostringstream();
-    }
-
-    return temp;
+    return newBanner;
 }
