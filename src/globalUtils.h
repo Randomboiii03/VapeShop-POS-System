@@ -87,11 +87,11 @@ string olILDivider();
 
 void globalMenu(char ch);
 
-string addSpacingWithOutline(int totalLength);
-string addSpacingWithoutOutline(int times, int totalLength);
 string addNRepeat(string text, int length);
-Padding centerPadding(int totalLength, int otherLength, int divisor);
+Padding centerPadding(int maxWidth, int textLength, int divisor);
+
 void centerText(string text, int textLength);
+void setInputPos(string text, int textLength, SHORT y, int padding, string label);
 
 // Security related functions
 void saveExpectedTime(time_t expectedTime);

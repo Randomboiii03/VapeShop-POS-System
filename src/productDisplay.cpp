@@ -70,7 +70,7 @@ void productDisplay()
 
     } while (true);
 
-    maxHeight = max(navigation.size() + 10, banner.size() + products.size() + 7); // Max height
+    maxHeight = max(navigation.size() + 5, banner.size() + products.size() + 7); // Max height
 
     newBanner = bannerDisplay(maxWidth, bannerWidth, categories[nextCateg]); // Banner display function
 
@@ -230,7 +230,7 @@ void productDisplay()
                     if (tries >= 5 && !checkTime(timeData.expectedTime))
                     {
                         temp = "Maximum login attempts reached. Please wait for one hour before trying again.";
-                        centerText(temp, maxWidth);
+                        centerText(temp, temp.length());
                     }
                     else if (checkTime(timeData.expectedTime))
                     {
@@ -263,7 +263,7 @@ void productDisplay()
             catch (const exception &) // Catch error
             {
                 temp = "Invalid input. Please enter a valid PIN code.";
-                centerText(temp, maxWidth);
+                centerText(temp, temp.length());
 
                 Sleep(2000);
                 productDisplay();
