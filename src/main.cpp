@@ -15,7 +15,7 @@ ExpectedTimeData timeData = loadExpectedTime();
 string accountType = "Admin";
 int tries = timeData.tries;
 
-bool isOpen = true;
+bool isOpen = false;
 
 vector<string> navUser, navAdmin, navDeveloper, banner;
 

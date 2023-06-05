@@ -9,7 +9,7 @@ void pinCodeLogin()
     vector<string> newBanner, content, options;
     string pinCode, temp, label, labelRow;
 
-    int bannerWidth, maxWidth, optListWidth, maxHeight, padY;
+    int bannerWidth, maxWidth, optListWidth = 0, maxHeight, padY;
 
     bool isValid = false;
 
@@ -42,6 +42,7 @@ void pinCodeLogin()
     // Enter pin code
     content.push_back(labelRow);
 
+    // Space between enter pin code and options
     content.push_back(olVLine() + addNRepeat(" ", maxWidth) + olVLine());
     content.push_back(olVLine() + addNRepeat(" ", maxWidth) + olVLine());
     content.push_back(olVLine() + addNRepeat(" ", maxWidth) + olVLine());
@@ -50,7 +51,7 @@ void pinCodeLogin()
 
     options = {"[1] Submit", "[0] Cancel"};
 
-    for (string option : options)
+    for (string option : options) // Option list width
     {
         optListWidth += option.length();
     }
@@ -66,9 +67,9 @@ void pinCodeLogin()
 
     temp += olVLine();
 
-    content.push_back(temp);
+    content.push_back(temp); // Options display
 
-    content.push_back(olBLCorner() + addNRepeat(olHLine(), maxWidth) + olBRCorner());
+    content.push_back(olBLCorner() + addNRepeat(olHLine(), maxWidth) + olBRCorner()); // Footer display
 
     maxHeight = newBanner.size() + content.size();
 
@@ -86,11 +87,9 @@ void pinCodeLogin()
         centerText(temp, maxWidth);
     }
 
-    // cin >> pinCode;
-
-    setInputPos(labelRow, maxWidth, 14, padY, label);
+    setInputPos(labelRow, maxWidth, 14, padY, label); // Set input position
     cin >> pinCode;
-    
+
     char ch = getch();
 
     try
@@ -98,10 +97,9 @@ void pinCodeLogin()
         if (ch == '1') // User submit to login
         {
             stoi(pinCode); // Check if integer
-            
+
             for (auto &account : accounts)
             {
-                
                 if (pinCode == account.pinCode)
                 {
                     isValid = true;
@@ -144,9 +142,17 @@ void pinCodeLogin()
                 }
             }
         }
-        else // Cancel
+        else if (ch == '0') // Cancel
         {
             productDisplay();
+        }
+        else
+        {
+            temp = "Invalid input. Please enter a valid PIN code.";
+            centerText(temp, temp.length());
+
+            Sleep(2000);
+            pinCodeLogin();
         }
     }
     catch (const exception &) // Catch error

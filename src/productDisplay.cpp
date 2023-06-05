@@ -51,6 +51,15 @@ void productDisplay()
 
     for (int i = 0; i < options.size() - 1; i++)
     {
+        if (!isOpen && i == 0)
+        {
+            continue;
+        }
+        else if (isOpen && i == 1)
+        {
+            continue;
+        }
+
         optListWidth += options[i].length();
     }
 
@@ -62,15 +71,15 @@ void productDisplay()
     {
         spaceBetween++;
         maxWidth = prodListWidth + ((headerName.size() * spaceBetween) * 2) + 5; // Max width
-        
-        if (maxWidth > bannerWidth) 
+
+        if (maxWidth > bannerWidth)
         {
             break;
         }
 
     } while (true);
 
-    maxHeight = max(navigation.size() + 5, banner.size() + products.size() + 7); // Max height
+    maxHeight = max(navigation.size() + 10, banner.size() + products.size() + 7); // Max height
 
     newBanner = bannerDisplay(maxWidth, bannerWidth, categories[nextCateg]); // Banner display function
 
@@ -94,16 +103,25 @@ void productDisplay()
         }
         else if (i == 1 || i == (maxHeight - newBanner.size() - 2)) // Options display
         {
-            padding = centerPadding(maxWidth, optListWidth, options.size() + 1);
+            padding = centerPadding(maxWidth, optListWidth, options.size());
 
-            temp = olVLine() + addNRepeat(" ", padding.paddingLeft) + options[0];
+            temp = olVLine() + addNRepeat(" ", padding.paddingLeft);
 
-            for (int j = 1; j < options.size(); j++)
+            for (int j = 0; j < options.size(); j++)
             {
-                temp += addNRepeat(" ", padding.paddingRight) + options[j];
+                if (!isOpen && j == 0)
+                {
+                    continue;
+                }
+                else if (isOpen && j == 1)
+                {
+                    continue;
+                }
+
+                temp += options[j] + addNRepeat(" ", padding.paddingRight);
             }
 
-            temp += addNRepeat(" ", padding.paddingRight) + olVLine();
+            temp += olVLine();
         }
         else if (i == (maxHeight - newBanner.size() - 1)) // Footer display
         {

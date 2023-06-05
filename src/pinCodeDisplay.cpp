@@ -4,175 +4,169 @@ using namespace std;
 
 void pinCodeDisplay()
 {
-    // vector<string> navigation, compiledSideNav, compiledBanner, compiledContent;
+    vector<string> navigation, newBanner, newNavigation, content, options;
+    string temp;
 
-    // int totalLength = 0, adj, bannerSize;
+    int bannerWidth, maxWidth, maxHeight, optListWidth = 0, spaceContent = 4;
 
-    // size_t sideNav, maxSizeHeight;
+    Padding padding;
 
-    // ostringstream output;
-    // string temp, pin, options;
+    system("cls");
+    SetConsoleOutputCP(CP_UTF8);
 
-    // Padding padding;
+    if (accountType == "Admin")
+    {
+        navigation = navAdmin;
+    }
+    else if (accountType == "Developer")
+    {
+        navigation = navDeveloper;
+        spaceContent++;
+    }
 
-    // system("cls");
-    // SetConsoleOutputCP(CP_UTF8);
+    bannerWidth = banner[0].length() + 10; // Banner width
 
-    // if (accountType == "Developer")
-    // {
-    //     navigation = navDeveloper;
-    // }
-    // else if (accountType == "Admin")
-    // {
-    //     navigation = navAdmin;
-    // }
+    maxWidth = bannerWidth; // Max width
 
-    // sideNav = navigation.size();
+    maxHeight = max(navigation.size() + 10, banner.size() + 10); // Max height
 
-    // totalLength = banner[1].length() + 10; // Total size of content w/o side navigation
+    newBanner = bannerDisplay(maxWidth, bannerWidth, "Pin Code Display"); // Banner display function
 
-    // maxSizeHeight = max(sideNav, banner.size()) + 11; // Compare height of side navigation and (banner + accounts)
+    padding = centerPadding(maxHeight - newBanner.size(), spaceContent, 2);
 
-    // padding = centerPadding(static_cast<int>(maxSizeHeight) - 2, static_cast<int>(sideNav), 2); // Get left and right padding
+    for (int i = 0; i < padding.paddingLeft; i++) // Space between banner and content
+    {
+        content.push_back(olVLine() + addNRepeat(" ", maxWidth) + olVLine());
+    }
 
-    // bannerSize = banner[1].length();
+    spaceContent = padding.paddingRight; // Number of spaces between content and options
 
-    // compiledSideNav = navigationDisplay(navigation, maxSizeHeight, sideNav, padding.paddingLeft); // Compile side navigation
+    temp = "Your Pin Code: ";
 
-    // for (size_t i = 0; i <= banner.size(); i++) // Compile banner
-    // {
-    //     temp = bannerDisplay(i, bannerSize, totalLength, "PIN CODE"); // Compile banner
-    //     compiledBanner.push_back(temp);
-    // }
+    if (accountType == "Admin") // If admin account type display pin code of admin
+    {
+        for (int i = 0; i < admin[0].pinCode.length(); i++)
+        {
+            if (i == admin[0].pinCode.length() - 1)
+            {
+                temp += admin[0].pinCode[i];
+            }
+            else
+            {
+                temp += "*";
+            }
+        }
+    }
+    else if (accountType == "Developer") // If developer account type display pin code of developer
+    {
+        temp += developer[0].pinCode;
+    }
 
-    // adj = compiledBanner.size();
+    padding = centerPadding(maxWidth, temp.length(), 2);
 
-    // for (size_t i = adj; i < maxSizeHeight; i++) // Compile content
-    // {
-    //     temp = "";
+    content.push_back(olVLine() + addNRepeat(" ", padding.paddingLeft) + temp + addNRepeat(" ", padding.paddingRight) + olVLine());
 
-    //     if (i == adj || i == maxSizeHeight - 3) // Add divider between title and PIN code, and between PIN code and options
-    //     {
-    //         temp += "┣" + addSpacingWithOutline(totalLength) + "┫";
-    //     }
-    //     else if (i == ((maxSizeHeight - adj - 4) / 2) + adj) // Add PIN Code details
-    //     {
-    //         pin = admin[0].pinCode;
-    //         temp = "Admin PIN Code: " + pin;
+    if (accountType == "Developer") // If developer account type display pin code of admin
+    {
+        temp = "Admin Pin Code: " + admin[0].pinCode;
+        content.push_back(olVLine() + addNRepeat(" ", padding.paddingLeft) + temp + addNRepeat(" ", padding.paddingRight) + olVLine());
+    }
 
-    //         if (accountType != "Developer")
-    //         {
-    //             temp = "PIN Code: ";
+    for (int i = 0; i < spaceContent; i++) // Space between enter pin code and options
+    {
+        content.push_back(olVLine() + addNRepeat(" ", maxWidth) + olVLine());
+    }
 
-    //             for (size_t j = 0; j < pin.length(); j++) // Encrypt PIN code
-    //             {
-    //                 if (j < pin.length() - 1)
-    //                 {
-    //                     temp += "*";
-    //                 }
-    //                 else
-    //                 {
-    //                     temp += pin[j];
-    //                 }
-    //             }
-    //         }
+    content.push_back(olLVDivider() + addNRepeat(olHLine(), maxWidth) + olRVDivider());
 
-    //         padding = centerPadding(totalLength, temp.length(), 2);
+    options = {"[Esc] Close Menu", "[M] Menu", "[X] Change PIN Code"};
 
-    //         output << setw(padding.paddingLeft + 3) << left << "┃" << temp;
-    //         output << setw(padding.paddingRight + 3) << right << "┃";
+    for (int i = 0; i < options.size(); i++) // Option list width
+    {
+        if (!isOpen && i == 0)
+        {
+            continue;
+        }
+        else if (isOpen && i == 1)
+        {
+            continue;
+        }
 
-    //         temp = "";
-    //     }
-    //     else if (i == maxSizeHeight - 2) // Add options
-    //     {
-    //         if (isOpen)
-    //         {
-    //             options = "[Esc] Close Menu";
-    //         }
-    //         else
-    //         {
-    //             options = "[M] Menu";
-    //         }
+        optListWidth += options[i].length();
+    }
 
-    //         padding = centerPadding(totalLength, options.length() + 19, 3);
+    padding = centerPadding(maxWidth, optListWidth, options.size());
 
-    //         output << "┃" << setw(padding.paddingLeft) << left << "" << options;
+    temp = olVLine() + addNRepeat(" ", padding.paddingLeft);
 
-    //         options = "[X] Change PIN Code";
+    for (int i = 0; i < options.size(); i++)
+    {
+        if (!isOpen && i == 0)
+        {
+            continue;
+        }
+        else if (isOpen && i == 1)
+        {
+            continue;
+        }
 
-    //         output << setw(padding.paddingRight) << left << "" << options;
-    //         output << setw(padding.paddingRight) << right << "" << "┃";
-    //     }
-    //     else if (i == maxSizeHeight - 1) // Add horizontal outline for bottom of content
-    //     {
-    //         if (isOpen)
-    //         {
-    //             temp += "┻";
-    //         }
-    //         else
-    //         {
-    //             temp += "┗";
-    //         }
+        temp += options[i] + addNRepeat(" ", padding.paddingRight);
+    }
 
-    //         temp += addSpacingWithOutline(totalLength) + "┛";
-    //     }
-    //     else // Add spacings
-    //     {
-    //         output << "┃" << addSpacingWithoutOutline(1, totalLength - 3) << "┃";
-    //     }
+    temp += olVLine();
 
-    //     if (temp == "")
-    //     {
-    //         temp = output.str();
-    //         output = ostringstream();
-    //     }
+    content.push_back(temp); // Options display
 
-    //     compiledContent.push_back(temp);
-    // }
+    content.push_back(olBLCorner() + addNRepeat(olHLine(), maxWidth) + olBRCorner()); // Footer display
 
-    // // Display the whole UI
-    // for (size_t i = 0; i < maxSizeHeight; i++)
-    // {
-    //     if (isOpen)
-    //     {
-    //         cout << compiledSideNav[i]; // Display sideNav
-    //     }
+    if (isOpen)
+    {
+        maxWidth += navigation[2].length() + 1;                   // Navigation width
+        newNavigation = navigationDisplay(navigation, maxHeight); // Navigation display function
+    }
 
-    //     if (i < compiledBanner.size())
-    //     {
-    //         cout << compiledBanner[i]; // Display banner
-    //     }
-    //     else
-    //     {
-    //         cout << compiledContent[i - adj]; // Display content (header, data and options)
-    //     }
+    for (int i = 0; i < maxHeight; i++)
+    {
+        temp = "";
 
-    //     cout << endl;
-    // }
+        if (isOpen)
+        {
+            temp = newNavigation[i];
+        }
 
-    // while (true) // Menus
-    // {
-    //     char ch = getch();
+        if (i < newBanner.size())
+        {
+            temp += newBanner[i];
+        }
+        else
+        {
+            temp += content[i - newBanner.size()];
+        }
 
-    //     if (ch == 'm' && !isOpen) // Open menu
-    //     {
-    //         isOpen = true;
-    //         pinCodeDisplay();
-    //     }
-    //     else if (ch == 27 && isOpen) // Close menu
-    //     {
-    //         isOpen = false;
-    //         pinCodeDisplay();
-    //     }
-    //     else if (ch == 'x') // Change PIN code
-    //     {
-    //         isOpen = false;
-    //         pinCodeEditor();
-    //     }
-    //     else
-    //     {
-    //         globalMenu(ch);
-    //     }
-    // }
+        centerText(temp, maxWidth);
+    }
+
+    while (true) // Menus
+    {
+        char ch = getch();
+
+        if (ch == 'm' && !isOpen) // Open menu
+        {
+            isOpen = true;
+            pinCodeDisplay();
+        }
+        else if (ch == 27) // Close menu
+        {
+            isOpen = false;
+            pinCodeDisplay();
+        }
+        else if (ch == 'x') // Change pin code
+        {
+            pinCodeEditor();
+        }
+        else
+        {
+            globalMenu(ch);
+        }
+    }
 }
