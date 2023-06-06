@@ -114,7 +114,9 @@ void productView(int prodIndex);
 
 void saveProductsByCategory(const vector<Product> &products, const string &category);
 vector<Product> loadProductsByCategory(const string &category);
-vector<string> getCategories(const string &folderPath);
+bool containsCategory(const vector<string> &categories, const string &category);
+vector<string> getCategories();
+
 int getMaxLengthProduct(const vector<Product> &data, int columnIndex, string columnName);
 
 #endif

@@ -19,7 +19,7 @@ bool isOpen = false;
 
 vector<string> navUser, navAdmin, navDeveloper, banner;
 
-vector<string> categories = getCategories("databaseFolder/products");
+vector<string> categories = getCategories();
 int nextCateg = 0;
 
 int main()
