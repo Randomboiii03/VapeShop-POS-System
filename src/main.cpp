@@ -29,8 +29,7 @@ int main()
     navigationUtils();
     bannerUtils();
 
-    // productDisplay();
-    pinCodeEditor();
+    productDisplay();
 
     return 0;
 }

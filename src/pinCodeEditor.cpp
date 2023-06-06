@@ -93,8 +93,8 @@ void pinCodeEditor()
 
     for (int i = 0; i < labels.size(); i++)
     {
-        setInputPos(labelRows[i], maxWidth, 13 + i, padY[i], labels[i]); // Set input position
-        // cout << i;
+        setInputPos(labelRows[i], maxWidth, 14 + i, padY[i], labels[i]); // Set input position
+        
         switch (i)
         {
         case 0:
