@@ -109,11 +109,11 @@ void productDisplay()
 
             for (int j = 0; j < options.size(); j++)
             {
-                if (!isOpen && j == 0)
+                if (!isOpen && j == 0)  // If menu is closed skip [Esc] Close Menu
                 {
                     continue;
                 }
-                else if (isOpen && j == 1)
+                else if (isOpen && j == 1) // If menu is open skip [M] Menu
                 {
                     continue;
                 }

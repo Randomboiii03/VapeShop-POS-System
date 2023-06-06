@@ -26,12 +26,12 @@ void pinCodeLogin()
 
     maxWidth = bannerWidth; // Max width
 
-    newBanner = bannerDisplay(maxWidth, bannerWidth, "Pin Code Login"); // Banner display
+    newBanner = bannerDisplay(maxWidth, bannerWidth, "PIN Code Login"); // Banner display
 
-    // Space between banner and content
-    content.push_back(olVLine() + addNRepeat(" ", maxWidth) + olVLine());
-    content.push_back(olVLine() + addNRepeat(" ", maxWidth) + olVLine());
-    content.push_back(olVLine() + addNRepeat(" ", maxWidth) + olVLine());
+    for (int i = 0; i < 3; i++) // Space between banner and content
+    {
+        content.push_back(olVLine() + addNRepeat(" ", maxWidth) + olVLine());
+    }
 
     label = "Enter Pin Code: ";
     padding = centerPadding(maxWidth, label.length() + 8, 2);
@@ -42,10 +42,10 @@ void pinCodeLogin()
     // Enter pin code
     content.push_back(labelRow);
 
-    // Space between enter pin code and options
-    content.push_back(olVLine() + addNRepeat(" ", maxWidth) + olVLine());
-    content.push_back(olVLine() + addNRepeat(" ", maxWidth) + olVLine());
-    content.push_back(olVLine() + addNRepeat(" ", maxWidth) + olVLine());
+    for (int i = 0; i < 3; i++) // Space between enter pin code and options
+    {
+        content.push_back(olVLine() + addNRepeat(" ", maxWidth) + olVLine());
+    }
 
     content.push_back(olLVDivider() + addNRepeat(olHLine(), maxWidth) + olRVDivider());
 

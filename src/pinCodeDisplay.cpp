@@ -30,7 +30,7 @@ void pinCodeDisplay()
 
     maxHeight = max(navigation.size() + 10, banner.size() + 10); // Max height
 
-    newBanner = bannerDisplay(maxWidth, bannerWidth, "Pin Code Display"); // Banner display function
+    newBanner = bannerDisplay(maxWidth, bannerWidth, "PIN Code Display"); // Banner display function
 
     padding = centerPadding(maxHeight - newBanner.size(), spaceContent, 2);
 
@@ -63,7 +63,6 @@ void pinCodeDisplay()
     }
 
     padding = centerPadding(maxWidth, temp.length(), 2);
-
     content.push_back(olVLine() + addNRepeat(" ", padding.paddingLeft) + temp + addNRepeat(" ", padding.paddingRight) + olVLine());
 
     if (accountType == "Developer") // If developer account type display pin code of admin
@@ -96,16 +95,15 @@ void pinCodeDisplay()
     }
 
     padding = centerPadding(maxWidth, optListWidth, options.size());
-
     temp = olVLine() + addNRepeat(" ", padding.paddingLeft);
 
     for (int i = 0; i < options.size(); i++)
     {
-        if (!isOpen && i == 0)
+        if (!isOpen && i == 0) // If menu is closed skip [Esc] Close Menu
         {
             continue;
         }
-        else if (isOpen && i == 1)
+        else if (isOpen && i == 1) // If menu is open [M] Menu
         {
             continue;
         }
@@ -117,7 +115,16 @@ void pinCodeDisplay()
 
     content.push_back(temp); // Options display
 
-    content.push_back(olBLCorner() + addNRepeat(olHLine(), maxWidth) + olBRCorner()); // Footer display
+    if (isOpen)
+    {
+        temp = olBHDivider();
+    }
+    else
+    {
+        temp = olBLCorner();
+    }
+
+    content.push_back(temp + addNRepeat(olHLine(), maxWidth) + olBRCorner()); // Footer display
 
     if (isOpen)
     {

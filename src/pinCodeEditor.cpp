@@ -4,133 +4,186 @@ using namespace std;
 
 void pinCodeEditor()
 {
-    // int totalLength = 0, bannerSize;
+    vector<Account> accounts;
 
-    // string oldPinCode, pinCode, newPinCode, temp;
-    // bool isValid = false;
+    vector<string> newBanner, content, labels, labelRows, options;
+    string oldPincode, newPinCode, confirmPincode, temp;
 
-    // Padding padding;
+    vector<int> padY;
+    int bannerWidth, maxWidth, optListWidth = 0, maxHeight, add = 10;
 
-    // system("cls");
-    // SetConsoleOutputCP(CP_UTF8);
+    boolean isValid = false;
 
-    // bannerSize = banner[1].length();
-    // totalLength = bannerSize + 10; // Total size of content w/o sideNav
-    
-    // for (size_t i = 0; i <= banner.size(); i++)
-    // {
-    //     temp = bannerDisplay(i, bannerSize, totalLength, "CHANGE PIN CODE"); // Display banner
-    //     cout << temp << endl;
-    // }
+    Padding padding;
 
-    // totalLength = banner[1].length() + 10;
+    system("cls");
+    SetConsoleOutputCP(CP_UTF8);
 
-    // cout << "┣" << addSpacingWithOutline(totalLength) << "┫" << endl;
+    bannerWidth = banner[0].length() + 10; // Banner width
 
-    // cout << addSpacingWithoutOutline(3, totalLength);
+    maxWidth = bannerWidth; // Max width
 
-    // int spacing = (totalLength + 3) / 3; // Spacing before inputs
+    newBanner = bannerDisplay(maxWidth, bannerWidth, "Change PIN Code"); // Banner display
 
-    // cout << setw(spacing) << left << "" << "Old Pin Code: ";
-    // cin >> oldPinCode;
+    for (int i = 0; i < 3; i++) // Space between banner and content
+    {
+        content.push_back(olVLine() + addNRepeat(" ", maxWidth) + olVLine());
+    }
 
-    // cout << setw(spacing) << left << "" << "New Pin Code: ";
-    // cin >> pinCode;
+    labels = {"Old Pin Code: ", "New Pin Code: ", "Confirm Pin Code: "};
 
-    // cout << setw(spacing - 4) << left << "" << "Confirm Pin Code: ";
-    // cin >> newPinCode;
+    for (int i = 0; i < labels.size(); i++)
+    {
+        if (i == labels.size() - 1)
+        {
+            add += 4;
+        }
 
-    // cout << addSpacingWithoutOutline(3, totalLength); // Spacing without outline
+        padding = centerPadding(maxWidth, labels[i].length() + add, 2);
+        padY.push_back(padding.paddingLeft);
 
-    // cout << "┣" << addSpacingWithOutline(totalLength) << "┫" << endl;
+        labelRows.push_back(olVLine() + addNRepeat(" ", padY[i]) + labels[i] + addNRepeat(" ", padding.paddingRight + add) + olVLine());
+        content.push_back(labelRows[i]);
+    }
 
-    // temp = "[1] Submit";
+    for (int i = 0; i < 3; i++) // Space between enter pin code and options
+    {
+        content.push_back(olVLine() + addNRepeat(" ", maxWidth) + olVLine());
+    }
 
-    // padding = centerPadding(totalLength, 20, 3); // Get left and right padding
+    content.push_back(olLVDivider() + addNRepeat(olHLine(), maxWidth) + olRVDivider());
 
-    // cout << setw(padding.paddingLeft + 3) << left << "┃" << temp;
+    options = {"[1] Submit", "[0] Cancel"};
 
-    // temp = "[0] Cancel";
+    for (string option : options) // Option list width
+    {
+        optListWidth += option.length();
+    }
 
-    // cout << setw(padding.paddingLeft + 3) << left << "" << temp;
-    // cout << setw(padding.paddingRight) << right << "┃" << endl;
+    padding = centerPadding(maxWidth, optListWidth, options.size() + 1);
 
-    // cout << "┗" << addSpacingWithOutline(totalLength) << "┛" << endl;
+    temp = olVLine() + addNRepeat(" ", padding.paddingLeft);
 
-    // temp = "";
+    for (string option : options)
+    {
+        temp += option + addNRepeat(" ", padding.paddingRight);
+    }
 
-    // char ch = getch();
+    temp += olVLine();
 
-    // try
-    // {
-    //     if (ch == '1') // User submit to login
-    //     {
-    //         if (oldPinCode != admin[0].pinCode)
-    //         {
-    //             temp = "Old PIN code is incorrect. PIN code not changed.";
-    //         }
-    //         else if (oldPinCode != pinCode)
-    //         {
-    //             temp = "PIN code is already used. PIN code not changed.";
-    //         }
-    //         else if (pinCode != newPinCode)
-    //         {
-    //             temp = "New PIN code and confirmation do not match. PIN code not changed.";
-    //         }
-    //         else
-    //         {
-    //             isValid = true;
-    //             temp = "PIN code changed successfully.";
+    content.push_back(temp); // Options display
 
-    //             changePinCode(pinCode);
-    //         }
+    content.push_back(olBLCorner() + addNRepeat(olHLine(), maxWidth) + olBRCorner()); // Footer display
 
-    //         padding = centerPadding(totalLength, temp.length(), 2);
+    maxHeight = newBanner.size() + content.size();
 
-    //         cout << setw(padding.paddingLeft + 3) << left << "" << temp << endl;
-    //         Sleep(2000);
+    for (int i = 0; i < maxHeight; i++) // Content display
+    {
+        if (i < newBanner.size())
+        {
+            temp = newBanner[i];
+        }
+        else
+        {
+            temp = content[i - newBanner.size()];
+        }
 
-    //         if (isValid) // Login
-    //         {
-    //             pinCodeDisplay();
-    //         }
-    //         else
-    //         {
-    //             tries++;
+        centerText(temp, maxWidth);
+    }
 
-    //             if (tries >= 5)
-    //             {
-    //                 temp = "Maximum login attempts reached. Please wait for one hour before trying again.";
+    for (int i = 0; i < labels.size(); i++)
+    {
+        setInputPos(labelRows[i], maxWidth, 13 + i, padY[i], labels[i]); // Set input position
+        // cout << i;
+        switch (i)
+        {
+        case 0:
+            cin >> oldPincode;
+            break;
+        case 1:
+            cin >> newPinCode;
+            break;
+        case 2:
+            cin >> confirmPincode;
+            break;
+        default:
+            break;
+        }
+    }
 
-    //                 padding = centerPadding(totalLength, temp.length(), 2);
-    //                 cout << setw(padding.paddingLeft + 3) << left << "" << temp;
+    char ch = getch();
 
-    //                 saveExpectedTime(calculateExpectedTime()); // Save the expected time after one hour of current time
+    try
+    {
+        if (ch == '1') // User submit to login
+        {
+            // Check if PIN code is valid
+            stoi(oldPincode);
+            stoi(newPinCode);
+            stoi(confirmPincode);
 
-    //                 Sleep(2000);
-    //                 pinCodeDisplay();
-    //             }
-    //             else 
-    //             {
-    //                 pinCodeEditor();
-    //             }
-                
-    //         }
-    //     }
-    //     else // Cancel editing
-    //     {
-    //         pinCodeDisplay();
-    //     }
-    // }
-    // catch (const exception &) // Catch error
-    // {
-    //     temp = "Invalid input. Please enter a valid PIN code.";
+            if (oldPincode != admin[0].pinCode)
+            {
+                temp = "Old PIN code is incorrect. PIN code not changed.";
+            }
+            else if (oldPincode != newPinCode)
+            {
+                temp = "PIN code is already used. PIN code not changed.";
+            }
+            else if (newPinCode != confirmPincode)
+            {
+                temp = "New PIN code and confirmation do not match. PIN code not changed.";
+            }
+            else if (newPinCode.length() == 6)
+            {
+                temp = "PIN code must be 6 digits long.";
+            }
+            else
+            {
+                isValid = true;
+                temp = "PIN code changed successfully.";
 
-    //     padding = centerPadding(totalLength, temp.length(), 2);
+                changePinCode(newPinCode);
+            }
 
-    //     cout << setw(padding.paddingLeft + 3) << left << "" << temp << endl;
+            centerText(temp, temp.length());
+            Sleep(2000);
 
-    //     Sleep(2000);
-    //     pinCodeLogin();
-    // }
+            if (isValid) // Login
+            {
+                pinCodeDisplay();
+            }
+            else
+            {
+                tries++;
+
+                if (tries >= 5)
+                {
+                    temp = "Maximum login attempts reached. Please wait for one hour before trying again.";
+                    centerText(temp, temp.length());
+
+                    saveExpectedTime(calculateExpectedTime()); // Save the expected time after one hour of current time
+
+                    Sleep(2000);
+                    pinCodeDisplay();
+                }
+                else
+                {
+                    pinCodeEditor();
+                }
+            }
+        }
+        else // Cancel editing
+        {
+            pinCodeDisplay();
+        }
+    }
+    catch (const exception &) // Catch error
+    {
+        temp = "Invalid input. Please enter a valid PIN code.";
+        centerText(temp, temp.length());
+
+        Sleep(2000);
+        pinCodeLogin();
+    }
 }
