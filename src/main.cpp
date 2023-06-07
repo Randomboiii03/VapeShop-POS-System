@@ -29,6 +29,8 @@ int main()
     navigationUtils();
     bannerUtils();
 
+    Sleep(2000);
+
     productDisplay();
 
     return 0;

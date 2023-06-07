@@ -4,230 +4,247 @@ using namespace std;
 
 void productView(int prodIndex)
 {
-    // vector<Product> products = loadProductsByCategory(categories[nextCateg]);
+    vector<Product> products = loadProductsByCategory(categories[nextCateg]);
 
-    // vector<string> navigation, compiledSideNav, compiledBanner, compiledContent, columnName;
-    // vector<int> maxLengths;
+    vector<string> navigation, newBanner, newNavigation, content, options;
+    string temp, label;
+    ostringstream oss;
 
-    // int totalLength = 0, adj, additionalDividerWidth = 3, bannerSize, infoSize;
-    // size_t sideNav, maxSizeHeight, spacingMenu;
+    int bannerWidth, maxWidth, maxHeight, optListWidth = 0, spaceContent = 7, padDetails = 0, minus = 0;
 
-    // ostringstream output;
-    // string temp, pin, options;
+    Padding padding;
 
-    // Padding padding;
+    system("cls");
+    SetConsoleOutputCP(CP_UTF8);
 
-    // system("cls");
-    // SetConsoleOutputCP(CP_UTF8);
+    if (accountType == "User")
+    {
+        navigation = navUser;
+        options = {"[Esc] Close Menu", "[M] Menu", "[B] Buy Now", "[A] Add to Cart"};
+    }
+    else if (accountType == "Admin")
+    {
+        navigation = navAdmin;
+        options = {"[Esc] Close Menu", "[M] Menu", "[E] Edit Product", "[<->] Next Product"};
 
-    // if (accountType == "User")
-    // {
-    //     navigation = navUser;
-    // }
-    // else if (accountType == "Admin")
-    // {
-    //     navigation = navAdmin;
-    // }
+        spaceContent++;
+    }
 
-    // sideNav = navigation.size();
+    bannerWidth = banner[0].length() + 10; // Banner width
 
-    // totalLength = banner[1].length() + 10; // Total size of content w/o side navigation
+    maxWidth = bannerWidth; // Max width
 
-    // maxSizeHeight = max(sideNav, banner.size()) + 11; // Compare height of side navigation and (banner + accounts)
+    maxHeight = max(navigation.size() + 10, banner.size() + 14); // Max height
 
-    // padding = centerPadding(static_cast<int>(maxSizeHeight) - 2, static_cast<int>(sideNav), 2); // Get left and right padding
+    newBanner = bannerDisplay(maxWidth, bannerWidth, categories[nextCateg]); // Banner display function
 
-    // bannerSize = banner[1].length();
+    padding = centerPadding(maxHeight - newBanner.size(), spaceContent, 2);
 
-    // compiledSideNav = navigationDisplay(navigation, maxSizeHeight, sideNav, padding.paddingLeft); // Compile side navigation
+    for (int i = 0; i < padding.paddingLeft; i++) // Space between banner and content
+    {
+        content.push_back(olVLine() + addNRepeat(" ", maxWidth) + olVLine());
+    }
 
-    // for (size_t i = 0; i <= banner.size(); i++) // Compile banner
-    // {
-    //     temp = bannerDisplay(i, bannerSize, totalLength, category); // Compile banner
-    //     compiledBanner.push_back(temp);
-    // }
+    spaceContent = padding.paddingRight; // Number of spaces between content and options
 
-    // adj = compiledBanner.size();
+    label = "Name:";
+    padding = centerPadding(maxWidth, label.length() + products[prodIndex].productName.length(), 2);
+    padDetails = padding.paddingLeft;
 
-    // for (size_t i = adj; i < maxSizeHeight; i++) // Compile content
-    // {
-    //     temp = "";
+    content.push_back(olVLine() + addNRepeat(" ", padDetails) + label + products[prodIndex].productName + addNRepeat(" ", padding.paddingRight) + olVLine());
 
-    //     if (i == adj || i == maxSizeHeight - 3) // Add divider between title and PIN code, and between PIN code and options
-    //     {
-    //         temp += "┣" + addSpacingWithOutline(totalLength) + "┫";
-    //     }
-    //     else if (i == adj + 5)
-    //     {
-    //         padding = centerPadding(totalLength, products[prodIndex].productName.length() + 13, 2);
-    //         infoSize = padding.paddingLeft;
+    temp = "Brand:";
+    padding = centerPadding(maxWidth, temp.length() + products[prodIndex].brandName.length(), 2);
+    minus = temp.length() - label.length();
 
-    //         output << "┃" << setw(padding.paddingLeft) << left << ""
-    //                << "Product Name:" << products[prodIndex].productName
-    //                << setw(padding.paddingRight) << right << ""
-    //                << "┃";
-    //     }
-    //     else if (i == adj + 6)
-    //     {
-    //         output << "┃" << setw(infoSize + 2) << left << ""
-    //                << "Brand Name:" << products[prodIndex].brandName
-    //                << setw((totalLength - infoSize) - (products[prodIndex].brandName.length() + 13)) << right << ""
-    //                << "┃";
-    //     }
-    //     else if (i == adj + 7)
-    //     {
-    //         ostringstream oss;
-    //         oss << fixed << setprecision(2) << products[i - 13].price; // Add two decimal into the price
+    content.push_back(olVLine() + addNRepeat(" ", padDetails - minus) + temp + products[prodIndex].brandName + addNRepeat(" ", (padding.paddingLeft - padDetails) + padding.paddingRight + minus) + olVLine());
 
-    //         output << "┃" << setw(infoSize + 7) << left << ""
-    //                << "Price: ₱ " << oss.str()
-    //                << setw((totalLength - infoSize) - (oss.str().length() + 16)) << right << ""
-    //                << "┃";
-    //     }
-    //     else if (i == adj + 8)
-    //     {
-    //         output << "┃" << setw(infoSize + 7) << left << ""
-    //                << "Stock: " << to_string(products[prodIndex].stock)
-    //                << setw((totalLength - infoSize) - (to_string(products[prodIndex].stock).length() + 14)) << right << ""
-    //                << "┃";
-    //     }
-    //     else if (i == adj + 9)
-    //     {
-    //         string status = products[i - 13].isAvailable ? "Available" : "Not Available";
+    temp = "Price: ";
+    oss << fixed << setprecision(2) << products[prodIndex].price; // Add two decimal into the price
 
-    //         output << "┃" << setw(infoSize + 6) << left << ""
-    //                << "Status: " << status
-    //                << setw((totalLength - infoSize) - (status.length() + 14)) << right << ""
-    //                << "┃";
-    //     }
-    //     else if (i == maxSizeHeight - 2) // Add options
-    //     {
-    //         if (isOpen)
-    //         {
-    //             options = "[Esc] Close Menu";
-    //         }
-    //         else
-    //         {
-    //             options = "[M] Menu";
-    //         }
+    padding = centerPadding(maxWidth, temp.length() + oss.str().length(), 2);
+    minus = temp.length() - label.length() - 1;
 
-    //         if (accountType == "User")
-    //         {
-    //             padding = centerPadding(totalLength, options.length() + 11 + 15, 4);
+    content.push_back(olVLine() + addNRepeat(" ", padDetails - minus) + temp + "₱ " + oss.str() + addNRepeat(" ", (padding.paddingLeft - padDetails) + padding.paddingRight + minus - 2) + olVLine());
 
-    //             output << "┃" << setw(padding.paddingLeft) << left << "" << options;
+    temp = "Stock/s: ";
+    padding = centerPadding(maxWidth, temp.length() + to_string(products[prodIndex].stock).length(), 2);
+    minus = temp.length() - label.length() - 1;
 
-    //             options = "[B] Buy Now";
-    //             output << setw(padding.paddingRight) << left << "" << options;
+    content.push_back(olVLine() + addNRepeat(" ", padDetails - minus) + temp + to_string(products[prodIndex].stock) + addNRepeat(" ", (padding.paddingLeft - padDetails) + padding.paddingRight + minus) + olVLine());
 
-    //             options = "[A] Add to Cart";
-    //             output << setw(padding.paddingRight) << left << "" << options;
+    if (accountType == "Admin")
+    {
+        temp = "Status: ";
+        string status = products[prodIndex].isAvailable ? "Available" : "Not Available";
 
-    //             output << setw(padding.paddingRight) << right << ""
-    //                    << "┃";
-    //         }
-    //         else if (accountType == "Admin")
-    //         {
-    //             padding = centerPadding(totalLength, options.length() + 16 + 18, 4);
+        padding = centerPadding(maxWidth, temp.length() + status.length(), 2);
+        minus = temp.length() - label.length() - 1;
+        cout << (padding.paddingLeft - padDetails);
+        content.push_back(olVLine() + addNRepeat(" ", padDetails - minus) + temp + status + addNRepeat(" ", (padding.paddingLeft - padDetails) + padding.paddingRight + minus) + olVLine());
+    }
 
-    //             output << "┃" << setw(padding.paddingLeft) << left << "" << options;
+    for (int i = 0; i < spaceContent; i++) // Space between enter pin code and options
+    {
+        content.push_back(olVLine() + addNRepeat(" ", maxWidth) + olVLine());
+    }
 
-    //             options = "[E] Edit Product";
-    //             output << setw(padding.paddingRight) << left << "" << options;
+    content.push_back(olLVDivider() + addNRepeat(olHLine(), maxWidth) + olRVDivider());
 
-    //             options = "[D] Delete Product";
-    //             output << setw(padding.paddingRight) << left << "" << options;
+    for (int i = 0; i < options.size(); i++) // Option list width
+    {
+        if (!isOpen && i == 0)
+        {
+            continue;
+        }
+        else if (isOpen && i == 1)
+        {
+            continue;
+        }
 
-    //             output << setw(padding.paddingRight) << right << ""
-    //                    << "┃";
-    //         }
-    //     }
-    //     else if (i == maxSizeHeight - 1) // Add horizontal outline for bottom of content
-    //     {
-    //         if (isOpen)
-    //         {
-    //             temp += "┻";
-    //         }
-    //         else
-    //         {
-    //             temp += "┗";
-    //         }
+        optListWidth += options[i].length();
+    }
 
-    //         temp += addSpacingWithOutline(totalLength) + "┛";
-    //     }
-    //     else // Add spacings
-    //     {
-    //         output << "┃" << addSpacingWithoutOutline(1, totalLength - 3) << "┃";
-    //     }
+    padding = centerPadding(maxWidth, optListWidth, options.size());
+    temp = olVLine() + addNRepeat(" ", padding.paddingLeft);
 
-    //     if (temp == "")
-    //     {
-    //         temp = output.str();
-    //         output = ostringstream();
-    //     }
+    for (int i = 0; i < options.size(); i++)
+    {
+        if (!isOpen && i == 0) // If menu is closed skip [Esc] Close Menu
+        {
+            continue;
+        }
+        else if (isOpen && i == 1) // If menu is open [M] Menu
+        {
+            continue;
+        }
 
-    //     compiledContent.push_back(temp);
-    // }
+        temp += options[i] + addNRepeat(" ", padding.paddingRight);
+    }
 
-    // // Display the whole UI
-    // for (size_t i = 0; i < maxSizeHeight; i++)
-    // {
-    //     if (isOpen)
-    //     {
-    //         cout << compiledSideNav[i]; // Display sideNav
-    //     }
+    temp += olVLine();
 
-    //     if (i < compiledBanner.size())
-    //     {
-    //         cout << compiledBanner[i]; // Display banner
-    //     }
-    //     else
-    //     {
-    //         cout << compiledContent[i - adj]; // Display content (header, data and options)
-    //     }
+    content.push_back(temp); // Options display
 
-    //     cout << endl;
-    // }
+    if (isOpen)
+    {
+        temp = olBHDivider();
+    }
+    else
+    {
+        temp = olBLCorner();
+    }
 
-    // while (true) // Menus
-    // {
-    //     char ch = getch();
+    content.push_back(temp + addNRepeat(olHLine(), maxWidth) + olBRCorner()); // Footer display
 
-    //     if (ch == 'm' && !isOpen) // Open menu
-    //     {
-    //         isOpen = true;
-    //         productView(category, prodIndex);
-    //     }
-    //     else if (ch == 27) // Close menu
-    //     {
-    //         isOpen = false;
-    //         productView(category, prodIndex);
-    //     }
-    //     else if (accountType == "User")
-    //     {
-    //         if (ch == 'a')
-    //         {
-    //             // Add to cart
-    //         }
-    //         else if (ch == 'b')
-    //         {
-    //             // Buy now
-    //         }
-    //     }
-    //     else if (accountType == "Admin")
-    //     {
-    //         if (ch == 'e')
-    //         {
-    //             // Edit product
-    //         }
-    //         else if (ch == 'd')
-    //         {
-    //             // Delete product
-    //         }
-    //     }
-    //     else
-    //     {
-    //         globalMenu(ch);
-    //     }
-    // }
+    if (isOpen)
+    {
+        maxWidth += navigation[2].length() + 1;                   // Navigation width
+        newNavigation = navigationDisplay(navigation, maxHeight); // Navigation display function
+    }
+
+    for (int i = 0; i < maxHeight; i++)
+    {
+        temp = "";
+
+        if (isOpen)
+        {
+            temp = newNavigation[i];
+        }
+
+        if (i < newBanner.size())
+        {
+            temp += newBanner[i];
+        }
+        else
+        {
+            temp += content[i - newBanner.size()];
+        }
+
+        centerText(temp, maxWidth);
+    }
+
+    while (true) // Menus
+    {
+        char ch = getch();
+
+        if (ch == 'm' && !isOpen) // Open menu
+        {
+            isOpen = true;
+            productView(prodIndex);
+        }
+        else if (ch == 27) // Close menu
+        {
+            isOpen = false;
+            productView(prodIndex);
+        }
+        else if (ch == 77) // Right
+        {
+            prodIndex = (prodIndex + 1) % products.size();
+            productView(prodIndex);
+        }
+        else if (ch == 75) // Left
+        {
+            prodIndex = (prodIndex - 1 + products.size()) % products.size();
+            productView(prodIndex);
+        }
+        else if (accountType == "User" && (ch == 'b' || ch == 'a'))
+        {
+            try
+            {
+                temp = "Enter quantity: ";
+
+                centerText(temp, temp.length());
+
+                setInputPos(temp, temp.length(), maxHeight - 2, -1, temp);
+                cin >> temp;
+
+                stoi(temp); // Remove when function is created
+
+                if (ch == 'b') // Buy now
+                {
+                    // checkout();
+                }
+                else if (ch == 'a') // Add to cart
+                {
+                    // cart();
+                }
+            }
+            catch (const exception &) // Catch error
+            {
+                temp = "Invalid input. Please enter a valid PIN code.";
+                centerText(temp, temp.length() + 10);
+
+                Sleep(2000);
+                productView(prodIndex);
+            }
+        }
+        else if (accountType == "Admin" && ch == 'e') // Edit product
+        {
+            try
+            {
+                temp = "Choose product number: ";
+                centerText(temp, temp.length());
+
+                setInputPos(temp, temp.length(), maxHeight - 2, -1, temp);
+                cin >> temp;
+
+                stoi(temp); // Remove when function is created
+
+                // productEditor(stoi(temp));
+            }
+            catch (const exception &) // Catch error
+            {
+                temp = "Invalid input. Please enter a valid PIN code.";
+                centerText(temp, temp.length() + 10);
+
+                Sleep(2000);
+                productView(prodIndex);
+            }
+        }
+        else
+        {
+            globalMenu(ch);
+        }
+    }
 }

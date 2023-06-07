@@ -27,7 +27,7 @@ void productDisplay()
                       getMaxLengthProduct(products, 2, headerName[2]),
                       getMaxLengthProduct(products, 4, headerName[3])};
 
-        options = {"[Esc] Close Menu", "[M] Menu", "[V] View Product", "[⇦ ⇨ ] Next Category"};
+        options = {"[Esc] Close Menu", "[M] Menu", "[V] View Product", "[<->] Next Category"};
     }
     else if (accountType == "Admin")
     {
@@ -41,7 +41,7 @@ void productDisplay()
                       getMaxLengthProduct(products, 5, headerName[4]),
                       getMaxLengthProduct(products, 6, headerName[5])};
 
-        options = {"[Esc] Close Menu", "[M] Menu", "[V] View/Edit/Delete Product", "[A] Add Product", "[⇦ ⇨ ] Next Category"};
+        options = {"[Esc] Close Menu", "[M] Menu", "[V] View & Edit Product", "[D] Delete Product", "[A] Add Product", "[<->] Next Category"};
     }
 
     for (int length : maxLengths)
@@ -49,7 +49,7 @@ void productDisplay()
         prodListWidth += length; // Total product list width
     }
 
-    for (int i = 0; i < options.size() - 1; i++)
+    for (int i = 0; i < options.size(); i++)
     {
         if (!isOpen && i == 0)
         {
@@ -62,8 +62,6 @@ void productDisplay()
 
         optListWidth += options[i].length();
     }
-
-    optListWidth += 20; // Total option list width
 
     bannerWidth = banner[0].length() + 10; // Banner width
 
@@ -109,7 +107,7 @@ void productDisplay()
 
             for (int j = 0; j < options.size(); j++)
             {
-                if (!isOpen && j == 0)  // If menu is closed skip [Esc] Close Menu
+                if (!isOpen && j == 0) // If menu is closed skip [Esc] Close Menu
                 {
                     continue;
                 }
@@ -273,7 +271,9 @@ void productDisplay()
             {
                 temp = "Choose product number: ";
 
-                centerText(temp, maxWidth);
+                centerText(temp, temp.length());
+
+                setInputPos(temp, temp.length(), maxHeight - 2, -1, temp);
                 cin >> temp;
 
                 productView(stoi(temp));
@@ -281,15 +281,41 @@ void productDisplay()
             catch (const exception &) // Catch error
             {
                 temp = "Invalid input. Please enter a valid PIN code.";
-                centerText(temp, temp.length());
+                centerText(temp, temp.length() + 10);
 
                 Sleep(2000);
                 productDisplay();
             }
         }
-        else if (ch == 'a' && accountType == "Admin") // Add product
+        else if (accountType == "Admin" && (ch == 'a' || ch == 'd'))
         {
-            // Add product
+            try
+            {
+                temp = "Choose product number: ";
+                centerText(temp, temp.length());
+
+                setInputPos(temp, temp.length(), maxHeight - 2, -1, temp);
+                cin >> temp;
+
+                stoi(temp); // Remove when function is created
+
+                if (ch == 'a') // Add product
+                {
+                    // productAdd();
+                }
+                else if (ch == 'd') // Delete product
+                {
+                    // productDelete(stoi(temp));
+                }
+            }
+            catch (const exception &) // Catch error
+            {
+                temp = "Invalid input. Please enter a valid PIN code.";
+                centerText(temp, temp.length() + 10);
+
+                Sleep(2000);
+                productDisplay();
+            }
         }
         else
         {

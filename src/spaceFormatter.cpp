@@ -5,7 +5,7 @@ using namespace std;
 string addNRepeat(string text, int length)
 {
     string temp = "";
-    
+
     for (int i = 0; i < length; i++)
     {
         temp += text;
@@ -32,10 +32,10 @@ void centerText(string text, int textLength)
 
     SHORT centerX = (maxWidth - textLength) / 2;
     SHORT centerY = csbi.dwCursorPosition.Y;
-    
+
     COORD pos = {centerX, centerY};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
-
+    
     cout << text << endl;
 }
 

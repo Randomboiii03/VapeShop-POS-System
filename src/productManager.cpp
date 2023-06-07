@@ -62,6 +62,11 @@ vector<Product> loadProductsByCategory(const string &category)
 
             if (category == product.category)
             {
+                if (accountType != "Admin" && product.isAvailable == 0)
+                {
+                    continue;
+                }
+                
                 products.push_back(product);
             }
         }
@@ -81,7 +86,7 @@ bool containsCategory(const vector<string> &categories, const string &category)
     return find(categories.begin(), categories.end(), category) != categories.end();
 }
 
-vector<string> getUniqueCategories()
+vector<string> getCategories()
 {
     vector<string> uniqueCategories;
 
