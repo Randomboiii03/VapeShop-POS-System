@@ -17,6 +17,7 @@
 #include <algorithm>
 #include <filesystem>
 #include <conio.h>
+#include <locale>
 
 using namespace std;
 
@@ -33,9 +34,15 @@ struct Product
     string brandName;
     string productName;
     string productDesc;
-    double price;
+    float price;
     int stock;
     bool isAvailable;
+};
+
+struct Cart
+{
+    int productNumber;
+    int quantity;
 };
 
 struct Padding
@@ -57,6 +64,9 @@ extern vector<Account> admin;
 // Product related variables
 extern vector<string> categories;
 extern int nextCateg;
+
+// Cart related variables
+extern vector<Cart> cart;
 
 // Vector navigationUtils related variables
 extern vector<string> navUser, navAdmin, navDeveloper, banner;
@@ -93,6 +103,8 @@ Padding centerPadding(int maxWidth, int textLength, int divisor);
 void centerText(string text, int textLength);
 void setInputPos(string text, int textLength, SHORT y, int padding, string label);
 
+string priceFormat(float value);
+
 // Security related functions
 void saveExpectedTime(time_t expectedTime);
 ExpectedTimeData loadExpectedTime();
@@ -118,5 +130,10 @@ bool containsCategory(const vector<string> &categories, const string &category);
 vector<string> getCategories();
 
 int getMaxLengthProduct(const vector<Product> &data, int columnIndex, string columnName);
+
+// Cart related functions
+void cartDisplay();
+
+int getMaxLengthCart(const vector<Cart> &data, const vector<Product> &data2, int columnIndex, string headerName);
 
 #endif

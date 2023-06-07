@@ -9,11 +9,6 @@ int getMaxLengthProduct(const vector<Product> &data, int columnIndex, string hea
     // Check for the datas width
     for (const auto &product : data)
     {
-        ostringstream oss;
-        oss << fixed << setprecision(2) << product.price;
-
-        string price = "₱ " + oss.str();
-
         switch (columnIndex)
         {
         case 0:
@@ -29,7 +24,7 @@ int getMaxLengthProduct(const vector<Product> &data, int columnIndex, string hea
             max_length = max(max_length, static_cast<int>(product.category.length()));
             break;
         case 4:
-            max_length = max(max_length, static_cast<int>(price.length() - 2));
+            max_length = max(max_length, static_cast<int>(priceFormat(product.price).length() - 2));
             break;
         case 5:
             max_length = max(max_length, static_cast<int>(to_string(product.stock).length()));

@@ -10,9 +10,17 @@ vector<Account> admin = {
     {"Admin", getPinCode()},
 };
 
+vector<Cart> cart = {
+    {10002, 100},
+    {10005, 400},
+    {10046, 50},
+    {10008, 200},
+    {10100, 700}
+};
+
 ExpectedTimeData timeData = loadExpectedTime();
 
-string accountType = "Admin";
+string accountType = "User";
 int tries = timeData.tries;
 
 bool isOpen = false;

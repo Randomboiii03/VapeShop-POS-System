@@ -18,6 +18,7 @@ void globalMenu(char ch)
     else if (ch == 'c' && isOpen && accountType == "User") // Cart
     {
         isOpen = false;
+        cartDisplay();
     }
     else if (ch == 's' && isOpen && accountType == "Admin") // Sales
     {

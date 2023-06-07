@@ -35,7 +35,7 @@ void centerText(string text, int textLength)
 
     COORD pos = {centerX, centerY};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
-    
+
     cout << text << endl;
 }
 
@@ -52,4 +52,21 @@ void setInputPos(string text, int textLength, SHORT y, int padding, string label
 
     COORD pos = {centerX, centerY};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+}
+
+string priceFormat(float value)
+{
+    ostringstream oss;
+    oss << fixed << setprecision(2) << value;
+
+    string result = oss.str();
+
+    int pos = result.find(".");
+
+    for (int i = pos - 3; i > 0; i -= 3)
+    {
+        result.insert(i, ",");
+    }
+
+    return result;
 }

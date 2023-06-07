@@ -2,46 +2,37 @@
 
 using namespace std;
 
-void productDisplay()
+void cartDisplay()
 {
-    vector<Product> products = loadProductsByCategory(categories[nextCateg]);
+    vector<Product> products;
+
+    for (string category : categories)
+    {
+        vector<Product> temp = loadProductsByCategory(category);
+        products.insert(products.begin(), temp.begin(), temp.end());
+    }
 
     vector<string> navigation, headerName, newBanner, newNavigation, content, options;
     string temp;
 
     vector<int> maxLengths;
     int prodListWidth = 0, bannerWidth, maxWidth, maxHeight, spaceBetween = 0, count = 0, optListWidth = 0;
+    float totalPrice = 0;
 
     Padding padding;
 
     system("cls");
     SetConsoleOutputCP(CP_UTF8);
 
-    if (accountType == "User")
+    navigation = navUser;
+
+    headerName = {"No", "Product", "Quantity", "Price", "Total"};
+
+    options = {"[Esc] Close Menu", "[M] Menu", "[E] Edit Product", "[D] Delete Product", "[T] Checkout"};
+
+    for (int i = 0; i < headerName.size(); i++)
     {
-        navigation = navUser;
-
-        headerName = {"No", "Brand", "Product Name", "Price"};
-        maxLengths = {getMaxLengthProduct(products, 0, headerName[0]),
-                      getMaxLengthProduct(products, 1, headerName[1]),
-                      getMaxLengthProduct(products, 2, headerName[2]),
-                      getMaxLengthProduct(products, 4, headerName[3])};
-
-        options = {"[Esc] Close Menu", "[M] Menu", "[V] View Product", "[<->] Next Category"};
-    }
-    else if (accountType == "Admin")
-    {
-        navigation = navAdmin;
-
-        headerName = {"No", "Brand", "Product Name", "Price", "Stock", "Status"};
-        maxLengths = {getMaxLengthProduct(products, 0, headerName[0]),
-                      getMaxLengthProduct(products, 1, headerName[1]),
-                      getMaxLengthProduct(products, 2, headerName[2]),
-                      getMaxLengthProduct(products, 4, headerName[3]),
-                      getMaxLengthProduct(products, 5, headerName[4]),
-                      getMaxLengthProduct(products, 6, headerName[5])};
-
-        options = {"[Esc] Close Menu", "[M] Menu", "[V] View & Edit Product", "[D] Delete Product", "[A] Add Product", "[<->] Next Category"};
+        maxLengths.push_back(getMaxLengthCart(cart, products, i, headerName[i]));
     }
 
     for (int length : maxLengths)
@@ -77,9 +68,9 @@ void productDisplay()
 
     } while (true);
 
-    maxHeight = max(navigation.size() + 10, banner.size() + products.size() + 7); // Max height
+    maxHeight = max(navigation.size() + 10, banner.size() + cart.size() + 9); // Max height
 
-    newBanner = bannerDisplay(maxWidth, bannerWidth, categories[nextCateg]); // Banner display function
+    newBanner = bannerDisplay(maxWidth, bannerWidth, "Cart"); // Banner display function
 
     for (int i = 0; i < maxHeight - newBanner.size(); i++) // Content display
     {
@@ -95,9 +86,33 @@ void productDisplay()
 
             temp += olVLine();
         }
-        else if (i == 1 || i == (maxHeight - newBanner.size() - 3)) // Divider display
+        else if (i == 1 || i == (maxHeight - newBanner.size() - 3) || i == (maxHeight - newBanner.size() - 5)) // Divider display
         {
             temp = olLVDivider() + addNRepeat(olHLine(), maxWidth) + olRVDivider();
+        }
+        else if (i == 1 || i == (maxHeight - newBanner.size() - 4)) // Total Price display
+        {
+            temp += olVLine();
+
+            vector<string> tPrice = {"", "", "", "Total Price:", "₱ " + priceFormat(totalPrice)};
+            int minus = 0;
+
+            for (int j = 0; j < headerName.size(); j++)
+            {
+                if (j == headerName.size() - 1)
+                {
+                    minus = 2;
+                }
+                else
+                {
+                    temp += " ";
+                }
+
+                padding = centerPadding(maxLengths[j], tPrice[j].length() - minus, 2);
+                temp += addNRepeat(" ", padding.paddingLeft + spaceBetween) + tPrice[j] + addNRepeat(" ", padding.paddingRight + spaceBetween);
+            }
+
+            temp += olVLine();
         }
         else if (i == 1 || i == (maxHeight - newBanner.size() - 2)) // Options display
         {
@@ -136,37 +151,43 @@ void productDisplay()
         }
         else
         {
-            if (products.size() > 0) // Product list display
+            if (cart.size() > 0) // Cart list display
             {
                 for (int j = 0; j < headerName.size(); j++)
                 {
                     string detail = "";
                     int minus = 0;
 
-                    switch (j)
+                    for (int k = 0; k < products.size(); k++)
                     {
-                    case 0:
-                        detail = to_string(i - 2); // Product number
-                        break;
-                    case 1:
-                        detail = products[i - 2].brandName; // Brand
-                        break;
-                    case 2:
-                        detail = products[i - 2].productName; // Product
-                        break;
-                    case 3:
-                        detail = "₱ " + priceFormat(products[i - 2].price); // Price
-                        minus = 2;                                          // For currency symbol
-                        break;
-                    case 4:
-                        detail = to_string(products[i - 2].stock); // Stock
-                        break;
-                    case 5:
-                        detail = products[i - 2].isAvailable ? "Available" : "Not Available"; // Status
-                        break;
-                    default:
-                        // Invalid column index
-                        break;
+                        if (products[k].productNumber == cart[i - 2].productNumber)
+                        {
+                            switch (j)
+                            {
+                            case 0:
+                                detail = to_string(i - 2); // Product number
+                                break;
+                            case 1:
+                                detail = products[k].productName; // Product name
+                                break;
+                            case 2:
+                                detail = to_string(cart[i - 2].quantity); // Product quantity
+                                break;
+                            case 3:
+                                detail = "₱ " + priceFormat(products[k].price); // Price
+                                minus = 2;                                      // For currency symbol
+                                break;
+                            case 4:
+                                totalPrice += products[k].price * cart[i - 2].quantity;
+
+                                detail = "₱ " + priceFormat(products[k].price * cart[i - 2].quantity); // Total
+                                minus = 2;                                                             // For currency symbol
+                                break;
+                            default:
+                                // Invalid column index
+                                break;
+                            }
+                        }
                     }
 
                     padding = centerPadding(maxLengths[j], detail.length() - minus, 2);
@@ -223,72 +244,24 @@ void productDisplay()
         if (ch == 'm' && !isOpen) // Open menu
         {
             isOpen = true;
-            productDisplay();
+            cartDisplay();
         }
         else if (ch == 27) // Close menu
         {
-            if (isOpen)
-            {
-                isOpen = false;
-                productDisplay();
-            }
-            else
-            {
-                count++;
-
-                if (count >= 10)
-                {
-                    ExpectedTimeData timeData = loadExpectedTime();
-
-                    if (tries >= 5 && !checkTime(timeData.expectedTime))
-                    {
-                        temp = "Maximum login attempts reached. Please wait for one hour before trying again.";
-                        centerText(temp, temp.length());
-                    }
-                    else if (checkTime(timeData.expectedTime))
-                    {
-                        pinCodeLogin();
-                    }
-                }
-            }
+            isOpen = false;
+            cartDisplay();
         }
-        else if (ch == 77) // Right
+        else if (ch == 't') // Checkout
         {
-            nextCateg = (nextCateg + 1) % categories.size();
-            productDisplay();
+            isOpen = false;
+            // checkout();
         }
-        else if (ch == 75) // Left
-        {
-            nextCateg = (nextCateg - 1 + categories.size()) % categories.size();
-            productDisplay();
-        }
-        else if (ch == 'v') // View product
+        else if (ch == 'd' || ch == 'e')
         {
             try
             {
-                temp = "Choose product number: ";
+                temp = "Enter product number: ";
 
-                centerText(temp, temp.length());
-
-                setInputPos(temp, temp.length(), maxHeight - 2, -1, temp);
-                cin >> temp;
-
-                productView(stoi(temp));
-            }
-            catch (const exception &) // Catch error
-            {
-                temp = "Invalid input. Please enter a valid PIN code.";
-                centerText(temp, temp.length() + 10);
-
-                Sleep(2000);
-                productDisplay();
-            }
-        }
-        else if (accountType == "Admin" && (ch == 'a' || ch == 'd'))
-        {
-            try
-            {
-                temp = "Choose product number: ";
                 centerText(temp, temp.length());
 
                 setInputPos(temp, temp.length(), maxHeight - 2, -1, temp);
@@ -296,13 +269,13 @@ void productDisplay()
 
                 stoi(temp); // Remove when function is created
 
-                if (ch == 'a') // Add product
+                if (ch == 'd') // Delete product in cart
                 {
-                    // productAdd();
+                    // cartDelete(stoi(temp));
                 }
-                else if (ch == 'd') // Delete product
+                else if (ch == 'e') // Edit product in cart
                 {
-                    // productDelete(stoi(temp));
+                    // cartEdit(stoi(temp));
                 }
             }
             catch (const exception &) // Catch error
@@ -311,7 +284,7 @@ void productDisplay()
                 centerText(temp, temp.length() + 10);
 
                 Sleep(2000);
-                productDisplay();
+                cartDisplay();
             }
         }
         else
