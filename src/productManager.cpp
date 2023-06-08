@@ -10,7 +10,7 @@ void saveProducts(const vector<Product> &products)
     {
         for (const Product &product : products)
         {
-            outputFile << product.productNumber << ", " << product.category << ", " << product.brandName << ", " << product.productName << ", " << product.productDesc << ", " << product.price << ", " << product.stock << ", " << product.isAvailable << "\n";
+            outputFile << product.productNumber << "," << product.category << "," << product.brandName << "," << product.productName << "," << product.productDesc << "," << product.price << "," << product.stock << "," << product.isAvailable << "\n";
         }
 
         outputFile.close();

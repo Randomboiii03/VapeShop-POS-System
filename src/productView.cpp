@@ -47,13 +47,13 @@ void productView(int prodIndex)
 
     spaceContent = padding.paddingRight; // Number of spaces between content and options
 
-    label = "Name:";
+    label = "Name: ";
     padding = centerPadding(maxWidth, label.length() + products[prodIndex].productName.length(), 2);
     padDetails = padding.paddingLeft;
 
     content.push_back(olVLine() + addNRepeat(" ", padDetails) + label + products[prodIndex].productName + addNRepeat(" ", padding.paddingRight) + olVLine());
 
-    temp = "Brand:";
+    temp = "Brand: ";
     padding = centerPadding(maxWidth, temp.length() + products[prodIndex].brandName.length(), 2);
     minus = temp.length() - label.length();
 
