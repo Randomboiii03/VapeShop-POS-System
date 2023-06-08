@@ -28,7 +28,7 @@ void cartDisplay()
 
     headerName = {"No", "Product", "Quantity", "Price", "Total"};
 
-    options = {"[Esc] Close Menu", "[M] Menu", "[E] Edit Product", "[D] Delete Product", "[T] Checkout"};
+    options = {"[Esc] Close Menu", "[M] Menu", "[E] Edit Quantity", "[D] Delete Product", "[T] Checkout"};
 
     for (int i = 0; i < headerName.size(); i++)
     {
@@ -68,9 +68,9 @@ void cartDisplay()
 
     } while (true);
 
-    maxHeight = max(navigation.size() + 10, banner.size() + cart.size() + 9); // Max height
-
     newBanner = bannerDisplay(maxWidth, bannerWidth, "Cart"); // Banner display function
+
+    maxHeight = max(navigation.size() + 10, banner.size() + cart.size() + 7); // Max height
 
     for (int i = 0; i < maxHeight - newBanner.size(); i++) // Content display
     {
@@ -264,24 +264,33 @@ void cartDisplay()
 
                 centerText(temp, temp.length());
 
-                setInputPos(temp, temp.length(), maxHeight - 2, -1, temp);
+                setInputPos(temp, temp.length(), 0, -1, temp);
                 cin >> temp;
 
-                stoi(temp); // Remove when function is created
-
-                if (ch == 'd') // Delete product in cart
+                if (stoi(temp) < cart.size() && stoi(temp) >= 0)
                 {
-                    // cartDelete(stoi(temp));
+                    if (ch == 'd') // Delete product in cart
+                    {
+                        deleteProductInCart(stoi(temp));
+                    }
+                    else if (ch == 'e') // Edit product in cart
+                    {
+                        editQuantityInCart(stoi(temp), maxHeight);
+                    }
                 }
-                else if (ch == 'e') // Edit product in cart
+                else
                 {
-                    // cartEdit(stoi(temp));
+                    temp = "Invalid input. Please enter a valid product number.";
+                    centerText(temp, temp.length());
+
+                    Sleep(2000);
+                    cartDisplay();
                 }
             }
             catch (const exception &) // Catch error
             {
-                temp = "Invalid input. Please enter a valid PIN code.";
-                centerText(temp, temp.length() + 10);
+                temp = "Invalid input. Please enter a valid product number.";
+                centerText(temp, temp.length());
 
                 Sleep(2000);
                 cartDisplay();

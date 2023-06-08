@@ -77,9 +77,9 @@ void productDisplay()
 
     } while (true);
 
-    maxHeight = max(navigation.size() + 10, banner.size() + products.size() + 7); // Max height
-
     newBanner = bannerDisplay(maxWidth, bannerWidth, categories[nextCateg]); // Banner display function
+
+    maxHeight = max(navigation.size() + 10, newBanner.size() + products.size() + 5); // Max height
 
     for (int i = 0; i < maxHeight - newBanner.size(); i++) // Content display
     {
@@ -95,11 +95,11 @@ void productDisplay()
 
             temp += olVLine();
         }
-        else if (i == 1 || i == (maxHeight - newBanner.size() - 3)) // Divider display
+        else if (i == 1 || i == ((maxHeight - newBanner.size()) - 3)) // Divider display
         {
             temp = olLVDivider() + addNRepeat(olHLine(), maxWidth) + olRVDivider();
         }
-        else if (i == 1 || i == (maxHeight - newBanner.size() - 2)) // Options display
+        else if (i == ((maxHeight - newBanner.size()) - 2)) // Options display
         {
             padding = centerPadding(maxWidth, optListWidth, options.size());
 
@@ -121,7 +121,7 @@ void productDisplay()
 
             temp += olVLine();
         }
-        else if (i == (maxHeight - newBanner.size() - 1)) // Footer display
+        else if (i == ((maxHeight - newBanner.size()) - 1)) // Footer display
         {
             if (isOpen)
             {
@@ -270,15 +270,27 @@ void productDisplay()
 
                 centerText(temp, temp.length());
 
-                setInputPos(temp, temp.length(), maxHeight - 2, -1, temp);
+                setInputPos(temp, temp.length(), 0, -1, temp);
+                // cout << to_string(maxHeight) << endl;
                 cin >> temp;
 
-                productView(stoi(temp));
+                if (stoi(temp) < products.size() && stoi(temp) >= 0)
+                {
+                    productView(stoi(temp));
+                }
+                else
+                {
+                    temp = "Invalid input. Please enter a valid product number.";
+                    centerText(temp, temp.length());
+
+                    Sleep(2000);
+                    productDisplay();
+                }
             }
             catch (const exception &) // Catch error
             {
-                temp = "Invalid input. Please enter a valid PIN code.";
-                centerText(temp, temp.length() + 10);
+                temp = "Invalid input. Please enter a valid product number.";
+                centerText(temp, temp.length());
 
                 Sleep(2000);
                 productDisplay();
@@ -291,24 +303,33 @@ void productDisplay()
                 temp = "Choose product number: ";
                 centerText(temp, temp.length());
 
-                setInputPos(temp, temp.length(), maxHeight - 2, -1, temp);
+                setInputPos(temp, temp.length(), 0, -1, temp);
                 cin >> temp;
 
-                stoi(temp); // Remove when function is created
-
-                if (ch == 'a') // Add product
+                if (stoi(temp) < products.size() && stoi(temp) >= 0)
                 {
-                    // productAdd();
+                    if (ch == 'a') // Add product
+                    {
+                        // productAdd();
+                    }
+                    else if (ch == 'd') // Delete product
+                    {
+                        deleteProduct(stoi(temp));
+                    }
                 }
-                else if (ch == 'd') // Delete product
+                else
                 {
-                    // productDelete(stoi(temp));
+                    temp = "Invalid input. Please enter a valid product number.";
+                    centerText(temp, temp.length());
+
+                    Sleep(2000);
+                    productDisplay();
                 }
             }
             catch (const exception &) // Catch error
             {
-                temp = "Invalid input. Please enter a valid PIN code.";
-                centerText(temp, temp.length() + 10);
+                temp = "Invalid input. Please enter a valid product number.";
+                centerText(temp, temp.length());
 
                 Sleep(2000);
                 productDisplay();

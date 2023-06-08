@@ -28,9 +28,9 @@ void pinCodeDisplay()
 
     maxWidth = bannerWidth; // Max width
 
-    maxHeight = max(navigation.size() + 10, banner.size() + 10); // Max height
-
     newBanner = bannerDisplay(maxWidth, bannerWidth, "PIN Code Display"); // Banner display function
+
+    maxHeight = max(navigation.size() + 10, newBanner.size() + spaceContent + 6); // Max height
 
     padding = centerPadding(maxHeight - newBanner.size(), spaceContent, 2);
 

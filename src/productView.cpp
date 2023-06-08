@@ -196,7 +196,7 @@ void productView(int prodIndex)
 
                 centerText(temp, temp.length());
 
-                setInputPos(temp, temp.length(), maxHeight - 2, -1, temp);
+                setInputPos(temp, temp.length(), 0, -1, temp);
                 cin >> temp;
 
                 stoi(temp); // Remove when function is created
@@ -226,7 +226,7 @@ void productView(int prodIndex)
                 temp = "Choose product number: ";
                 centerText(temp, temp.length());
 
-                setInputPos(temp, temp.length(), maxHeight - 2, -1, temp);
+                setInputPos(temp, temp.length(), 0, -1, temp);
                 cin >> temp;
 
                 stoi(temp); // Remove when function is created

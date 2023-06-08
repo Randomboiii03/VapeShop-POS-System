@@ -48,7 +48,16 @@ void setInputPos(string text, int textLength, SHORT y, int padding, string label
     int maxWidth = csbi.dwMaximumWindowSize.X;
 
     SHORT centerX = ((maxWidth - textLength) / 2) + padding + label.length() + 1;
-    SHORT centerY = y;
+    SHORT centerY;
+
+    if (y == 0)
+    {
+        centerY = csbi.dwCursorPosition.Y - 1;
+    }
+    else
+    {
+        centerY = y;
+    }
 
     COORD pos = {centerX, centerY};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);

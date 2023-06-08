@@ -87,7 +87,7 @@ void pinCodeLogin()
         centerText(temp, maxWidth);
     }
 
-    setInputPos(labelRow, maxWidth, 14, padY, label); // Set input position
+    setInputPos(labelRow, maxWidth, newBanner.size() + 3, padY, label); // Set input position
     cin >> pinCode;
 
     char ch = getch();

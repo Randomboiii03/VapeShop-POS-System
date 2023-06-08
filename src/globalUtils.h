@@ -124,15 +124,20 @@ void pinCodeDisplay();
 void productDisplay();
 void productView(int prodIndex);
 
-void saveProductsByCategory(const vector<Product> &products, const string &category);
+void saveProducts(const vector<Product> &products);
 vector<Product> loadProductsByCategory(const string &category);
 bool containsCategory(const vector<string> &categories, const string &category);
 vector<string> getCategories();
+void deleteProduct(int prodIndex);
 
 int getMaxLengthProduct(const vector<Product> &data, int columnIndex, string columnName);
 
 // Cart related functions
 void cartDisplay();
+
+void deleteProductInCart(int cartIndex);
+void editQuantityInCart(int cartIndex, int maxHeight);
+bool checkStockinCart(int cartIndex, int quantity);
 
 int getMaxLengthCart(const vector<Cart> &data, const vector<Product> &data2, int columnIndex, string headerName);
 

@@ -8,7 +8,12 @@ void globalMenu(char ch)
     {
         isOpen = false;
         accountType = "User";
-        int pinCode = 0;
+
+        string temp = "Logging out...";
+        centerText(temp, temp.length());
+
+        Sleep(2000);
+        productDisplay();
     }
     else if (ch == 'p' && isOpen && accountType != "Developer") // Product
     {
@@ -27,6 +32,6 @@ void globalMenu(char ch)
     else if (ch == 'i' && isOpen && accountType != "User") // Pincode
     { 
         isOpen = false;
-        // pinCodeDisplay();
+        pinCodeDisplay();
     }
 }
