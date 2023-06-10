@@ -5,7 +5,7 @@ using namespace std;
 // Writes the expected time to a text file named "expecteTime.txt"
 void saveExpectedTime(time_t expectedTime)
 {
-    ofstream outputFile("databaseFolder/expectedTime.txt");
+    ofstream outputFile("database/expectedTime.txt");
 
     if (outputFile.is_open())
     {
@@ -23,7 +23,7 @@ ExpectedTimeData loadExpectedTime()
 {
     ExpectedTimeData data;
 
-    ifstream inputFile("databaseFolder/expectedTime.txt");
+    ifstream inputFile("database/expectedTime.txt");
 
     if (inputFile.is_open())
     {

@@ -65,9 +65,6 @@ extern vector<Account> admin;
 extern vector<string> categories;
 extern int nextCateg;
 
-// Cart related variables
-extern vector<Cart> cart;
-
 // Vector navigationUtils related variables
 extern vector<string> navUser, navAdmin, navDeveloper, banner;
 extern bool isOpen;
@@ -135,9 +132,12 @@ int getMaxLengthProduct(const vector<Product> &data, int columnIndex, string col
 // Cart related functions
 void cartDisplay();
 
+void saveCart(const vector<Cart> &data);
+vector<Cart> loadCart();
 void deleteProductInCart(int cartIndex);
 void editQuantityInCart(int cartIndex, int maxHeight);
-bool checkStockinCart(int cartIndex, int quantity);
+bool checkStock(int cartIndex, int quantity);
+void inCart(int prodIndex, int quantity);
 
 int getMaxLengthCart(const vector<Cart> &data, const vector<Product> &data2, int columnIndex, string headerName);
 

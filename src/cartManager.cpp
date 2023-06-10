@@ -2,8 +2,64 @@
 
 using namespace std;
 
+void saveCart(const vector<Cart> &data)
+{
+    ofstream outputFile("database/cart.txt");
+
+    if (outputFile.is_open())
+    {
+        for (const Cart &cart : data)
+        {
+            outputFile << cart.productNumber << "," << cart.quantity << "\n";
+        }
+
+        outputFile.close();
+    }
+    else
+    {
+        cerr << "Error opening file for cart.\n";
+    }
+}
+
+vector<Cart> loadCart()
+{
+    vector<Cart> data;
+
+    ifstream inputFile("database/cart.txt");
+
+    if (inputFile.is_open())
+    {
+        string line;
+
+        while (getline(inputFile, line))
+        {
+            Cart cart;
+            stringstream ss(line);
+            string value;
+
+            getline(ss, value, ',');
+            cart.productNumber = stoi(value);
+
+            getline(ss, value, ',');
+            cart.quantity = stoi(value);
+
+            data.push_back(cart);
+        }
+
+        inputFile.close();
+    }
+    else
+    {
+        cerr << "Error opening file for loading cart.\n";
+    }
+
+    return data;
+}
+
 void deleteProductInCart(int cartIndex)
 {
+    vector<Cart> cart = loadCart();
+
     string temp = "Are you sure you want to delete this item? [Y/N]";
     centerText(temp, temp.length());
 
@@ -13,7 +69,8 @@ void deleteProductInCart(int cartIndex)
     {
         if (ch == 'y')
         {
-            cart.erase(cart.begin() + cartIndex);
+            cart.erase(cart.begin() + cartIndex); // Delete item from cart
+            saveCart(cart);
 
             temp = "Item deleted successfully!";
             centerText(temp, temp.length());
@@ -30,6 +87,7 @@ void deleteProductInCart(int cartIndex)
 
 void editQuantityInCart(int cartIndex, int maxHeight)
 {
+    vector<Cart> cart = loadCart();
     string temp;
 
     try
@@ -37,23 +95,24 @@ void editQuantityInCart(int cartIndex, int maxHeight)
         temp = "Enter new quantity: ";
         centerText(temp, temp.length());
 
-        setInputPos(temp, temp.length(), maxHeight + 1, -1, temp);
+        setInputPos(temp, temp.length(), maxHeight, -1, temp);
         cin >> temp;
 
-        if (checkStockinCart(cartIndex, stoi(temp)))
+        if (checkStock(cartIndex, stoi(temp))) // Check stock is enough
         {
             cart[cartIndex].quantity = stoi(temp);
+            saveCart(cart);
 
             temp = "Item new quantity updated successfully!";
             centerText(temp, temp.length());
         }
-        else if (stoi(temp) <= 0)
+        else if (stoi(temp) <= 0) // If less than 0 quantity, delete item
         {
             deleteProductInCart(cartIndex);
         }
-        else
+        else // If stock is not enough
         {
-            temp = "Invalid input. Please enter a valid quantity."; // Change this message
+            temp = "Stock is not enough to update quantity in cart.";
             centerText(temp, temp.length());
         }
 
@@ -70,9 +129,10 @@ void editQuantityInCart(int cartIndex, int maxHeight)
     }
 }
 
-bool checkStockinCart(int cartIndex, int quantity)
+bool checkStock(int cartIndex, int quantity)
 {
     vector<Product> products;
+    vector<Cart> cart = loadCart();
 
     int stock;
 
@@ -91,20 +151,48 @@ bool checkStockinCart(int cartIndex, int quantity)
         }
     }
 
-    return stock >= quantity && quantity > 0;
+    return stock >= quantity && quantity > 0; // Check stock is enough and quantity is greater than 0
 }
 
-bool inCart(int prodIndex)
+void inCart(int prodIndex, int quantity)
 {
     vector<Product> products = loadProductsByCategory(categories[nextCateg]);
+    vector<Cart> cart = loadCart();
+
+    string temp;
+    bool isFound = false;
 
     for (int i = 0; i < cart.size(); i++)
     {
-        if (cart[i].productNumber == products[prodIndex].productNumber)
+        if (cart[i].productNumber == products[prodIndex].productNumber) // Check product is in cart
         {
-            return true;
+            if (checkStock(i, cart[i].quantity + quantity)) // Check stock is enough
+            {
+                cart[i].quantity += quantity;
+
+                temp = "Product already in cart. Quantity updated successfully!";
+                centerText(temp, temp.length());
+            }
+            else
+            {
+                temp = "Stock not enough for this product. Please enter a valid quantity.";
+                centerText(temp, temp.length());
+            }
+
+            isFound = true;
+            break;
         }
     }
 
-    return false;
+    if (!isFound)
+    {
+        temp = "Product added to cart successfully!";
+        centerText(temp, temp.length());
+
+        Cart newCart = {products[prodIndex].productNumber, quantity};
+
+        cart.push_back(newCart); // Add new item to cart
+    }
+
+    saveCart(cart); // Save cart to file
 }

@@ -199,21 +199,33 @@ void productView(int prodIndex)
                 setInputPos(temp, temp.length(), 0, -1, temp);
                 cin >> temp;
 
-                stoi(temp); // Remove when function is created
+                if (stoi(temp) > 0)
+                {
+                    if (ch == 'b') // Buy now
+                    {
+                        // checkout();
+                    }
+                    else if (ch == 'a') // Add to cart
+                    {
+                        inCart(prodIndex, stoi(temp));
 
-                if (ch == 'b') // Buy now
-                {
-                    // checkout();
+                        Sleep(2000);
+                        productDisplay();
+                    }
                 }
-                else if (ch == 'a') // Add to cart
+                else
                 {
-                    // cart();
+                    temp = "Invalid input. Please enter a valid quantity.";
+                    centerText(temp, temp.length());
+
+                    Sleep(2000);
+                    productView(prodIndex);
                 }
             }
             catch (const exception &) // Catch error
             {
-                temp = "Invalid input. Please enter a valid PIN code.";
-                centerText(temp, temp.length() + 10);
+                temp = "Invalid input. Please enter a valid quantity.";
+                centerText(temp, temp.length());
 
                 Sleep(2000);
                 productView(prodIndex);

@@ -5,11 +5,12 @@ using namespace std;
 void cartDisplay()
 {
     vector<Product> products;
+    vector<Cart> cart = loadCart();
 
     for (string category : categories)
     {
         vector<Product> temp = loadProductsByCategory(category);
-        products.insert(products.begin(), temp.begin(), temp.end());
+        products.insert(products.begin(), temp.begin(), temp.end()); // Insert all products of each category
     }
 
     vector<string> navigation, headerName, newBanner, newNavigation, content, options;

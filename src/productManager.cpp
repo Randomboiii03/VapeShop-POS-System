@@ -4,7 +4,7 @@ using namespace std;
 
 void saveProducts(const vector<Product> &products)
 {
-    ofstream outputFile("databaseFolder/products.txt");
+    ofstream outputFile("database/products.txt");
 
     if (outputFile.is_open())
     {
@@ -25,7 +25,7 @@ vector<Product> loadProductsByCategory(const string &category)
 {
     vector<Product> products;
 
-    ifstream inputFile("databaseFolder/products.txt");
+    ifstream inputFile("database/products.txt");
 
     if (inputFile.is_open())
     {
@@ -87,7 +87,7 @@ vector<string> getCategories()
 {
     vector<string> uniqueCategories;
 
-    fstream inputFile("databaseFolder/products.txt");
+    fstream inputFile("database/products.txt");
 
     if (inputFile.is_open())
     {
