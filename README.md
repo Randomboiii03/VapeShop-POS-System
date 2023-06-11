@@ -43,10 +43,10 @@ Once the VapeShop POS System is up and running, you can interact with it using t
 ## Data Persistence
 The VapeShop POS System utilizes file streams as a database for storing and retrieving data. The system creates and maintains the following files:
 
-* **inventory.txt:** Stores information about products in the inventory.
-* **admins.txt:** Contains admins credentials.
-* **users.txt:** Contains customer credentials.
-* **transactions.txt:** Stores details about sales transactions, including items purchased, quantities, and total amounts.
+* **products.txt:** Stores information about products.
+* **pinCode.txt:** Contains admin PIN code.
+* **cart.txt:** Stores information about cart.
+* **sales.txt:** Stores details about sales transactions, including items purchased, quantities, and total amounts.
 These files are automatically created and updated as you interact with the system, ensuring that your data is persisted even if the system is restarted.
 
 ## Contributions

@@ -62,7 +62,7 @@ void cartDisplay()
         spaceBetween++;
         maxWidth = prodListWidth + ((headerName.size() * spaceBetween) * 2) + (headerName.size() - 1); // Max width
 
-        if (maxWidth > bannerWidth)
+        if (maxWidth > bannerWidth && maxWidth > prodListWidth)
         {
             break;
         }
@@ -169,7 +169,7 @@ void cartDisplay()
                                 detail = to_string(i - 2); // Product number
                                 break;
                             case 1:
-                                detail = products[k].productName; // Product name
+                                detail = products[k].productName + " - " + products[k].category; // Product name and category
                                 break;
                             case 2:
                                 detail = to_string(cart[i - 2].quantity); // Product quantity
@@ -188,6 +188,8 @@ void cartDisplay()
                                 // Invalid column index
                                 break;
                             }
+
+                            break;
                         }
                     }
 

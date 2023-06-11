@@ -70,7 +70,7 @@ void productDisplay()
         spaceBetween++;
         maxWidth = prodListWidth + ((headerName.size() * spaceBetween) * 2) + (headerName.size() - 1); // Max width
 
-        if (maxWidth > bannerWidth)
+        if (maxWidth > bannerWidth && maxWidth > prodListWidth)
         {
             break;
         }

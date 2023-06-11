@@ -2,6 +2,63 @@
 
 using namespace std;
 
+bool containsCategory(const vector<string> &categories, const string &category)
+{
+    return find(categories.begin(), categories.end(), category) != categories.end();
+}
+
+vector<string> getCategories()
+{
+    vector<string> uniqueCategories;
+
+    fstream inputFile("database/products.txt");
+
+    if (inputFile.is_open())
+    {
+        string line;
+
+        while (getline(inputFile, line))
+        {
+            Product product;
+            stringstream ss(line);
+            string value;
+
+            getline(ss, value, ',');
+            product.productNumber = stoi(value);
+
+            getline(ss, product.category, ',');
+
+            getline(ss, product.brandName, ',');
+
+            getline(ss, product.productName, ',');
+
+            getline(ss, product.productDesc, ',');
+
+            getline(ss, value, ',');
+            product.price = stoi(value);
+
+            getline(ss, value, ',');
+            product.stock = stoi(value);
+
+            getline(ss, value);
+            product.isAvailable = stoi(value);
+
+            if (!containsCategory(uniqueCategories, product.category))
+            {
+                uniqueCategories.push_back(product.category);
+            }
+        }
+
+        inputFile.close();
+    }
+    else
+    {
+        cerr << "Error opening file for getting categories.\n";
+    }
+
+    return uniqueCategories;
+}
+
 int getMaxLengthProduct(const vector<Product> &data, int columnIndex, string headerName)
 {
     int max_length = 0;
