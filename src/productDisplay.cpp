@@ -177,12 +177,19 @@ void productDisplay()
             }
             else // When there is no product
             {
-                for (int length : maxLengths)
-                {
-                    temp += olVLine() + addNRepeat(" ", length + (spaceBetween * 2));
-                }
+                padding = centerPadding(maxHeight - newBanner.size() - 5, 1, 2);
 
-                temp += olVLine();
+                if (i == 2 + padding.paddingLeft)
+                {
+                    temp = "No products found";
+                    padding = centerPadding(maxWidth, temp.length(), 2);
+
+                    temp = olVLine() + addNRepeat(" ", padding.paddingLeft) + temp + addNRepeat(" ", padding.paddingRight) + olVLine();
+                }
+                else
+                {
+                    temp = olVLine() + addNRepeat(" ", maxWidth) + olVLine();
+                }
             }
         }
 

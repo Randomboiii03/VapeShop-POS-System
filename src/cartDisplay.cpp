@@ -201,12 +201,19 @@ void cartDisplay()
             }
             else // When there is no product
             {
-                for (int length : maxLengths)
-                {
-                    temp += olVLine() + addNRepeat(" ", length + (spaceBetween * 2));
-                }
+                padding = centerPadding(maxHeight - newBanner.size() - 7, 1, 2);
 
-                temp += olVLine();
+                if (i == 2 + padding.paddingLeft + 1)
+                {
+                    temp = "No item in cart";
+                    padding = centerPadding(maxWidth, temp.length(), 2);
+
+                    temp = olVLine() + addNRepeat(" ", padding.paddingLeft) + temp + addNRepeat(" ", padding.paddingRight) + olVLine();
+                }
+                else
+                {
+                    temp = olVLine() + addNRepeat(" ", maxWidth) + olVLine();
+                }
             }
         }
 
@@ -257,7 +264,7 @@ void cartDisplay()
         else if (ch == 't') // Checkout
         {
             isOpen = false;
-            
+
             if (cart.size() > 0)
             {
                 checkoutDisplay("");
