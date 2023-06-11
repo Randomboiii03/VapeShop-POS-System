@@ -10,7 +10,7 @@ void saveProducts(const vector<Product> &products)
     {
         for (const Product &product : products)
         {
-            outputFile << product.productNumber << "," << product.category << "," << product.brandName << "," << product.productName << "," << product.productDesc << "," << product.price << "," << product.stock << "," << product.isAvailable << "\n";
+            outputFile << product.productID << "," << product.category << "," << product.brandName << "," << product.productName << "," << product.productDesc << "," << product.price << "," << product.stock << "," << product.isAvailable << "\n";
         }
 
         outputFile.close();
@@ -38,7 +38,7 @@ vector<Product> loadProductsByCategory(const string &category)
             string value;
 
             getline(ss, value, ',');
-            product.productNumber = stoi(value);
+            product.productID = stoi(value);
 
             getline(ss, product.category, ',');
 
@@ -99,7 +99,7 @@ void deleteProduct(int prodIndex)
         {
             for (int i = 0; i < products.size(); i++)
             {
-                if (products[i].productNumber == productsByCategory[prodIndex].productNumber)
+                if (products[i].productID == productsByCategory[prodIndex].productID)
                 {
                     products.erase(products.begin() + i);
                     break;

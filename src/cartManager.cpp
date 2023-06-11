@@ -10,7 +10,7 @@ void saveCart(const vector<Cart> &data)
     {
         for (const Cart &cart : data)
         {
-            outputFile << cart.productNumber << "," << cart.quantity << "\n";
+            outputFile << cart.productID << "," << cart.quantity << "\n";
         }
 
         outputFile.close();
@@ -38,7 +38,7 @@ vector<Cart> loadCart()
             string value;
 
             getline(ss, value, ',');
-            cart.productNumber = stoi(value);
+            cart.productID = stoi(value);
 
             getline(ss, value, ',');
             cart.quantity = stoi(value);

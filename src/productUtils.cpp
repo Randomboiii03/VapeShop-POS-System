@@ -24,7 +24,7 @@ vector<string> getCategories()
             string value;
 
             getline(ss, value, ',');
-            product.productNumber = stoi(value);
+            product.productID = stoi(value);
 
             getline(ss, product.category, ',');
 

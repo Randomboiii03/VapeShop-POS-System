@@ -29,7 +29,7 @@ struct Account
 
 struct Product
 {
-    int productNumber;
+    int productID;
     string category;
     string brandName;
     string productName;
@@ -41,8 +41,18 @@ struct Product
 
 struct Cart
 {
-    int productNumber;
+    int productID;
     int quantity;
+};
+
+struct Sales
+{
+    int productID;
+    float price;
+    int quantity;
+    string paymentMode;
+    string transactionNum;
+    string currentTime;
 };
 
 struct Padding
@@ -123,10 +133,10 @@ void productView(int prodIndex);
 
 void saveProducts(const vector<Product> &products);
 vector<Product> loadProductsByCategory(const string &category);
-bool containsCategory(const vector<string> &categories, const string &category);
-vector<string> getCategories();
 void deleteProduct(int prodIndex);
 
+bool containsCategory(const vector<string> &categories, const string &category);
+vector<string> getCategories();
 int getMaxLengthProduct(const vector<Product> &data, int columnIndex, string columnName);
 
 // Cart related functions
@@ -136,9 +146,17 @@ void saveCart(const vector<Cart> &data);
 vector<Cart> loadCart();
 void deleteProductInCart(int cartIndex);
 void editQuantityInCart(int cartIndex, int maxHeight);
+
 bool checkStock(int cartIndex, int quantity);
 void inCart(int prodIndex, int quantity);
-
+void emptyCart();
 int getMaxLengthCart(const vector<Cart> &data, const vector<Product> &data2, int columnIndex, string headerName);
+
+// Checkout related functions
+void checkoutDisplay(string paymentMode);
+
+void saveSales(const vector<Sales> &data);
+
+string getCurrentDateTime();
 
 #endif

@@ -11,7 +11,7 @@ int getMaxLengthCart(const vector<Cart> &data, const vector<Product> &data2, int
     {
         for (const auto &product : data2)
         {
-            if (cart.productNumber == product.productNumber)
+            if (cart.productID == product.productID)
             {
                 string detail = product.productName + " - " + product.category;
 
@@ -62,7 +62,7 @@ bool checkStock(int cartIndex, int quantity)
 
     for (int i = 0; i < products.size(); i++)
     {
-        if (products[i].productNumber == cart[cartIndex].productNumber)
+        if (products[i].productID == cart[cartIndex].productID)
         {
             stock = products[i].stock;
             break;
@@ -82,7 +82,7 @@ void inCart(int prodIndex, int quantity)
 
     for (int i = 0; i < cart.size(); i++)
     {
-        if (cart[i].productNumber == products[prodIndex].productNumber) // Check product is in cart
+        if (cart[i].productID == products[prodIndex].productID) // Check product is in cart
         {
             if (checkStock(i, cart[i].quantity + quantity)) // Check stock is enough
             {
@@ -107,10 +107,20 @@ void inCart(int prodIndex, int quantity)
         temp = "Product added to cart successfully!";
         centerText(temp, temp.length());
 
-        Cart newCart = {products[prodIndex].productNumber, quantity};
+        Cart newCart = {products[prodIndex].productID, quantity};
 
         cart.push_back(newCart); // Add new item to cart
     }
 
     saveCart(cart); // Save cart to file
+}
+
+void emptyCart()
+{
+    ofstream outputFile("database/cart.txt", ios::trunc);
+
+    if (!outputFile)
+    {
+        cerr << "Error opening file for cart.\n";
+    }
 }

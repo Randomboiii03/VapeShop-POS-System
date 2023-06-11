@@ -2,10 +2,11 @@
 
 using namespace std;
 
-void cartDisplay()
+void checkoutDisplay(string paymentMode)
 {
     vector<Product> products;
     vector<Cart> cart = loadCart();
+    vector<Sales> sales;
 
     for (string category : categories)
     {
@@ -14,7 +15,7 @@ void cartDisplay()
     }
 
     vector<string> navigation, headerName, newBanner, newNavigation, content, options;
-    string temp;
+    string temp, currentTime = getCurrentDateTime();
 
     vector<int> maxLengths;
     int prodListWidth = 0, bannerWidth, maxWidth, maxHeight, spaceBetween = 0, count = 0, optListWidth = 0;
@@ -27,13 +28,13 @@ void cartDisplay()
 
     navigation = navUser;
 
-    headerName = {"No", "Product", "Quantity", "Price", "Total"};
+    headerName = {"Product", "Quantity", "Price", "Total"};
 
-    options = {"[Esc] Close Menu", "[M] Menu", "[E] Edit Quantity", "[D] Delete Product", "[T] Checkout"};
+    options = {"[B] Back", "[C] Cash", "[E] E-Money", "[A] Credit Card"};
 
-    for (int i = 0; i < headerName.size(); i++)
+    for (int i = 1; i <= headerName.size(); i++)
     {
-        maxLengths.push_back(getMaxLengthCart(cart, products, i, headerName[i]));
+        maxLengths.push_back(getMaxLengthCart(cart, products, i, headerName[i - 1]));
     }
 
     for (int length : maxLengths)
@@ -43,15 +44,6 @@ void cartDisplay()
 
     for (int i = 0; i < options.size(); i++)
     {
-        if (!isOpen && i == 0)
-        {
-            continue;
-        }
-        else if (isOpen && i == 1)
-        {
-            continue;
-        }
-
         optListWidth += options[i].length();
     }
 
@@ -62,7 +54,7 @@ void cartDisplay()
         spaceBetween++;
         maxWidth = prodListWidth + ((headerName.size() * spaceBetween) * 2) + (headerName.size() - 1); // Max width
 
-        if (maxWidth > bannerWidth && maxWidth > prodListWidth)
+        if (maxWidth > bannerWidth)
         {
             break;
         }
@@ -71,7 +63,7 @@ void cartDisplay()
 
     newBanner = bannerDisplay(maxWidth, bannerWidth, "Cart"); // Banner display function
 
-    maxHeight = max(navigation.size() + 10, newBanner.size() + cart.size() + 7); // Max height
+    maxHeight = newBanner.size() + cart.size() + 7; // Max height
 
     for (int i = 0; i < maxHeight - newBanner.size(); i++) // Content display
     {
@@ -87,15 +79,15 @@ void cartDisplay()
 
             temp += olVLine();
         }
-        else if (i == 1 || i == (maxHeight - newBanner.size() - 3) || (i == (maxHeight - newBanner.size() - 5) && totalPrice != 0)) // Divider display
+        else if (i == 1 || i == (maxHeight - newBanner.size() - 3) || i == (maxHeight - newBanner.size() - 5)) // Divider display
         {
             temp = olLVDivider() + addNRepeat(olHLine(), maxWidth) + olRVDivider();
         }
-        else if (i == (maxHeight - newBanner.size() - 4) && totalPrice != 0) // Total Price display
+        else if (i == (maxHeight - newBanner.size() - 4)) // Total Price display
         {
             temp += olVLine();
 
-            vector<string> tPrice = {"", "", "", "Total Price:", "₱ " + priceFormat(totalPrice)};
+            vector<string> tPrice = {currentTime, "", "Total Price:", "₱ " + priceFormat(totalPrice)};
             int minus = 0;
 
             for (int j = 0; j < headerName.size(); j++)
@@ -117,25 +109,24 @@ void cartDisplay()
         }
         else if (i == (maxHeight - newBanner.size() - 2)) // Options display
         {
-            padding = centerPadding(maxWidth, optListWidth, options.size());
-
-            temp = olVLine() + addNRepeat(" ", padding.paddingLeft);
-
-            for (int j = 0; j < options.size(); j++)
+            if (paymentMode == "")
             {
-                if (!isOpen && j == 0) // If menu is closed skip [Esc] Close Menu
+                padding = centerPadding(maxWidth, optListWidth, options.size() + 1);
+
+                temp = olVLine() + addNRepeat(" ", padding.paddingLeft);
+
+                for (int j = 0; j < options.size(); j++)
                 {
-                    continue;
-                }
-                else if (isOpen && j == 1) // If menu is open skip [M] Menu
-                {
-                    continue;
+                    temp += options[j] + addNRepeat(" ", padding.paddingRight);
                 }
 
-                temp += options[j] + addNRepeat(" ", padding.paddingRight);
+                temp += olVLine();
             }
-
-            temp += olVLine();
+            else
+            {
+                padding = centerPadding(maxWidth, paymentMode.length(), 2);
+                temp = olVLine() + addNRepeat(" ", padding.paddingLeft) + paymentMode + addNRepeat(" ", padding.paddingRight) + olVLine();
+            }
         }
         else if (i == (maxHeight - newBanner.size() - 1)) // Footer display
         {
@@ -166,19 +157,16 @@ void cartDisplay()
                             switch (j)
                             {
                             case 0:
-                                detail = to_string(i - 2); // Product number
+                                detail = products[k].productName; // Product name
                                 break;
                             case 1:
-                                detail = products[k].productName + " - " + products[k].category; // Product name and category
-                                break;
-                            case 2:
                                 detail = to_string(cart[i - 2].quantity); // Product quantity
                                 break;
-                            case 3:
+                            case 2:
                                 detail = "₱ " + priceFormat(products[k].price); // Price
                                 minus = 2;                                      // For currency symbol
                                 break;
-                            case 4:
+                            case 3:
                                 totalPrice += products[k].price * cart[i - 2].quantity;
 
                                 detail = "₱ " + priceFormat(products[k].price * cart[i - 2].quantity); // Total
@@ -213,20 +201,9 @@ void cartDisplay()
         content.push_back(temp);
     }
 
-    if (isOpen)
-    {
-        maxWidth += navigation[2].length() + 1;                   // Navigation width
-        newNavigation = navigationDisplay(navigation, maxHeight); // Navigation display function
-    }
-
     for (int i = 0; i < maxHeight; i++)
     {
         temp = "";
-
-        if (isOpen)
-        {
-            temp = newNavigation[i];
-        }
 
         if (i < newBanner.size())
         {
@@ -240,80 +217,107 @@ void cartDisplay()
         centerText(temp, maxWidth);
     }
 
-    while (true) // Menus
+    if (paymentMode == "")
     {
-        char ch = getch();
+        while (true) // Menus
+        {
+            char ch = getch();
 
-        if (ch == 'm' && !isOpen) // Open menu
-        {
-            isOpen = true;
-            cartDisplay();
-        }
-        else if (ch == 27) // Close menu
-        {
-            isOpen = false;
-            cartDisplay();
-        }
-        else if (ch == 't') // Checkout
-        {
-            isOpen = false;
-            
-            if (cart.size() > 0)
+            if (ch == 'c')
             {
-                checkoutDisplay("");
+                checkoutDisplay("Cash");
             }
-            else
+            else if (ch == 'e')
             {
-                temp = "There is no product in cart.";
+                checkoutDisplay("E-Money");
+            }
+            else if (ch == 'a')
+            {
+                checkoutDisplay("Credit Card");
+            }
+            else if (ch == 'b')
+            {
+                cartDisplay();
+            }
+        }
+    }
+    else
+    {
+        string transactionNum;
+
+        if (paymentMode == "Cash")
+        {
+            transactionNum = "N/A";
+        }
+        else if (paymentMode == "E-Money")
+        {
+            temp = "What type of e-money would you like to use? ";
+            centerText(temp, temp.length());
+
+            setInputPos(temp, temp.length(), 0, -1, temp);
+            cin >> paymentMode;
+
+            temp = "Enter transaction number: ";
+            centerText(temp, temp.length());
+
+            setInputPos(temp, temp.length(), 0, -1, temp);
+            cin >> transactionNum;
+        }
+        else if (paymentMode == "Credit Card")
+        {
+            temp = "What type of credit card would you like to use? ";
+            centerText(temp, temp.length());
+
+            setInputPos(temp, temp.length(), 0, -1, temp);
+            cin >> paymentMode;
+
+            temp = "Enter transaction number: ";
+            centerText(temp, temp.length());
+
+            setInputPos(temp, temp.length(), 0, -1, temp);
+            cin >> transactionNum;
+        }
+
+        temp = "Would you like to proceed to checkout? [Y/N]";
+        centerText(temp, temp.length());
+
+        while (true)
+        {
+            char ch = getch();
+
+            if (ch == 'y')
+            {
+                for (auto &data : cart)
+                {
+                    for (auto &product : products)
+                    {
+                        if (data.productID == product.productID)
+                        {
+                            Sales sale = {data.productID, product.price, data.quantity, paymentMode, transactionNum, currentTime};
+                            sales.push_back(sale);
+
+                            break;
+                        }
+                    }
+                }
+
+                temp = "Checkout successful. Thank you!";
+                centerText(temp, temp.length());
+
+                saveSales(sales); // Save sales
+                emptyCart(); // Empty cart
+
+                Sleep(2000);
+                cartDisplay();
+            }
+            else if (ch == 'n')
+            {
+                temp = "Cancel checkout";
                 centerText(temp, temp.length());
 
                 Sleep(2000);
                 cartDisplay();
             }
-        }
-        else if (ch == 'd' || ch == 'e')
-        {
-            try
-            {
-                temp = "Enter product number: ";
-
-                centerText(temp, temp.length());
-
-                setInputPos(temp, temp.length(), 0, -1, temp);
-                cin >> temp;
-
-                if (stoi(temp) < cart.size() && stoi(temp) >= 0)
-                {
-                    if (ch == 'd') // Delete product in cart
-                    {
-                        deleteProductInCart(stoi(temp));
-                    }
-                    else if (ch == 'e') // Edit product in cart
-                    {
-                        editQuantityInCart(stoi(temp), maxHeight);
-                    }
-                }
-                else
-                {
-                    temp = "Invalid input. Please enter a valid product number.";
-                    centerText(temp, temp.length());
-
-                    Sleep(2000);
-                    cartDisplay();
-                }
-            }
-            catch (const exception &) // Catch error
-            {
-                temp = "Invalid input. Please enter a valid product number.";
-                centerText(temp, temp.length());
-
-                Sleep(2000);
-                cartDisplay();
-            }
-        }
-        else
-        {
-            globalMenu(ch);
         }
     }
 }
