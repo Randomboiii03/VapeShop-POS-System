@@ -59,7 +59,7 @@ int getMaxLengthSales(const vector<Sales> &data, const vector<Product> &data2, i
 }
 
 vector<string> getWeekDates(time_t currentDate)
-{   
+{
     tm *date = localtime(&currentDate);
     int dayOfWeek = date->tm_wday;
     int secondsPerDay = 24 * 60 * 60; // Number of seconds in a day
@@ -90,4 +90,28 @@ vector<string> getWeekDates(time_t currentDate)
     }
 
     return weekDates;
+}
+
+string getSalesTitle(time_t currentDate)
+{
+    stringstream ss;
+    tm *date = localtime(&currentDate);
+    ss << put_time(date, "%Y-%m-%d"); // Create a string representation of the current date
+
+    vector<string> months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    vector<string> week = getWeekDates(currentDate);
+
+    switch (saleFilterIndex)
+    {
+    case 0:
+        return "All Sales";
+    case 1:
+        return "Sales for " + months[date->tm_mon] + " " + splitString(ss.str(), '-')[2] + ", " + splitString(ss.str(), '-')[0];
+    case 2:
+        return "Sales from " + months[stoi(splitString(week[0], '-')[1])] + " " + splitString(week[0], '-')[2] + ", " + splitString(week[0], '-')[0] + " to " + months[stoi(splitString(week[6], '-')[1])] + " " + splitString(week[6], '-')[2] + ", " + splitString(week[6], '-')[0];
+    case 3:
+        return "Sales for " + months[date->tm_mon] + " " + splitString(ss.str(), '-')[0];
+    case 4:
+        return "Sales for year - " + splitString(ss.str(), '-')[0];
+    }
 }

@@ -173,6 +173,7 @@ vector<Sales> loadByMonthSales(time_t currentDate);
 vector<Sales> loadByYearSales(time_t currentDate);
 void deleteSales(int saleIndex, time_t currentDate);
 
+string getSalesTitle(time_t currentDate);
 int getMaxLengthSales(const vector<Sales> &data, const vector<Product> &data2, int columnIndex, string headerName);
 vector<string> getWeekDates(time_t currentDate);
 

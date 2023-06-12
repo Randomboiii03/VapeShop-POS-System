@@ -90,69 +90,65 @@ void pinCodeLogin()
     setInputPos(labelRow, maxWidth, newBanner.size() + 3, padY, label); // Set input position
     cin >> pinCode;
 
-    char ch = getch();
-
     try
     {
-        if (ch == '1') // User submit to login
+        while (true)
         {
-            stoi(pinCode); // Check if integer
+            char ch = getch();
 
-            for (auto &account : accounts)
+            if (ch == '1') // User submit to login
             {
-                if (pinCode == account.pinCode)
+                stoi(pinCode); // Check if integer
+
+                for (auto &account : accounts)
                 {
-                    isValid = true;
-                    accountType = account.accountType;
-                    temp = accountType + " successfully login!";
-                    break;
+                    if (pinCode == account.pinCode)
+                    {
+                        isValid = true;
+                        accountType = account.accountType;
+                        temp = accountType + " successfully login!";
+                        break;
+                    }
+                }
+
+                if (!isValid) // Wrong PIN code
+                {
+                    temp = "Wrong PIN code!";
+                    tries++;
+                }
+
+                centerText(temp, temp.length());
+
+                Sleep(2000);
+
+                if (isValid) // Login
+                {
+                    pinCodeDisplay();
+                }
+                else // Wrong PIN code
+                {
+                    if (tries >= 5)
+                    {
+                        temp = "Maximum login attempts reached. Please wait for one hour before trying again.";
+
+                        centerText(temp, temp.length());
+
+                        saveExpectedTime(calculateExpectedTime()); // Save the expected time after one hour of current time
+                        Sleep(2000);
+                        productDisplay();
+                    }
+                    else
+                    {
+                        saveExpectedTime(calculateExpectedTime());
+                        pinCodeLogin();
+                    }
                 }
             }
-
-            if (!isValid) // Wrong PIN code
+            else if (ch == '0') // Cancel
             {
-                temp = "Wrong PIN code!";
-                tries++;
+                saveExpectedTime(calculateExpectedTime()); // Save the expected time after one hour of current time
+                productDisplay();
             }
-
-            centerText(temp, temp.length());
-
-            Sleep(2000);
-
-            if (isValid) // Login
-            {
-                pinCodeDisplay();
-            }
-            else // Wrong PIN code
-            {
-                if (tries >= 5)
-                {
-                    temp = "Maximum login attempts reached. Please wait for one hour before trying again.";
-
-                    centerText(temp, temp.length());
-
-                    saveExpectedTime(calculateExpectedTime()); // Save the expected time after one hour of current time
-                    Sleep(2000);
-                    productDisplay();
-                }
-                else
-                {
-                    saveExpectedTime(calculateExpectedTime());
-                    pinCodeLogin();
-                }
-            }
-        }
-        else if (ch == '0') // Cancel
-        {
-            productDisplay();
-        }
-        else
-        {
-            temp = "Invalid input. Please enter a valid PIN code.";
-            centerText(temp, temp.length());
-
-            Sleep(2000);
-            pinCodeLogin();
         }
     }
     catch (const exception &) // Catch error

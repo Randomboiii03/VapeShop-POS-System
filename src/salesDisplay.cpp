@@ -24,7 +24,7 @@ void salesDisplay(time_t currentDate)
     system("cls");
     SetConsoleOutputCP(CP_UTF8);
 
-    navigation = navUser;
+    navigation = navAdmin;
 
     headerName = {"No", "Date", "Product", "Quantity", "Price", "Total", "Payment Mode", "Transaction Number"};
 
@@ -89,7 +89,7 @@ void salesDisplay(time_t currentDate)
 
     } while (true);
 
-    newBanner = bannerDisplay(maxWidth, bannerWidth, "Sales -" + splitString(saleFilters[saleFilterIndex], ']')[1]); // Banner display function
+    newBanner = bannerDisplay(maxWidth, bannerWidth, getSalesTitle(currentDate)); // Banner display function
 
     maxHeight = max(navigation.size() + 10, newBanner.size() + sale.size() + 7); // Max height
 
@@ -324,14 +324,28 @@ void salesDisplay(time_t currentDate)
         else if (ch == 77) // Right
         {
             saleFilterIndex = (saleFilterIndex + 1) % saleFilters.size();
+
+            if (saleFilterIndex == 0)
+            {
+                auto now = chrono::system_clock::now();
+                currentDate = chrono::system_clock::to_time_t(now); // Get the current system time
+            }
+
             salesDisplay(currentDate);
         }
         else if (ch == 75) // Left
         {
             saleFilterIndex = (saleFilterIndex - 1 + saleFilters.size()) % saleFilters.size();
+
+            if (saleFilterIndex == 0)
+            {
+                auto now = chrono::system_clock::now();
+                currentDate = chrono::system_clock::to_time_t(now); // Get the current system time
+            }
+
             salesDisplay(currentDate);
         }
-        else if (ch == 72 && saleFilterIndex > 1) // Up
+        else if (ch == 72 && saleFilterIndex >= 1) // Up
         {
             tm *date = localtime(&currentDate);
 
@@ -339,6 +353,7 @@ void salesDisplay(time_t currentDate)
             {
             case 1:
                 date->tm_mday += 1;
+                break;
             case 2:
                 date->tm_mday += 7;
                 break;
@@ -350,10 +365,12 @@ void salesDisplay(time_t currentDate)
                 break;
             }
 
+            Sleep(500);
+
             currentDate = mktime(date);
             salesDisplay(currentDate);
         }
-        else if (ch == 80 && saleFilterIndex > 1) // Down
+        else if (ch == 80 && saleFilterIndex >= 1) // Down
         {
             tm *date = localtime(&currentDate);
 
@@ -361,6 +378,7 @@ void salesDisplay(time_t currentDate)
             {
             case 1:
                 date->tm_mday -= 1;
+                break;
             case 2:
                 date->tm_mday -= 7;
                 break;
@@ -371,6 +389,8 @@ void salesDisplay(time_t currentDate)
                 date->tm_year -= 1;
                 break;
             }
+
+            Sleep(500);
 
             currentDate = mktime(date);
             salesDisplay(currentDate);
