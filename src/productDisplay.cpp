@@ -254,7 +254,7 @@ void productDisplay()
                         temp = "Maximum login attempts reached. Please wait for one hour before trying again.";
                         centerText(temp, temp.length());
                     }
-                    else if (checkTime(timeData.expectedTime))
+                    else if (tries < 5)
                     {
                         pinCodeLogin();
                     }

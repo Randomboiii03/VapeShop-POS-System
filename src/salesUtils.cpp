@@ -100,18 +100,21 @@ string getSalesTitle(time_t currentDate)
 
     vector<string> months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     vector<string> week = getWeekDates(currentDate);
+    string temp;
 
     switch (saleFilterIndex)
     {
     case 0:
-        return "All Sales";
+        temp = "All Sales";
     case 1:
-        return "Sales for " + months[date->tm_mon] + " " + splitString(ss.str(), '-')[2] + ", " + splitString(ss.str(), '-')[0];
+        temp = "Sales for " + months[date->tm_mon] + " " + splitString(ss.str(), '-')[2] + ", " + splitString(ss.str(), '-')[0];
     case 2:
-        return "Sales from " + months[stoi(splitString(week[0], '-')[1])] + " " + splitString(week[0], '-')[2] + ", " + splitString(week[0], '-')[0] + " to " + months[stoi(splitString(week[6], '-')[1])] + " " + splitString(week[6], '-')[2] + ", " + splitString(week[6], '-')[0];
+        temp = "Sales from " + months[stoi(splitString(week[0], '-')[1])] + " " + splitString(week[0], '-')[2] + ", " + splitString(week[0], '-')[0] + " to " + months[stoi(splitString(week[6], '-')[1])] + " " + splitString(week[6], '-')[2] + ", " + splitString(week[6], '-')[0];
     case 3:
-        return "Sales for " + months[date->tm_mon] + " " + splitString(ss.str(), '-')[0];
+        temp = "Sales for " + months[date->tm_mon] + " " + splitString(ss.str(), '-')[0];
     case 4:
-        return "Sales for year - " + splitString(ss.str(), '-')[0];
+        temp = "Sales for year - " + splitString(ss.str(), '-')[0];
     }
+
+    return temp;
 }

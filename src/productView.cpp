@@ -20,7 +20,7 @@ void productView(int prodIndex)
     if (accountType == "User")
     {
         navigation = navUser;
-        options = {"[Esc] Close Menu", "[M] Menu", "[B] Buy Now", "[A] Add to Cart"};
+        options = {"[Esc] Close Menu", "[M] Menu", "[A] Add to Cart"};
     }
     else if (accountType == "Admin")
     {
@@ -188,7 +188,7 @@ void productView(int prodIndex)
             prodIndex = (prodIndex - 1 + products.size()) % products.size();
             productView(prodIndex);
         }
-        else if (accountType == "User" && (ch == 'b' || ch == 'a'))
+        else if (accountType == "User" && ch == 'a')
         {
             try
             {
@@ -201,17 +201,10 @@ void productView(int prodIndex)
 
                 if (stoi(temp) > 0)
                 {
-                    if (ch == 'b') // Buy now
-                    {
-                        // checkout();
-                    }
-                    else if (ch == 'a') // Add to cart
-                    {
-                        inCart(prodIndex, stoi(temp));
+                    inCart(prodIndex, stoi(temp));
 
-                        Sleep(2000);
-                        productDisplay();
-                    }
+                    Sleep(2000);
+                    productDisplay();
                 }
                 else
                 {
