@@ -75,6 +75,10 @@ extern vector<Account> admin;
 extern vector<string> categories;
 extern int nextCateg;
 
+// Sales related variables
+extern int saleFilterIndex;
+extern string saleDate;
+
 // Vector navigationUtils related variables
 extern vector<string> navUser, navAdmin, navDeveloper, banner;
 extern bool isOpen;
@@ -111,6 +115,7 @@ void centerText(string text, int textLength);
 void setInputPos(string text, int textLength, SHORT y, int padding, string label);
 
 string priceFormat(float value);
+vector<string> splitString(string text, char delimiter);
 
 // Security related functions
 void saveExpectedTime(time_t expectedTime);
@@ -155,8 +160,20 @@ int getMaxLengthCart(const vector<Cart> &data, const vector<Product> &data2, int
 // Checkout related functions
 void checkoutDisplay(string paymentMode);
 
-void saveSales(const vector<Sales> &data);
-
 string getCurrentDateTime();
+
+// Sales related functions
+void salesDisplay();
+
+void saveSales(const vector<Sales> &data);
+vector<Sales> loadSales();
+vector<Sales> loadAllSales();
+vector<Sales> loadTodaySales();
+vector<Sales> loadThisWeekSales();
+vector<Sales> loadThisMonthSales();
+vector<Sales> loadThisYearSales();
+
+int getMaxLengthSales(const vector<Sales> &data, const vector<Product> &data2, int columnIndex, string headerName);
+vector<string> getWeekDates();
 
 #endif

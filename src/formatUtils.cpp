@@ -79,3 +79,17 @@ string priceFormat(float value)
 
     return result;
 }
+
+vector<string> splitString(string text, char delimiter)
+{
+    vector<string> tokens;
+    istringstream iss(text);
+    string token;
+
+    while (getline(iss, token, delimiter))
+    {
+        tokens.push_back(token);
+    }
+
+    return tokens;
+}

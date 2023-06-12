@@ -4,7 +4,7 @@ using namespace std;
 
 int getMaxLengthCart(const vector<Cart> &data, const vector<Product> &data2, int columnIndex, string headerName)
 {
-    int max_length = 0;
+    int maxLength = 0;
 
     // Check for the datas width
     for (const auto &cart : data)
@@ -18,19 +18,19 @@ int getMaxLengthCart(const vector<Cart> &data, const vector<Product> &data2, int
                 switch (columnIndex)
                 {
                 case 0:
-                    max_length = max(max_length, static_cast<int>(to_string(data.size()).length()));
+                    maxLength = max(maxLength, static_cast<int>(to_string(data.size()).length()));
                     break;
                 case 1:
-                    max_length = max(max_length, static_cast<int>(detail.length()));
+                    maxLength = max(maxLength, static_cast<int>(detail.length()));
                     break;
                 case 2:
-                    max_length = max(max_length, static_cast<int>(to_string(cart.quantity).length()));
+                    maxLength = max(maxLength, static_cast<int>(to_string(cart.quantity).length()));
                     break;
                 case 3:
-                    max_length = max(max_length, static_cast<int>(priceFormat(product.price).length() - 2));
+                    maxLength = max(maxLength, static_cast<int>(priceFormat(product.price).length() - 2));
                     break;
                 case 4:
-                    max_length = max(max_length, static_cast<int>(priceFormat(product.price * cart.quantity).length() - 2));
+                    maxLength = max(maxLength, static_cast<int>(priceFormat(product.price * cart.quantity).length() - 2));
                     break;
                 default:
                     // Invalid column index
@@ -42,9 +42,9 @@ int getMaxLengthCart(const vector<Cart> &data, const vector<Product> &data2, int
         }
     }
 
-    max_length = max(max_length, static_cast<int>(headerName.length())); // Check for the header width
+    maxLength = max(maxLength, static_cast<int>(headerName.length())); // Check for the header width
 
-    return max_length;
+    return maxLength;
 }
 
 bool checkStock(int cartIndex, int quantity)

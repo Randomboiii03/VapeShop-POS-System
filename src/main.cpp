@@ -22,6 +22,9 @@ vector<string> navUser, navAdmin, navDeveloper, banner;
 vector<string> categories = getCategories();
 int nextCateg = 0;
 
+int saleFilterIndex = 0;
+string saleDate = getCurrentDateTime();
+
 int main()
 {
     checkTime(timeData.expectedTime);

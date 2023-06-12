@@ -28,6 +28,7 @@ void globalMenu(char ch)
     else if (ch == 's' && isOpen && accountType == "Admin") // Sales
     {
         isOpen = false;
+        salesDisplay();
     }
     else if (ch == 'i' && isOpen && accountType != "User") // Pincode
     { 

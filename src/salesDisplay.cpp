@@ -2,10 +2,9 @@
 
 using namespace std;
 
-void cartDisplay()
+void salesDisplay()
 {
     vector<Product> products;
-    vector<Cart> cart = loadCart();
 
     for (string category : categories)
     {
@@ -13,12 +12,12 @@ void cartDisplay()
         products.insert(products.begin(), temp.begin(), temp.end()); // Insert all products of each category
     }
 
-    vector<string> navigation, headerName, newBanner, newNavigation, content, options;
+    vector<string> navigation, headerName, saleFilters, newBanner, newNavigation, content, options;
     string temp;
 
     vector<int> maxLengths;
-    int prodListWidth = 0, bannerWidth, maxWidth, maxHeight, spaceBetween = 0, count = 0, optListWidth = 0;
-    float totalPrice = 0;
+    int prodListWidth = 0, bannerWidth, maxWidth, maxHeight, spaceBetween = 0, count = 0, optListWidth = 0, saleFilterListWidth = 0;
+    float totalSales = 0;
 
     Padding padding;
 
@@ -27,13 +26,17 @@ void cartDisplay()
 
     navigation = navUser;
 
-    headerName = {"No", "Product", "Quantity", "Price", "Total"};
+    headerName = {"No", "Date", "Product", "Quantity", "Price", "Total", "Payment Mode", "Transaction Number"};
 
-    options = {"[Esc] Close Menu", "[M] Menu", "[E] Edit Quantity", "[D] Delete Product", "[T] Checkout"};
+    saleFilters = {"[0] All", "[1] Today", "[2] This Week", "[3] This Month", "[4] This Year"};
+
+    options = {"[Esc] Close Menu", "[M] Menu", "[V] View Sale", "[D] Delete Sale", "[<->] Filter"};
+
+    vector<Sales> sale = loadSales(); // Load sales
 
     for (int i = 0; i < headerName.size(); i++)
     {
-        maxLengths.push_back(getMaxLengthCart(cart, products, i, headerName[i]));
+        maxLengths.push_back(getMaxLengthSales(sale, products, i, headerName[i]));
     }
 
     for (int length : maxLengths)
@@ -55,11 +58,16 @@ void cartDisplay()
         optListWidth += options[i].length();
     }
 
+    for (string filter : saleFilters)
+    {
+        saleFilterListWidth += filter.length(); // Sale filter list width
+    }
+
     bannerWidth = banner[0].length() + 10; // Banner width
 
     do
     {
-        spaceBetween++;
+        spaceBetween += 3;
         maxWidth = prodListWidth + ((headerName.size() * spaceBetween) * 2) + (headerName.size() - 1); // Max width
 
         if (maxWidth > bannerWidth && maxWidth > prodListWidth)
@@ -69,9 +77,9 @@ void cartDisplay()
 
     } while (true);
 
-    newBanner = bannerDisplay(maxWidth, bannerWidth, "Cart"); // Banner display function
+    newBanner = bannerDisplay(maxWidth, bannerWidth, "Sales -" + splitString(saleFilters[saleFilterIndex], ']')[1]); // Banner display function
 
-    maxHeight = max(navigation.size() + 10, newBanner.size() + cart.size() + 7); // Max height
+    maxHeight = max(navigation.size() + 10, newBanner.size() + sale.size() + 7); // Max height
 
     for (int i = 0; i < maxHeight - newBanner.size(); i++) // Content display
     {
@@ -87,33 +95,17 @@ void cartDisplay()
 
             temp += olVLine();
         }
-        else if (i == 1 || i == (maxHeight - newBanner.size() - 3) || (i == (maxHeight - newBanner.size() - 5) && totalPrice != 0)) // Divider display
+        else if (i == 1 || i == (maxHeight - newBanner.size() - 3) || (i == (maxHeight - newBanner.size() - 5) && totalSales != 0)) // Divider display
         {
             temp = olLVDivider() + addNRepeat(olHLine(), maxWidth) + olRVDivider();
         }
-        else if (i == (maxHeight - newBanner.size() - 4) && totalPrice != 0) // Total price display
+        else if (i == (maxHeight - newBanner.size() - 4) && totalSales != 0) // Total sales display
         {
-            temp += olVLine();
+            temp = "Total Sales: ₱ " + priceFormat(totalSales);
 
-            vector<string> tPrice = {"", "", "", "Total Price:", "₱ " + priceFormat(totalPrice)};
-            int minus = 0;
+            padding = centerPadding(maxWidth, temp.length() - 2, 2);
 
-            for (int j = 0; j < headerName.size(); j++)
-            {
-                if (j == headerName.size() - 1)
-                {
-                    minus = 2;
-                }
-                else
-                {
-                    temp += " ";
-                }
-
-                padding = centerPadding(maxLengths[j], tPrice[j].length() - minus, 2);
-                temp += addNRepeat(" ", padding.paddingLeft + spaceBetween) + tPrice[j] + addNRepeat(" ", padding.paddingRight + spaceBetween);
-            }
-
-            temp += olVLine();
+            temp = olVLine() + addNRepeat(" ", padding.paddingLeft) + temp + addNRepeat(" ", padding.paddingRight) + olVLine();
         }
         else if (i == (maxHeight - newBanner.size() - 2)) // Options display
         {
@@ -152,7 +144,7 @@ void cartDisplay()
         }
         else
         {
-            if (cart.size() > 0) // Cart list display
+            if (sale.size() > 0) // Sales list display
             {
                 for (int j = 0; j < headerName.size(); j++)
                 {
@@ -161,7 +153,7 @@ void cartDisplay()
 
                     for (int k = 0; k < products.size(); k++)
                     {
-                        if (products[k].productID == cart[i - 2].productID)
+                        if (products[k].productID == sale[i - 2].productID)
                         {
                             switch (j)
                             {
@@ -169,20 +161,36 @@ void cartDisplay()
                                 detail = to_string(i - 2); // Product number
                                 break;
                             case 1:
-                                detail = products[k].productName + " - " + products[k].category; // Product name and category
+                                detail = splitString(sale[i - 2].currentTime, ' ')[0]; // Date
                                 break;
                             case 2:
-                                detail = to_string(cart[i - 2].quantity); // Product quantity
+                                detail = products[k].productName + " - " + products[k].category; // Product name and category
                                 break;
                             case 3:
+                                detail = to_string(sale[i - 2].quantity); // Product quantity
+                                break;
+                            case 4:
                                 detail = "₱ " + priceFormat(products[k].price); // Price
                                 minus = 2;                                      // For currency symbol
                                 break;
-                            case 4:
-                                totalPrice += products[k].price * cart[i - 2].quantity;
+                            case 5:
+                                totalSales += products[k].price * sale[i - 2].quantity;
 
-                                detail = "₱ " + priceFormat(products[k].price * cart[i - 2].quantity); // Total
+                                detail = "₱ " + priceFormat(products[k].price * sale[i - 2].quantity); // Total
                                 minus = 2;                                                             // For currency symbol
+                                break;
+                            case 6:
+                                detail = sale[i - 2].paymentMode; // Payment mode
+                                break;
+                            case 7:
+                                if (sale[i - 2].transactionNum.length() > 5) // Transaction number if more than 5 digits
+                                {
+                                    detail = sale[i - 2].transactionNum.substr(0, 7) + "...";
+                                }
+                                else
+                                {
+                                    detail = sale[i - 2].transactionNum;
+                                }
                                 break;
                             default:
                                 // Invalid column index
@@ -199,13 +207,13 @@ void cartDisplay()
 
                 temp += olVLine();
             }
-            else // When there is no product
+            else // When there is no sales
             {
                 padding = centerPadding(maxHeight - newBanner.size() - 7, 1, 2);
 
                 if (i == 2 + padding.paddingLeft + 1)
                 {
-                    temp = "No item in cart";
+                    temp = "No sales have been made yet.";
                     padding = centerPadding(maxWidth, temp.length(), 2);
 
                     temp = olVLine() + addNRepeat(" ", padding.paddingLeft) + temp + addNRepeat(" ", padding.paddingRight) + olVLine();
@@ -254,68 +262,28 @@ void cartDisplay()
         if (ch == 'm' && !isOpen) // Open menu
         {
             isOpen = true;
-            cartDisplay();
+            salesDisplay();
         }
         else if (ch == 27) // Close menu
         {
             isOpen = false;
-            cartDisplay();
+            salesDisplay();
         }
-        else if (ch == 't') // Checkout
+        else if (ch == 'v')
         {
-            isOpen = false;
-
-            if (cart.size() > 0)
-            {
-                checkoutDisplay("");
-            }
-            else
-            {
-                temp = "There is no product in cart.";
-                centerText(temp, temp.length());
-
-                Sleep(2000);
-                cartDisplay();
-            }
         }
-        else if (ch == 'd' || ch == 'e')
+        else if (ch == 'd')
         {
-            try
-            {
-                temp = "Enter product number: ";
-                centerText(temp, temp.length());
-
-                setInputPos(temp, temp.length(), 0, -1, temp);
-                cin >> temp;
-
-                if (stoi(temp) < cart.size() && stoi(temp) >= 0)
-                {
-                    if (ch == 'd') // Delete product in cart
-                    {
-                        deleteProductInCart(stoi(temp));
-                    }
-                    else if (ch == 'e') // Edit product in cart
-                    {
-                        editQuantityInCart(stoi(temp), maxHeight);
-                    }
-                }
-                else
-                {
-                    temp = "Invalid input. Please enter a valid product number.";
-                    centerText(temp, temp.length());
-
-                    Sleep(2000);
-                    cartDisplay();
-                }
-            }
-            catch (const exception &) // Catch error
-            {
-                temp = "Invalid input. Please enter a valid product number.";
-                centerText(temp, temp.length());
-
-                Sleep(2000);
-                cartDisplay();
-            }
+        }
+        else if (ch == 77) // Right
+        {
+            saleFilterIndex = (saleFilterIndex + 1) % saleFilters.size();
+            salesDisplay();
+        }
+        else if (ch == 75) // Left
+        {
+            saleFilterIndex = (saleFilterIndex - 1 + saleFilters.size()) % saleFilters.size();
+            salesDisplay();
         }
         else
         {
