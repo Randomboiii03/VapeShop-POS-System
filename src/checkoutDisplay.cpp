@@ -304,7 +304,7 @@ void checkoutDisplay(string paymentMode)
                 temp = "Checkout successful. Thank you!";
                 centerText(temp, temp.length());
 
-                saveSales(sales); // Save sales
+                addSales(sales); // Save sales
                 emptyCart(); // Empty cart
 
                 Sleep(2000);

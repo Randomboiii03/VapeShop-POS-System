@@ -4,7 +4,7 @@ using namespace std;
 
 void saveSales(const vector<Sales> &data)
 {
-    ofstream outputFile("database/sales.txt", ios::app);
+    ofstream outputFile("database/sales.txt");
 
     if (outputFile.is_open())
     {

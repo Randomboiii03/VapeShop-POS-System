@@ -106,14 +106,19 @@ string getSalesTitle(time_t currentDate)
     {
     case 0:
         temp = "All Sales";
+        break;
     case 1:
         temp = "Sales for " + months[date->tm_mon] + " " + splitString(ss.str(), '-')[2] + ", " + splitString(ss.str(), '-')[0];
+        break;
     case 2:
         temp = "Sales from " + months[stoi(splitString(week[0], '-')[1])] + " " + splitString(week[0], '-')[2] + ", " + splitString(week[0], '-')[0] + " to " + months[stoi(splitString(week[6], '-')[1])] + " " + splitString(week[6], '-')[2] + ", " + splitString(week[6], '-')[0];
+        break;
     case 3:
         temp = "Sales for " + months[date->tm_mon] + " " + splitString(ss.str(), '-')[0];
+        break;
     case 4:
         temp = "Sales for year - " + splitString(ss.str(), '-')[0];
+        break;
     }
 
     return temp;

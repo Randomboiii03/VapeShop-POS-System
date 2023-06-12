@@ -159,6 +159,8 @@ int getMaxLengthCart(const vector<Cart> &data, const vector<Product> &data2, int
 // Checkout related functions
 void checkoutDisplay(string paymentMode);
 
+void addSales(const vector<Sales> &data);
+
 string getCurrentDateTime();
 
 // Sales related functions
