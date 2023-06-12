@@ -58,12 +58,9 @@ int getMaxLengthSales(const vector<Sales> &data, const vector<Product> &data2, i
     return maxLength;
 }
 
-vector<string> getWeekDates()
+vector<string> getWeekDates(time_t currentDate)
 {   
-    auto now = chrono::system_clock::now();
-    time_t currentDate = chrono::system_clock::to_time_t(now); // Get the current system time
-
-    tm *date = std::localtime(&currentDate);
+    tm *date = localtime(&currentDate);
     int dayOfWeek = date->tm_wday;
     int secondsPerDay = 24 * 60 * 60; // Number of seconds in a day
 
@@ -76,7 +73,7 @@ vector<string> getWeekDates()
         currentDate -= secondsToSunday;
 
         // Update the tm structure with the adjusted date
-        date = std::localtime(&currentDate);
+        date = localtime(&currentDate);
         dayOfWeek = date->tm_wday;
     }
 
@@ -85,11 +82,11 @@ vector<string> getWeekDates()
     for (int i = 0; i < 7; i++) // Loop to get the dates for the entire week
     {
         stringstream ss;
-        ss << std::put_time(date, "%Y-%m-%d"); // Create a string representation of the current date
+        ss << put_time(date, "%Y-%m-%d"); // Create a string representation of the current date
         weekDates.push_back(ss.str());
 
         currentDate += secondsPerDay; // Increment the date by one day
-        date = std::localtime(&currentDate);
+        date = localtime(&currentDate);
     }
 
     return weekDates;

@@ -17,11 +17,11 @@ void saveSales(const vector<Sales> &data)
     }
     else
     {
-        cerr << "Error opening file for cart.\n";
+        cerr << "Error opening file for sales.\n";
     }
 }
 
-vector<Sales> loadSales()
+vector<Sales> loadSales(time_t currentDate)
 {
     vector<Sales> data;
 
@@ -31,16 +31,16 @@ vector<Sales> loadSales()
         data = loadAllSales();
         break;
     case 1:
-        data = loadTodaySales();
+        data = loadByDaySales(currentDate);
         break;
     case 2:
-        data = loadThisWeekSales();
+        data = loadByWeekSales(currentDate);
         break;
     case 3:
-        data = loadThisMonthSales();
+        data = loadByMonthSales(currentDate);
         break;
     case 4:
-        data = loadThisYearSales();
+        data = loadByYearSales(currentDate);
         break;
     }
 
@@ -91,7 +91,7 @@ vector<Sales> loadAllSales()
     return data;
 }
 
-vector<Sales> loadTodaySales()
+vector<Sales> loadByDaySales(time_t currentDate)
 {
     ifstream inputFile("database/sales.txt");
 
@@ -122,10 +122,13 @@ vector<Sales> loadTodaySales()
 
             getline(ss, sale.currentTime, ',');
 
-            string currentDate = splitString(getCurrentDateTime(), ' ')[0];
+            stringstream sss;
+            tm *date = localtime(&currentDate);
+            sss << put_time(date, "%Y-%m-%d");
+
             string saleDate = splitString(sale.currentTime, ' ')[0];
 
-            if (currentDate != saleDate)
+            if (saleDate != sss.str())
             {
                 continue;
             }
@@ -143,7 +146,7 @@ vector<Sales> loadTodaySales()
     return data;
 }
 
-vector<Sales> loadThisWeekSales()
+vector<Sales> loadByWeekSales(time_t currentDate)
 {
     ifstream inputFile("database/sales.txt");
 
@@ -176,7 +179,7 @@ vector<Sales> loadThisWeekSales()
 
             string saleDate = splitString(sale.currentTime, ' ')[0];
 
-            for (string date : getWeekDates())
+            for (string date : getWeekDates(currentDate))
             {
                 if (date == saleDate)
                 {
@@ -196,7 +199,7 @@ vector<Sales> loadThisWeekSales()
     return data;
 }
 
-vector<Sales> loadThisMonthSales()
+vector<Sales> loadByMonthSales(time_t currentDate)
 {
     ifstream inputFile("database/sales.txt");
 
@@ -227,8 +230,11 @@ vector<Sales> loadThisMonthSales()
 
             getline(ss, sale.currentTime, ',');
 
-            string currentDate = splitString(getCurrentDateTime(), ' ')[0];
-            string currentMonth = splitString(currentDate, '-')[0] + "-" + splitString(currentDate, '-')[1];
+            stringstream sss;
+            tm *date = localtime(&currentDate);
+            sss << put_time(date, "%Y-%m-%d");
+
+            string currentMonth = splitString(sss.str(), '-')[0] + "-" + splitString(sss.str(), '-')[1];
 
             string saleDate = splitString(sale.currentTime, ' ')[0];
             string saleMonth = splitString(saleDate, '-')[0] + "-" + splitString(saleDate, '-')[1];
@@ -251,7 +257,7 @@ vector<Sales> loadThisMonthSales()
     return data;
 }
 
-vector<Sales> loadThisYearSales()
+vector<Sales> loadByYearSales(time_t currentDate)
 {
     ifstream inputFile("database/sales.txt");
 
@@ -282,8 +288,11 @@ vector<Sales> loadThisYearSales()
 
             getline(ss, sale.currentTime, ',');
 
-            string currentDate = splitString(getCurrentDateTime(), ' ')[0];
-            string currentYear = splitString(currentDate, '-')[0];
+            stringstream sss;
+            tm *date = localtime(&currentDate);
+            sss << put_time(date, "%Y-%m-%d");
+
+            string currentYear = splitString(sss.str(), '-')[0];
 
             string saleDate = splitString(sale.currentTime, ' ')[0];
             string saleYear = splitString(saleDate, '-')[0];
@@ -304,4 +313,41 @@ vector<Sales> loadThisYearSales()
     }
 
     return data;
+}
+
+void deleteSales(int saleIndex, time_t currentDate)
+{
+    vector<Sales> sale = loadAllSales(), saleFiltered = loadSales(currentDate);
+
+    string temp = "Are you sure you want to delete this sale history? [Y/N]";
+    centerText(temp, temp.length());
+
+    char ch = getch();
+
+    while (true)
+    {
+        if (ch == 'y')
+        {
+            for (int i = 0; i < sale.size(); i++)
+            {
+                if (sale[i].currentTime == saleFiltered[saleIndex].currentTime && sale[i].productID == saleFiltered[saleIndex].productID)
+                {
+                    sale.erase(sale.begin() + saleIndex); // Delete history in sales
+                    saveSales(sale);
+
+                    break;
+                }
+            }
+
+            temp = "Sale history deleted successfully!";
+            centerText(temp, temp.length());
+
+            Sleep(2000);
+            salesDisplay(currentDate);
+        }
+        else if (ch == 'n')
+        {
+            salesDisplay(currentDate);
+        }
+    }
 }

@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void salesDisplay()
+void salesDisplay(time_t currentDate)
 {
     vector<Product> products;
 
@@ -16,7 +16,7 @@ void salesDisplay()
     string temp;
 
     vector<int> maxLengths;
-    int prodListWidth = 0, bannerWidth, maxWidth, maxHeight, spaceBetween = 0, count = 0, optListWidth = 0, saleFilterListWidth = 0;
+    int prodListWidth = 0, bannerWidth, maxWidth, maxHeight, spaceBetween = 0, count = 0, optListWidth = 0, saleFilterListWidth = 0, minus = 0, add = 8;
     float totalSales = 0;
 
     Padding padding;
@@ -28,11 +28,11 @@ void salesDisplay()
 
     headerName = {"No", "Date", "Product", "Quantity", "Price", "Total", "Payment Mode", "Transaction Number"};
 
-    saleFilters = {"[0] All", "[1] Today", "[2] This Week", "[3] This Month", "[4] This Year"};
+    saleFilters = {"[0] All", "[1] By Day", "[2] By Week", "[3] By Month", "[4] By Year"};
 
-    options = {"[Esc] Close Menu", "[M] Menu", "[V] View Sale", "[D] Delete Sale", "[<->] Filter"};
+    options = {"[Esc] Close Menu", "[M] Menu", "[V] View Sale", "[D] Delete Sale", "[◀️▶️] Filter", "[🔼🔽] Sort"};
 
-    vector<Sales> sale = loadSales(); // Load sales
+    vector<Sales> sale = loadSales(currentDate); // Load sales
 
     for (int i = 0; i < headerName.size(); i++)
     {
@@ -54,9 +54,21 @@ void salesDisplay()
         {
             continue;
         }
+        else if (saleFilterIndex == 0 && i == 5)
+        {
+            minus = 1;
+            continue;
+        }
 
         optListWidth += options[i].length();
     }
+
+    if (saleFilterIndex >= 1)
+    {
+        add += 4;
+    }
+
+    optListWidth -= add;
 
     for (string filter : saleFilters)
     {
@@ -109,7 +121,7 @@ void salesDisplay()
         }
         else if (i == (maxHeight - newBanner.size() - 2)) // Options display
         {
-            padding = centerPadding(maxWidth, optListWidth, options.size());
+            padding = centerPadding(maxWidth, optListWidth, options.size() - minus);
 
             temp = olVLine() + addNRepeat(" ", padding.paddingLeft);
 
@@ -120,6 +132,10 @@ void salesDisplay()
                     continue;
                 }
                 else if (isOpen && j == 1) // If menu is open skip [M] Menu
+                {
+                    continue;
+                }
+                else if (saleFilterIndex == 0 && j == 5)
                 {
                     continue;
                 }
@@ -262,28 +278,102 @@ void salesDisplay()
         if (ch == 'm' && !isOpen) // Open menu
         {
             isOpen = true;
-            salesDisplay();
+            salesDisplay(currentDate);
         }
         else if (ch == 27) // Close menu
         {
             isOpen = false;
-            salesDisplay();
+            salesDisplay(currentDate);
         }
         else if (ch == 'v')
         {
+            isOpen = false;
         }
         else if (ch == 'd')
         {
+            try
+            {
+                temp = "Choose product number: ";
+                centerText(temp, temp.length());
+
+                setInputPos(temp, temp.length(), 0, -1, temp);
+                cin >> temp;
+
+                if (stoi(temp) < products.size() && stoi(temp) >= 0)
+                {
+                    deleteSales(stoi(temp), currentDate);
+                }
+                else
+                {
+                    temp = "Invalid input. Please enter a valid sales number.";
+                    centerText(temp, temp.length());
+
+                    Sleep(2000);
+                    salesDisplay(currentDate);
+                }
+            }
+            catch (const exception &) // Catch error
+            {
+                temp = "Invalid input. Please enter a valid sales number.";
+                centerText(temp, temp.length());
+
+                Sleep(2000);
+                salesDisplay(currentDate);
+            }
         }
         else if (ch == 77) // Right
         {
             saleFilterIndex = (saleFilterIndex + 1) % saleFilters.size();
-            salesDisplay();
+            salesDisplay(currentDate);
         }
         else if (ch == 75) // Left
         {
             saleFilterIndex = (saleFilterIndex - 1 + saleFilters.size()) % saleFilters.size();
-            salesDisplay();
+            salesDisplay(currentDate);
+        }
+        else if (ch == 72 && saleFilterIndex > 1) // Up
+        {
+            tm *date = localtime(&currentDate);
+
+            switch (saleFilterIndex)
+            {
+            case 1:
+                date->tm_mday += 1;
+            case 2:
+                date->tm_mday += 7;
+                break;
+            case 3:
+                date->tm_mon += 1;
+                break;
+            case 4:
+                date->tm_year += 1;
+                break;
+            }
+
+            currentDate = mktime(date);
+            salesDisplay(currentDate);
+        }
+        else if (ch == 80 && saleFilterIndex > 1) // Down
+        {
+            tm *date = localtime(&currentDate);
+
+            switch (saleFilterIndex)
+            {
+            case 1:
+                date->tm_mday -= 1;
+            case 2:
+                date->tm_mday -= 7;
+                break;
+            case 3:
+                date->tm_mon -= 1;
+                break;
+            case 4:
+                date->tm_year -= 1;
+                break;
+            }
+
+            currentDate = mktime(date);
+            salesDisplay(currentDate);
         }
         else
         {

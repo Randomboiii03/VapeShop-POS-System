@@ -27,11 +27,14 @@ void globalMenu(char ch)
     }
     else if (ch == 's' && isOpen && accountType == "Admin") // Sales
     {
+        auto now = chrono::system_clock::now();
+        time_t currentDate = chrono::system_clock::to_time_t(now); // Get the current system time
+
         isOpen = false;
-        salesDisplay();
+        salesDisplay(currentDate);
     }
     else if (ch == 'i' && isOpen && accountType != "User") // Pincode
-    { 
+    {
         isOpen = false;
         pinCodeDisplay();
     }

@@ -77,7 +77,6 @@ extern int nextCateg;
 
 // Sales related variables
 extern int saleFilterIndex;
-extern string saleDate;
 
 // Vector navigationUtils related variables
 extern vector<string> navUser, navAdmin, navDeveloper, banner;
@@ -163,17 +162,18 @@ void checkoutDisplay(string paymentMode);
 string getCurrentDateTime();
 
 // Sales related functions
-void salesDisplay();
+void salesDisplay(time_t currentDate);
 
 void saveSales(const vector<Sales> &data);
-vector<Sales> loadSales();
+vector<Sales> loadSales(time_t currentDate);
 vector<Sales> loadAllSales();
-vector<Sales> loadTodaySales();
-vector<Sales> loadThisWeekSales();
-vector<Sales> loadThisMonthSales();
-vector<Sales> loadThisYearSales();
+vector<Sales> loadByDaySales(time_t currentDate);
+vector<Sales> loadByWeekSales(time_t currentDate);
+vector<Sales> loadByMonthSales(time_t currentDate);
+vector<Sales> loadByYearSales(time_t currentDate);
+void deleteSales(int saleIndex, time_t currentDate);
 
 int getMaxLengthSales(const vector<Sales> &data, const vector<Product> &data2, int columnIndex, string headerName);
-vector<string> getWeekDates();
+vector<string> getWeekDates(time_t currentDate);
 
 #endif

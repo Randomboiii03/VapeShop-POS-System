@@ -27,7 +27,7 @@ void productDisplay()
                       getMaxLengthProduct(products, 2, headerName[2]),
                       getMaxLengthProduct(products, 4, headerName[3])};
 
-        options = {"[Esc] Close Menu", "[M] Menu", "[V] View Product", "[<->] Next Category"};
+        options = {"[Esc] Close Menu", "[M] Menu", "[V] View Product", "[◀️▶️] Next Category"};
     }
     else if (accountType == "Admin")
     {
@@ -41,7 +41,7 @@ void productDisplay()
                       getMaxLengthProduct(products, 5, headerName[4]),
                       getMaxLengthProduct(products, 6, headerName[5])};
 
-        options = {"[Esc] Close Menu", "[M] Menu", "[V] View & Edit Product", "[D] Delete Product", "[A] Add Product", "[<->] Next Category"};
+        options = {"[Esc] Close Menu", "[M] Menu", "[V] View & Edit Product", "[D] Delete Product", "[A] Add Product", "[◀️▶️] Next Category"};
     }
 
     for (int length : maxLengths)
@@ -62,6 +62,8 @@ void productDisplay()
 
         optListWidth += options[i].length();
     }
+
+    optListWidth -= 8;
 
     bannerWidth = banner[0].length() + 10; // Banner width
 
