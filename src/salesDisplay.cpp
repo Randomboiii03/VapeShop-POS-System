@@ -5,6 +5,7 @@ using namespace std;
 void salesDisplay(time_t currentDate)
 {
     vector<Product> products;
+    vector<Sales> sale = loadSales(currentDate); // Load sales
 
     for (string category : categories)
     {
@@ -31,8 +32,6 @@ void salesDisplay(time_t currentDate)
     saleFilters = {"[0] All", "[1] By Day", "[2] By Week", "[3] By Month", "[4] By Year"};
 
     options = {"[Esc] Close Menu", "[M] Menu", "[V] View Sale", "[D] Delete Sale", "[◀️▶️] Filter", "[🔼🔽] Sort"};
-
-    vector<Sales> sale = loadSales(currentDate); // Load sales
 
     for (int i = 0; i < headerName.size(); i++)
     {
@@ -186,13 +185,13 @@ void salesDisplay(time_t currentDate)
                                 detail = to_string(sale[i - 2].quantity); // Product quantity
                                 break;
                             case 4:
-                                detail = "₱ " + priceFormat(products[k].price); // Price
+                                detail = "₱ " + priceFormat(sale[i - 2].price); // Price
                                 minus = 2;                                      // For currency symbol
                                 break;
                             case 5:
-                                totalSales += products[k].price * sale[i - 2].quantity;
+                                totalSales += sale[i - 2].price * sale[i - 2].quantity;
 
-                                detail = "₱ " + priceFormat(products[k].price * sale[i - 2].quantity); // Total
+                                detail = "₱ " + priceFormat(sale[i - 2].price * sale[i - 2].quantity); // Total
                                 minus = 2;                                                             // For currency symbol
                                 break;
                             case 6:
@@ -286,20 +285,50 @@ void salesDisplay(time_t currentDate)
             salesDisplay(currentDate);
         }
         else if (ch == 'v')
-        {
-            isOpen = false;
-        }
-        else if (ch == 'd')
-        {
+        {            
             try
             {
-                temp = "Choose product number: ";
+                temp = "Choose sales number: ";
                 centerText(temp, temp.length());
 
                 setInputPos(temp, temp.length(), 0, -1, temp);
                 cin >> temp;
 
-                if (stoi(temp) < products.size() && stoi(temp) >= 0)
+                isOpen = false;
+
+                if (stoi(temp) < sale.size() && stoi(temp) >= 0)
+                {
+                    salesView(stoi(temp), currentDate);
+                }
+                else
+                {
+                    temp = "Invalid input. Please enter a valid sales number.";
+                    centerText(temp, temp.length());
+
+                    Sleep(2000);
+                    salesDisplay(currentDate);
+                }
+            }
+            catch (const exception &) // Catch error
+            {
+                temp = "Invalid input. Please enter a valid sales number.";
+                centerText(temp, temp.length());
+
+                Sleep(2000);
+                salesDisplay(currentDate);
+            }
+        }
+        else if (ch == 'd')
+        {
+            try
+            {
+                temp = "Choose sales number: ";
+                centerText(temp, temp.length());
+
+                setInputPos(temp, temp.length(), 0, -1, temp);
+                cin >> temp;
+
+                if (stoi(temp) < sale.size() && stoi(temp) >= 0)
                 {
                     deleteSales(stoi(temp), currentDate);
                 }

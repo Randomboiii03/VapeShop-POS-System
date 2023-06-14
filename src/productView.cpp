@@ -8,7 +8,6 @@ void productView(int prodIndex)
 
     vector<string> navigation, newBanner, newNavigation, content, options;
     string temp, label;
-    ostringstream oss;
 
     int bannerWidth, maxWidth, maxHeight, optListWidth = 0, spaceContent = 7, padDetails = 0, minus = 0;
 
@@ -20,12 +19,12 @@ void productView(int prodIndex)
     if (accountType == "User")
     {
         navigation = navUser;
-        options = {"[Esc] Close Menu", "[M] Menu", "[A] Add to Cart"};
+        options = {"[Esc] Close Menu", "[M] Menu", "[A] Add to Cart", "[<->] Next Product", "[B] Back"};
     }
     else if (accountType == "Admin")
     {
         navigation = navAdmin;
-        options = {"[Esc] Close Menu", "[M] Menu", "[E] Edit Product", "[<->] Next Product"};
+        options = {"[Esc] Close Menu", "[M] Menu", "[E] Edit Product", "[<->] Next Product", "[B] Back"};
 
         spaceContent++;
     }
@@ -34,9 +33,9 @@ void productView(int prodIndex)
 
     maxWidth = bannerWidth; // Max width
 
-    maxHeight = max(navigation.size() + 10, banner.size() + 14); // Max height
-
     newBanner = bannerDisplay(maxWidth, bannerWidth, categories[nextCateg]); // Banner display function
+
+    maxHeight = max(navigation.size() + 10, newBanner.size() + 13); // Max height
 
     padding = centerPadding(maxHeight - newBanner.size(), spaceContent, 2);
 
@@ -48,40 +47,43 @@ void productView(int prodIndex)
     spaceContent = padding.paddingRight; // Number of spaces between content and options
 
     label = "Name: ";
-    padding = centerPadding(maxWidth, label.length() + products[prodIndex].productName.length(), 2);
+    temp = label + products[prodIndex].productName;
+
+    padding = centerPadding(maxWidth, temp.length(), 2);
     padDetails = padding.paddingLeft;
 
-    content.push_back(olVLine() + addNRepeat(" ", padDetails) + label + products[prodIndex].productName + addNRepeat(" ", padding.paddingRight) + olVLine());
+    content.push_back(olVLine() + addNRepeat(" ", padDetails) + temp + addNRepeat(" ", padding.paddingRight) + olVLine());
 
-    temp = "Brand: ";
-    padding = centerPadding(maxWidth, temp.length() + products[prodIndex].brandName.length(), 2);
-    minus = temp.length() - label.length();
+    temp = "Brand: " + products[prodIndex].brandName;
 
-    content.push_back(olVLine() + addNRepeat(" ", padDetails - minus) + temp + products[prodIndex].brandName + addNRepeat(" ", (padding.paddingLeft - padDetails) + padding.paddingRight + minus) + olVLine());
+    padding = centerPadding(maxWidth, temp.length(), 2);
+    minus = splitString(temp, ':')[0].length() - label.length() + 2;
 
-    temp = "Price: ";
-    oss << fixed << setprecision(2) << products[prodIndex].price; // Add two decimal into the price
+    content.push_back(olVLine() + addNRepeat(" ", padDetails - minus) + temp + addNRepeat(" ", (padding.paddingLeft - padDetails) + padding.paddingRight + minus) + olVLine());
 
-    padding = centerPadding(maxWidth, temp.length() + oss.str().length(), 2);
-    minus = temp.length() - label.length() - 1;
+    temp = "Price: ₱ " + priceFormat(products[prodIndex].price);
 
-    content.push_back(olVLine() + addNRepeat(" ", padDetails - minus) + temp + "₱ " + oss.str() + addNRepeat(" ", (padding.paddingLeft - padDetails) + padding.paddingRight + minus - 2) + olVLine());
+    padding = centerPadding(maxWidth, temp.length() - 2, 2);
+    minus = splitString(temp, ':')[0].length() - label.length() + 2;
 
-    temp = "Stock/s: ";
-    padding = centerPadding(maxWidth, temp.length() + to_string(products[prodIndex].stock).length(), 2);
-    minus = temp.length() - label.length() - 1;
+    content.push_back(olVLine() + addNRepeat(" ", padDetails - minus) + temp + addNRepeat(" ", (padding.paddingLeft - padDetails) + padding.paddingRight + minus) + olVLine());
 
-    content.push_back(olVLine() + addNRepeat(" ", padDetails - minus) + temp + to_string(products[prodIndex].stock) + addNRepeat(" ", (padding.paddingLeft - padDetails) + padding.paddingRight + minus) + olVLine());
+    temp = "Stock/s: " + to_string(products[prodIndex].stock);
+
+    padding = centerPadding(maxWidth, temp.length(), 2);
+    minus = splitString(temp, ':')[0].length() - label.length() + 2;
+
+    content.push_back(olVLine() + addNRepeat(" ", padDetails - minus) + temp + addNRepeat(" ", (padding.paddingLeft - padDetails) + padding.paddingRight + minus) + olVLine());
 
     if (accountType == "Admin")
     {
-        temp = "Status: ";
         string status = products[prodIndex].isAvailable ? "Available" : "Not Available";
+        temp = "Status: " + status;
 
-        padding = centerPadding(maxWidth, temp.length() + status.length(), 2);
-        minus = temp.length() - label.length() - 1;
-        cout << (padding.paddingLeft - padDetails);
-        content.push_back(olVLine() + addNRepeat(" ", padDetails - minus) + temp + status + addNRepeat(" ", (padding.paddingLeft - padDetails) + padding.paddingRight + minus) + olVLine());
+        padding = centerPadding(maxWidth, temp.length(), 2);
+        minus = splitString(temp, ':')[0].length() - label.length() + 2;
+        
+        content.push_back(olVLine() + addNRepeat(" ", padDetails - minus) + temp +  addNRepeat(" ", (padding.paddingLeft - padDetails) + padding.paddingRight + minus) + olVLine());
     }
 
     for (int i = 0; i < spaceContent; i++) // Space between enter pin code and options
@@ -187,6 +189,11 @@ void productView(int prodIndex)
         {
             prodIndex = (prodIndex - 1 + products.size()) % products.size();
             productView(prodIndex);
+        }
+        else if (ch == 'b') // Left
+        {
+            isOpen = false;
+            productDisplay();
         }
         else if (accountType == "User" && ch == 'a')
         {

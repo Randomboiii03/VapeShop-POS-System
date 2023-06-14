@@ -165,6 +165,7 @@ string getCurrentDateTime();
 
 // Sales related functions
 void salesDisplay(time_t currentDate);
+void salesView(int saleIndex, time_t currentDate);
 
 void saveSales(const vector<Sales> &data);
 vector<Sales> loadSales(time_t currentDate);
