@@ -21,7 +21,7 @@ void saveProducts(const vector<Product> &products)
     }
 }
 
-vector<Product> loadProductsByCategory(const string &category)
+vector<Product> loadAllProducts()
 {
     vector<Product> products;
 
@@ -57,15 +57,7 @@ vector<Product> loadProductsByCategory(const string &category)
             getline(ss, value);
             product.isAvailable = stoi(value);
 
-            if (category == product.category)
-            {
-                if (accountType != "Admin" && product.isAvailable == 0)
-                {
-                    continue;
-                }
-
-                products.push_back(product);
-            }
+            products.push_back(product);
         }
 
         inputFile.close();
@@ -78,15 +70,24 @@ vector<Product> loadProductsByCategory(const string &category)
     return products;
 }
 
-void deleteProduct(int prodIndex)
+vector<Product> loadProductsByCategory(const string &category)
 {
-    vector<Product> products, productsByCategory = loadProductsByCategory(categories[nextCateg]);
+    vector<Product> products = loadAllProducts(), result;
 
-    for (string category : categories)
+    for (auto &product : products)
     {
-        vector<Product> temp = loadProductsByCategory(category);
-        products.insert(products.begin(), temp.begin(), temp.end());
+        if (product.category == category)
+        {
+            result.push_back(product);
+        }
     }
+
+    return result;
+}
+
+void deleteProduct(int prodIndex, vector<Product> products)
+{
+    vector<Product> allProducts = loadAllProducts();
 
     string temp = "Are you sure you want to delete this product? [Y/N]";
     centerText(temp, temp.length());
@@ -97,16 +98,16 @@ void deleteProduct(int prodIndex)
     {
         if (ch == 'y')
         {
-            for (int i = 0; i < products.size(); i++)
+            for (int i = 0; i < allProducts.size(); i++)
             {
-                if (products[i].productID == productsByCategory[prodIndex].productID)
+                if (allProducts[i].productID == products[prodIndex].productID)
                 {
-                    products.erase(products.begin() + i);
+                    allProducts.erase(allProducts.begin() + i);
                     break;
                 }
             }
 
-            saveProducts(products);
+            saveProducts(allProducts);
 
             temp = "Product deleted successfully!";
             centerText(temp, temp.length());
@@ -119,4 +120,28 @@ void deleteProduct(int prodIndex)
             productDisplay();
         }
     }
+}
+
+vector<Product> searchProductsByName(const string &substring)
+{
+    vector<Product> results;
+
+    string searchTerm = toLowercase(substring);
+
+    for (string category : categories)
+    {
+        vector<Product> products = loadProductsByCategory(category);
+
+        for (Product product : products)
+        {
+            string name = toLowercase(product.productName);
+
+            if (name.find(searchTerm) != string::npos)
+            {
+                results.push_back(product);
+            }
+        }
+    }
+
+    return results;
 }

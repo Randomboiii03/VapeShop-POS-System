@@ -2,10 +2,8 @@
 
 using namespace std;
 
-void productView(int prodIndex)
+void productView(int prodIndex, vector<Product> products)
 {
-    vector<Product> products = loadProductsByCategory(categories[nextCateg]);
-
     vector<string> navigation, newBanner, newNavigation, content, options;
     string temp, label;
 
@@ -173,22 +171,22 @@ void productView(int prodIndex)
         if (ch == 'm' && !isOpen) // Open menu
         {
             isOpen = true;
-            productView(prodIndex);
+            productView(prodIndex, products);
         }
         else if (ch == 27) // Close menu
         {
             isOpen = false;
-            productView(prodIndex);
+            productView(prodIndex, products);
         }
         else if (ch == 77) // Right
         {
             prodIndex = (prodIndex + 1) % products.size();
-            productView(prodIndex);
+            productView(prodIndex, products);
         }
         else if (ch == 75) // Left
         {
             prodIndex = (prodIndex - 1 + products.size()) % products.size();
-            productView(prodIndex);
+            productView(prodIndex, products);
         }
         else if (ch == 'b') // Left
         {
@@ -219,7 +217,7 @@ void productView(int prodIndex)
                     centerText(temp, temp.length());
 
                     Sleep(2000);
-                    productView(prodIndex);
+                    productView(prodIndex, products);
                 }
             }
             catch (const exception &) // Catch error
@@ -228,7 +226,7 @@ void productView(int prodIndex)
                 centerText(temp, temp.length());
 
                 Sleep(2000);
-                productView(prodIndex);
+                productView(prodIndex, products);
             }
         }
         else if (accountType == "Admin" && ch == 'e') // Edit product
@@ -251,7 +249,7 @@ void productView(int prodIndex)
                 centerText(temp, temp.length() + 10);
 
                 Sleep(2000);
-                productView(prodIndex);
+                productView(prodIndex, products);
             }
         }
         else

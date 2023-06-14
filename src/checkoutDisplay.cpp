@@ -4,15 +4,9 @@ using namespace std;
 
 void checkoutDisplay(string paymentMode)
 {
-    vector<Product> products;
+    vector<Product> products = loadAllProducts();
     vector<Cart> cart = loadCart();
     vector<Sales> sales;
-
-    for (string category : categories)
-    {
-        vector<Product> temp = loadProductsByCategory(category);
-        products.insert(products.begin(), temp.begin(), temp.end()); // Insert all products of each category
-    }
 
     vector<string> navigation, headerName, newBanner, newNavigation, content, options;
     string temp, currentTime = getCurrentDateTime();

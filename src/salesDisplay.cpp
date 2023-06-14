@@ -4,14 +4,8 @@ using namespace std;
 
 void salesDisplay(time_t currentDate)
 {
-    vector<Product> products;
+    vector<Product> products = loadAllProducts();
     vector<Sales> sale = loadSales(currentDate); // Load sales
-
-    for (string category : categories)
-    {
-        vector<Product> temp = loadProductsByCategory(category);
-        products.insert(products.begin(), temp.begin(), temp.end()); // Insert all products of each category
-    }
 
     vector<string> navigation, headerName, saleFilters, newBanner, newNavigation, content, options;
     string temp;

@@ -32,10 +32,10 @@ int getMaxLengthSales(const vector<Sales> &data, const vector<Product> &data2, i
                     maxLength = max(maxLength, static_cast<int>(to_string(sale.quantity).length()));
                     break;
                 case 4:
-                    maxLength = max(maxLength, static_cast<int>(priceFormat(product.price).length() - 2));
+                    maxLength = max(maxLength, static_cast<int>(priceFormat(product.price).length() + 2));
                     break;
                 case 5:
-                    maxLength = max(maxLength, static_cast<int>(priceFormat(product.price * sale.quantity).length() - 2));
+                    maxLength = max(maxLength, static_cast<int>(priceFormat(product.price * sale.quantity).length() + 2));
                     break;
                 case 6:
                     maxLength = max(maxLength, static_cast<int>(sale.paymentMode.length()));

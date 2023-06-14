@@ -93,3 +93,14 @@ vector<string> splitString(string text, char delimiter)
 
     return tokens;
 }
+
+string toLowercase(const string &str)
+{
+    string lowercaseStr = str;
+    
+    transform(lowercaseStr.begin(), lowercaseStr.end(), lowercaseStr.begin(),
+              [](unsigned char c)
+              { return tolower(c); });
+
+    return lowercaseStr;
+}

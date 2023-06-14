@@ -2,9 +2,9 @@
 
 using namespace std;
 
-void productDisplay()
+void productSearch(string searchTerm)
 {
-    vector<Product> products = loadProductsByCategory(categories[nextCateg]);
+    vector<Product> products = searchProductsByName(searchTerm);
 
     vector<string> navigation, headerName, newBanner, newNavigation, content, options;
     string temp;
@@ -27,7 +27,7 @@ void productDisplay()
                       getMaxLengthProduct(products, 2, headerName[2]),
                       getMaxLengthProduct(products, 4, headerName[3])};
 
-        options = {"[Esc] Close Menu", "[M] Menu", "[◀️▶️] Next Category", "Product: ", "[H] Search", "[V] View"};
+        options = {"[Esc] Close Menu", "[M] Menu", "[B] Back", "Product: ", "[H] Search", "[V] View"};
     }
     else if (accountType == "Admin")
     {
@@ -41,7 +41,7 @@ void productDisplay()
                       getMaxLengthProduct(products, 5, headerName[4]),
                       getMaxLengthProduct(products, 6, headerName[5])};
 
-        options = {"[Esc] Close Menu", "[M] Menu", "[◀️▶️] Next Category", "Product: ", "[H] Search", "[A] Add", "[V] View & Edit", "[D] Delete"};
+        options = {"[Esc] Close Menu", "[M] Menu", "Product: ", "[H] Search", "[A] Add", "[V] View & Edit", "[D] Delete"};
     }
 
     for (int length : maxLengths)
@@ -63,8 +63,6 @@ void productDisplay()
         optListWidth += options[i].length();
     }
 
-    optListWidth -= 8;
-
     bannerWidth = banner[0].length() + 10; // Banner width
 
     do
@@ -79,7 +77,7 @@ void productDisplay()
 
     } while (true);
 
-    newBanner = bannerDisplay(maxWidth, bannerWidth, categories[nextCateg]); // Banner display function
+    newBanner = bannerDisplay(maxWidth, bannerWidth, "Search - " + searchTerm); // Banner display function
 
     maxHeight = max(navigation.size() + 10, newBanner.size() + products.size() + 5); // Max height
 
@@ -197,8 +195,7 @@ void productDisplay()
             {
                 for (int j = 0; j < headerName.size(); j++) // Header display
                 {
-                    padding = centerPadding(maxLengths[j], headerName[j].length(), 2);
-                    temp += olVLine() + addNRepeat(" ", padding.paddingLeft + spaceBetween) + headerName[j] + addNRepeat(" ", padding.paddingRight + spaceBetween);
+                    temp += olVLine() + addNRepeat(" ", maxLengths[j] + (spaceBetween * 2));
                 }
 
                 temp += olVLine();
@@ -242,36 +239,19 @@ void productDisplay()
         if (ch == 'm' && !isOpen) // Open menu
         {
             isOpen = true;
-            productDisplay();
+            productSearch(searchTerm);
         }
         else if (ch == 27) // Close menu
         {
-            if (isOpen)
-            {
-                isOpen = false;
-                productDisplay();
-            }
-            else
-            {
-                count++;
-
-                if (count >= 10)
-                {
-                    ExpectedTimeData timeData = loadExpectedTime();
-
-                    if (tries >= 5 && !checkTime(timeData.expectedTime))
-                    {
-                        temp = "Maximum login attempts reached. Please wait for one hour before trying again.";
-                        centerText(temp, temp.length());
-                    }
-                    else if (tries < 5)
-                    {
-                        pinCodeLogin();
-                    }
-                }
-            }
+            isOpen = false;
+            productSearch(searchTerm);
         }
-        else if (ch == 'h') // Search product
+        else if (ch == 'b') // Right
+        {
+            isOpen = false;
+            productDisplay();
+        }
+        else if (ch == 'h') // View product
         {
             temp = "Search: ";
             centerText(temp, temp.length());
@@ -279,17 +259,8 @@ void productDisplay()
             setInputPos(temp, temp.length(), 0, -1, temp);
             getline(cin, temp);
 
+            isOpen = false;
             productSearch(temp);
-        }
-        else if (ch == 77) // Right
-        {
-            nextCateg = (nextCateg + 1) % categories.size();
-            productDisplay();
-        }
-        else if (ch == 75) // Left
-        {
-            nextCateg = (nextCateg - 1 + categories.size()) % categories.size();
-            productDisplay();
         }
         else if (ch == 'v') // View product
         {
@@ -300,7 +271,7 @@ void productDisplay()
                 centerText(temp, temp.length());
 
                 setInputPos(temp, temp.length(), 0, -1, temp);
-
+                // cout << to_string(maxHeight) << endl;
                 cin >> temp;
 
                 if (stoi(temp) < products.size() && stoi(temp) >= 0)
@@ -313,7 +284,7 @@ void productDisplay()
                     centerText(temp, temp.length());
 
                     Sleep(2000);
-                    productDisplay();
+                    productSearch(searchTerm);
                 }
             }
             catch (const exception &) // Catch error
@@ -322,7 +293,7 @@ void productDisplay()
                 centerText(temp, temp.length());
 
                 Sleep(2000);
-                productDisplay();
+                productSearch(searchTerm);
             }
         }
         else if (accountType == "Admin" && (ch == 'a' || ch == 'd'))
@@ -352,7 +323,7 @@ void productDisplay()
                     centerText(temp, temp.length());
 
                     Sleep(2000);
-                    productDisplay();
+                    productSearch(searchTerm);
                 }
             }
             catch (const exception &) // Catch error
@@ -361,7 +332,7 @@ void productDisplay()
                 centerText(temp, temp.length());
 
                 Sleep(2000);
-                productDisplay();
+                productSearch(searchTerm);
             }
         }
         else

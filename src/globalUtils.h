@@ -18,6 +18,7 @@
 #include <filesystem>
 #include <conio.h>
 #include <locale>
+#include <cctype>
 
 using namespace std;
 
@@ -115,6 +116,7 @@ void setInputPos(string text, int textLength, SHORT y, int padding, string label
 
 string priceFormat(float value);
 vector<string> splitString(string text, char delimiter);
+string toLowercase(const string &str);
 
 // Security related functions
 void saveExpectedTime(time_t expectedTime);
@@ -133,11 +135,14 @@ void pinCodeDisplay();
 
 // Product related functions
 void productDisplay();
-void productView(int prodIndex);
+void productView(int prodIndex, vector<Product> products);
+void productSearch(string search);
 
 void saveProducts(const vector<Product> &products);
 vector<Product> loadProductsByCategory(const string &category);
-void deleteProduct(int prodIndex);
+vector<Product> loadAllProducts();
+void deleteProduct(int prodIndex, vector<Product> products);
+vector<Product> searchProductsByName(const string &substring);
 
 bool containsCategory(const vector<string> &categories, const string &category);
 vector<string> getCategories();

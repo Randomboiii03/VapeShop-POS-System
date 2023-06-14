@@ -9,51 +9,15 @@ bool containsCategory(const vector<string> &categories, const string &category)
 
 vector<string> getCategories()
 {
+    vector<Product> products = loadAllProducts();
     vector<string> uniqueCategories;
 
-    fstream inputFile("database/products.txt");
-
-    if (inputFile.is_open())
+    for(auto &product : products)
     {
-        string line;
-
-        while (getline(inputFile, line))
+        if(!containsCategory(uniqueCategories, product.category))
         {
-            Product product;
-            stringstream ss(line);
-            string value;
-
-            getline(ss, value, ',');
-            product.productID = stoi(value);
-
-            getline(ss, product.category, ',');
-
-            getline(ss, product.brandName, ',');
-
-            getline(ss, product.productName, ',');
-
-            getline(ss, product.productDesc, ',');
-
-            getline(ss, value, ',');
-            product.price = stoi(value);
-
-            getline(ss, value, ',');
-            product.stock = stoi(value);
-
-            getline(ss, value);
-            product.isAvailable = stoi(value);
-
-            if (!containsCategory(uniqueCategories, product.category))
-            {
-                uniqueCategories.push_back(product.category);
-            }
+            uniqueCategories.push_back(product.category);
         }
-
-        inputFile.close();
-    }
-    else
-    {
-        cerr << "Error opening file for getting categories.\n";
     }
 
     return uniqueCategories;
@@ -81,7 +45,7 @@ int getMaxLengthProduct(const vector<Product> &data, int columnIndex, string hea
             maxLength = max(maxLength, static_cast<int>(product.category.length()));
             break;
         case 4:
-            maxLength = max(maxLength, static_cast<int>(priceFormat(product.price).length() - 2));
+            maxLength = max(maxLength, static_cast<int>(priceFormat(product.price).length() + 2));
             break;
         case 5:
             maxLength = max(maxLength, static_cast<int>(to_string(product.stock).length()));
