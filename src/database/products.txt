@@ -136,4 +136,3 @@
 10136,Pod System,Snowwolf,Snowwolf P50 50W Gemini Hybrid 80W,,10,100,1
 10137,Pod System,Snowwolf,Snowwolf WOcket 25W,,10,100,1
 10138,Pod System,Snowwolf,Snowwolf Afeng 22W,,10,100,1
-10139,gab,gab,gab,,10,2,1

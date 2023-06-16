@@ -4,7 +4,7 @@ using namespace std;
 
 void globalMenu(char ch)
 {
-    if (ch == 'l' && isOpen) // Logout
+    if (ch == 'l' && isOpen && accountType != "User") // Logout
     {
         isOpen = false;
         accountType = "User";

@@ -84,17 +84,22 @@ void inCart(int prodIndex, int quantity)
     {
         if (cart[i].productID == products[prodIndex].productID) // Check product is in cart
         {
-            if (checkStock(i, cart[i].quantity + quantity)) // Check stock is enough
+            if (cart[i].quantity + quantity <= products[prodIndex].stock) // Check stock is enough
             {
                 cart[i].quantity += quantity;
 
                 temp = "Product already in cart. Quantity updated successfully!";
                 centerText(temp, temp.length());
+
+                saveCart(cart); // Save cart to file
             }
             else
             {
                 temp = "Stock not enough for this product. Please enter a valid quantity.";
                 centerText(temp, temp.length());
+
+                Sleep(2000);
+                productView(prodIndex, products);
             }
 
             isFound = true;
@@ -102,7 +107,7 @@ void inCart(int prodIndex, int quantity)
         }
     }
 
-    if (!isFound)
+    if (!isFound && products[prodIndex].stock >= quantity)
     {
         temp = "Product added to cart successfully!";
         centerText(temp, temp.length());
@@ -110,9 +115,17 @@ void inCart(int prodIndex, int quantity)
         Cart newCart = {products[prodIndex].productID, quantity};
 
         cart.push_back(newCart); // Add new item to cart
-    }
 
-    saveCart(cart); // Save cart to file
+        saveCart(cart); // Save cart to file
+    }
+    else if (products[prodIndex].stock < quantity)
+    {
+        temp = "Stock not enough for this product. Please enter a valid quantity.";
+        centerText(temp, temp.length());
+
+        Sleep(2000);
+        productView(prodIndex, products);
+    }
 }
 
 void emptyCart()

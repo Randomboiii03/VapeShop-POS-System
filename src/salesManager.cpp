@@ -52,6 +52,10 @@ vector<Sales> loadSales(time_t currentDate)
 
             getline(ss, sale.currentTime, ',');
 
+            stringstream sss;
+            tm *date = localtime(&currentDate);
+            sss << put_time(date, "%Y-%m-%d");
+
             switch (saleFilterIndex)
             {
             case 0: // All
@@ -59,10 +63,6 @@ vector<Sales> loadSales(time_t currentDate)
                 break;
             case 1: // By Day
             {
-                stringstream sss;
-                tm *date = localtime(&currentDate);
-                sss << put_time(date, "%Y-%m-%d");
-
                 string saleDate = splitString(sale.currentTime, ' ')[0];
 
                 if (saleDate == sss.str())
@@ -87,10 +87,6 @@ vector<Sales> loadSales(time_t currentDate)
             break;
             case 3: // By Month
             {
-                stringstream sss;
-                tm *date = localtime(&currentDate);
-                sss << put_time(date, "%Y-%m-%d");
-
                 string currentMonth = splitString(sss.str(), '-')[0] + "-" + splitString(sss.str(), '-')[1];
 
                 string saleDate = splitString(sale.currentTime, ' ')[0];
@@ -104,17 +100,14 @@ vector<Sales> loadSales(time_t currentDate)
             break;
             case 4: // By Year
             {
-                stringstream sss;
-                tm *date = localtime(&currentDate);
-                sss << put_time(date, "%Y-%m-%d");
-
-                string currentMonth = splitString(sss.str(), '-')[0] + "-" + splitString(sss.str(), '-')[1];
+                string currentYear = splitString(sss.str(), '-')[0];
 
                 string saleDate = splitString(sale.currentTime, ' ')[0];
-                string saleMonth = splitString(saleDate, '-')[0] + "-" + splitString(saleDate, '-')[1];
+                string saleYear = splitString(saleDate, '-')[0];
 
-                if (currentMonth == saleMonth)
+                if (currentYear == saleYear)
                 {
+                    cout << "Year: " << saleYear << " - " << sale.currentTime << endl;
                     data.push_back(sale);
                 }
             }
@@ -138,7 +131,7 @@ void deleteSales(int saleIndex, time_t currentDate)
 
     saleFilterIndex = 0;
 
-    vector<Sales> sale = loadSales(currentDate); 
+    vector<Sales> sale = loadSales(currentDate);
 
     string temp = "Are you sure you want to delete this sale history? [Y/N]";
     centerText(temp, temp.length());

@@ -259,7 +259,7 @@ void cartDisplay()
         {
             isOpen = false;
 
-            if (cart.size() > 0)
+            if (!cart.empty())
             {
                 checkoutDisplay("");
             }
@@ -274,26 +274,37 @@ void cartDisplay()
         }
         else if (ch == 'd' || ch == 'e')
         {
-            try
+            if (!cart.empty())
             {
-                temp = "Enter product number: ";
-                centerText(temp, temp.length());
-
-                setInputPos(temp, temp.length(), 0, -1, temp);
-                cin >> temp;
-
-                if (stoi(temp) < cart.size() && stoi(temp) >= 0)
+                try
                 {
-                    if (ch == 'd') // Delete product in cart
+                    temp = "Enter product number: ";
+                    centerText(temp, temp.length());
+
+                    setInputPos(temp, temp.length(), 0, -1, temp);
+                    cin >> temp;
+
+                    if (stoi(temp) < cart.size() && stoi(temp) >= 0)
                     {
-                        deleteProductInCart(stoi(temp));
+                        if (ch == 'd') // Delete product in cart
+                        {
+                            deleteProductInCart(stoi(temp));
+                        }
+                        else if (ch == 'e') // Edit product in cart
+                        {
+                            editQuantityInCart(stoi(temp), maxHeight);
+                        }
                     }
-                    else if (ch == 'e') // Edit product in cart
+                    else
                     {
-                        editQuantityInCart(stoi(temp), maxHeight);
+                        temp = "Invalid input. Please enter a valid product number.";
+                        centerText(temp, temp.length());
+
+                        Sleep(2000);
+                        cartDisplay();
                     }
                 }
-                else
+                catch (const exception &) // Catch error
                 {
                     temp = "Invalid input. Please enter a valid product number.";
                     centerText(temp, temp.length());
@@ -302,9 +313,9 @@ void cartDisplay()
                     cartDisplay();
                 }
             }
-            catch (const exception &) // Catch error
+            else
             {
-                temp = "Invalid input. Please enter a valid product number.";
+                temp = "There is no product in cart.";
                 centerText(temp, temp.length());
 
                 Sleep(2000);

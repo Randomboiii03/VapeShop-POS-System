@@ -6,7 +6,7 @@ void productEditor(int prodID, int editIndex)
 {
     vector<Product> products = loadAllProducts();
 
-    vector<string> navigation, newBanner, content, options, editOptions;
+    vector<string> newBanner, content, options, editOptions;
     string temp, label, labelRow, detail;
 
     int bannerWidth, maxWidth, maxHeight, maxLength, optListWidth = 0, spaceContent = 9, padDetails = 0, minus = 0, prodIndex = 0;
@@ -15,8 +15,6 @@ void productEditor(int prodID, int editIndex)
 
     system("cls");
     SetConsoleOutputCP(CP_UTF8);
-
-    navigation = navAdmin;
 
     editOptions = {"Product Name", "Product Brand", "Product Category", "Product Price", "Product Stocks", "Product Status"};
 

@@ -113,6 +113,7 @@ void deleteProduct(int prodIndex, vector<Product> products)
             }
 
             saveProducts(allProducts);
+            categories = getCategories();
 
             temp = "Product deleted successfully!";
             centerText(temp, temp.length());
