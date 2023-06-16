@@ -10,15 +10,11 @@ The VapeShop POS System offers the following key features:
 
 1. **Inventory Management:** Easily manage your vape shop's inventory, including adding new products, updating quantities, and removing items.
 
-2. **Sales Transactions:** Conduct sales transactions, calculate totals, and generate itemized receipts for customers.
+2. **Sales Transactions:** Conduct sales transactions, calculate totals, and generate itemized receipts.
 
-3. **Customer Information:** Store and retrieve customer information, including names, contact details, and purchase history.
+3. **Search and Filter:** Search for specific products, and filter sales transactions based on various criteria.
 
-4. **Reporting:** Generate reports to analyze sales data, track popular products, and identify trends.
-
-5. **Search and Filter:** Search for specific products or customers, and filter sales transactions based on various criteria.
-
-6. **Data Persistence:** Utilize file streams as a persistent database to store inventory, customer, and transaction information.
+4. **Data Persistence:** Utilize file streams as a persistent database to store inventory, customer, and transaction information.
 
 ## Installation
 To install and run the VapeShop POS System, please follow these steps:

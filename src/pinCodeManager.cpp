@@ -5,7 +5,7 @@ using namespace std;
 // Get PIN code of admin
 string getPinCode()
 {
-    ifstream inputFile("database/pinCode.txt"); // Open the input file
+    ifstream inputFile("database/pincode.txt"); // Open the input file
     string pinCode;
 
     if (inputFile.is_open())
@@ -25,7 +25,7 @@ string getPinCode()
 // Change PIN code of admin
 void changePinCode(string newPinCode)
 {
-    ofstream outputFile("database/pinCode.txt");
+    ofstream outputFile("database/pincode.txt");
 
     admin[0].pinCode = newPinCode;
 

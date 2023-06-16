@@ -141,9 +141,14 @@ void productAdd()
             {
                 if (stof(price) > 0 && stoi(stocks) > 0)
                 {
-                    int productID = products[products.size() - 1].productID;
+                    int productID = 0;
 
-                    Product product = {productID  + 1, checkCategory(category), brand, name, "", stof(price), stoi(stocks), 1};
+                    for (int i = 0; i < products.size(); i++)
+                    {
+                        productID = max(productID, products[i].productID);
+                    }
+
+                    Product product = {productID + 1, checkCategory(category), brand, name, "", stof(price), stoi(stocks), 1};
 
                     products.push_back(product);
                     saveProducts(products);

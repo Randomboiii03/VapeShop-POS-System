@@ -78,6 +78,11 @@ vector<Product> loadProductsByCategory(const string &category)
     {
         if (product.category == category)
         {
+            if ((accountType != "Admin" && !product.isAvailable) || product.stock <= 0)
+            {
+                continue;
+            }
+
             result.push_back(product);
         }
     }

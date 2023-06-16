@@ -27,7 +27,7 @@ void productDisplay()
                       getMaxLengthProduct(products, 2, headerName[2]),
                       getMaxLengthProduct(products, 4, headerName[3])};
 
-        options = {"[Esc] Close Menu", "[M] Menu", "[◀️▶️] Next Category", "Product: ", "[H] Search", "[V] View"};
+        options = {"[Esc] Close Menu", "[M] Menu", "[◀️▶️] Next Category", "Product:   [H] Search", "[V] View"};
     }
     else if (accountType == "Admin")
     {
@@ -41,7 +41,7 @@ void productDisplay()
                       getMaxLengthProduct(products, 5, headerName[4]),
                       getMaxLengthProduct(products, 6, headerName[5])};
 
-        options = {"[Esc] Close Menu", "[M] Menu", "[◀️▶️] Next Category", "Product: ", "[H] Search", "[A] Add", "[V] View & Edit", "[D] Delete"};
+        options = {"[Esc] Close Menu", "[M] Menu", "[◀️▶️] Next Category", "Product:   [H] Search", "[A] Add", "[V] View & Edit", "[D] Delete"};
     }
 
     for (int length : maxLengths)
@@ -328,30 +328,30 @@ void productDisplay()
         {
             try
             {
-                temp = "Choose product number: ";
-                centerText(temp, temp.length());
-
-                setInputPos(temp, temp.length(), 0, -1, temp);
-                cin >> temp;
-
-                if (stoi(temp) < products.size() && stoi(temp) >= 0)
+                if (ch == 'd') // Add product
                 {
-                    if (ch == 'a') // Add product
-                    {
-                        // productAdd();
-                    }
-                    else if (ch == 'd') // Delete product
+                    temp = "Choose product number: ";
+                    centerText(temp, temp.length());
+
+                    setInputPos(temp, temp.length(), 0, -1, temp);
+                    cin >> temp;
+
+                    if (stoi(temp) < products.size() && stoi(temp) >= 0)
                     {
                         deleteProduct(stoi(temp), products);
                     }
-                }
-                else
-                {
-                    temp = "Invalid input. Please enter a valid product number.";
-                    centerText(temp, temp.length());
+                    else
+                    {
+                        temp = "Invalid input. Please enter a valid product number.";
+                        centerText(temp, temp.length());
 
-                    Sleep(2000);
-                    productDisplay();
+                        Sleep(2000);
+                        productDisplay();
+                    }
+                }
+                else if (ch == 'a') // Delete product
+                {
+                    productAdd();
                 }
             }
             catch (const exception &) // Catch error

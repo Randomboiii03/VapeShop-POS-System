@@ -138,6 +138,7 @@ void productDisplay();
 void productView(int prodIndex, vector<Product> products);
 void productSearch(string search);
 void productAdd();
+void productEditor(int prodID, int editIndex);
 
 void saveProducts(const vector<Product> &products);
 vector<Product> loadProductsByCategory(const string &category);
@@ -176,11 +177,6 @@ void salesView(int saleIndex, time_t currentDate);
 
 void saveSales(const vector<Sales> &data);
 vector<Sales> loadSales(time_t currentDate);
-vector<Sales> loadAllSales();
-vector<Sales> loadByDaySales(time_t currentDate);
-vector<Sales> loadByWeekSales(time_t currentDate);
-vector<Sales> loadByMonthSales(time_t currentDate);
-vector<Sales> loadByYearSales(time_t currentDate);
 void deleteSales(int saleIndex, time_t currentDate);
 
 string getSalesTitle(time_t currentDate);

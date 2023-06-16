@@ -388,8 +388,6 @@ void salesDisplay(time_t currentDate)
                 break;
             }
 
-            Sleep(500);
-
             currentDate = mktime(date);
             salesDisplay(currentDate);
         }
@@ -412,8 +410,6 @@ void salesDisplay(time_t currentDate)
                 date->tm_year -= 1;
                 break;
             }
-
-            Sleep(500);
 
             currentDate = mktime(date);
             salesDisplay(currentDate);

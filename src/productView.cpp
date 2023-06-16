@@ -105,6 +105,8 @@ void productView(int prodIndex, vector<Product> products)
         optListWidth += options[i].length();
     }
 
+    optListWidth -= 8;
+
     padding = centerPadding(maxWidth, optListWidth, options.size());
     temp = olVLine() + addNRepeat(" ", padding.paddingLeft);
 
@@ -231,26 +233,7 @@ void productView(int prodIndex, vector<Product> products)
         }
         else if (accountType == "Admin" && ch == 'e') // Edit product
         {
-            try
-            {
-                temp = "Choose product number: ";
-                centerText(temp, temp.length());
-
-                setInputPos(temp, temp.length(), 0, -1, temp);
-                cin >> temp;
-
-                stoi(temp); // Remove when function is created
-
-                // productEditor(stoi(temp));
-            }
-            catch (const exception &) // Catch error
-            {
-                temp = "Invalid input. Please enter a valid PIN code.";
-                centerText(temp, temp.length() + 10);
-
-                Sleep(2000);
-                productView(prodIndex, products);
-            }
+            productEditor(products[prodIndex].productID, 0);
         }
         else
         {
