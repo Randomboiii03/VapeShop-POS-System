@@ -1,5 +1,5 @@
 10001,Box Mods,Vaporesso,Vaporesso GEN FIT 40W,,100,100,0
-10002,Box Mods,Innokin,Innokin GoZee 60W,,10,100,1
+10002,Box Mods,Innokin,Innokin GoZee 60W,,10,90,1
 10003,Box Mods,Innokin,Innokin Kroma 217 100W,,10,100,1
 10004,Box Mods,Innokin,Innokin Coolfire Z80,,10,100,1
 10005,Box Mods,Innokin,Innokin COolfire Z50W,,10,100,1

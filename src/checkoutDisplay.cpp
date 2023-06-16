@@ -290,6 +290,9 @@ void checkoutDisplay(string paymentMode)
                             Sales sale = {data.productID, product.price, data.quantity, paymentMode, transactionNum, currentTime};
                             sales.push_back(sale);
 
+                            product.stock -= data.quantity;
+                            saveProducts(products);
+
                             break;
                         }
                     }
