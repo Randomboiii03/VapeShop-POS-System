@@ -59,8 +59,24 @@ int getMaxLengthProduct(const vector<Product> &data, int columnIndex, string hea
         }
     }
 
-    // Check for the header width
-    maxLength = max(maxLength, static_cast<int>(headerName.length()));
+    maxLength = max(maxLength, static_cast<int>(headerName.length())); // Check for the header width
 
     return maxLength;
+}
+
+string checkCategory(string categ)
+{
+    string lowerCateg = toLowercase(categ);
+
+    for (string category : categories)
+    {
+        string lowerCategory = toLowercase(category);
+
+        if (lowerCateg == lowerCategory || lowerCateg.find(lowerCategory) != string::npos || lowerCategory.find(lowerCateg) != string::npos) 
+        {
+            return category;
+        }
+    }
+
+    return categ;
 }

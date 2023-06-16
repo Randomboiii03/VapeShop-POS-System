@@ -17,12 +17,12 @@ void productView(int prodIndex, vector<Product> products)
     if (accountType == "User")
     {
         navigation = navUser;
-        options = {"[Esc] Close Menu", "[M] Menu", "[A] Add to Cart", "[<->] Next Product", "[B] Back"};
+        options = {"[Esc] Close Menu", "[M] Menu", "[A] Add to Cart", "[◀️▶️] Next Product", "[B] Back"};
     }
     else if (accountType == "Admin")
     {
         navigation = navAdmin;
-        options = {"[Esc] Close Menu", "[M] Menu", "[E] Edit Product", "[<->] Next Product", "[B] Back"};
+        options = {"[Esc] Close Menu", "[M] Menu", "[E] Edit Product", "[◀️▶️] Next Product", "[B] Back"};
 
         spaceContent++;
     }
@@ -31,7 +31,7 @@ void productView(int prodIndex, vector<Product> products)
 
     maxWidth = bannerWidth; // Max width
 
-    newBanner = bannerDisplay(maxWidth, bannerWidth, categories[nextCateg]); // Banner display function
+    newBanner = bannerDisplay(maxWidth, bannerWidth, products[prodIndex].category); // Banner display function
 
     maxHeight = max(navigation.size() + 10, newBanner.size() + 13); // Max height
 

@@ -175,7 +175,7 @@ void productSearch(string searchTerm)
 
                 temp += olVLine();
             }
-            else if (products.size() == 0)
+            else if (products.empty()) // When there is no product
             {
                 padding = centerPadding(maxHeight - newBanner.size() - 5, 1, 2);
 
@@ -191,11 +191,11 @@ void productSearch(string searchTerm)
                     temp = olVLine() + addNRepeat(" ", maxWidth) + olVLine();
                 }
             }
-            else // When there is no product
+            else // Empty space display
             {
-                for (int j = 0; j < headerName.size(); j++) // Header display
+                for (int length : maxLengths)
                 {
-                    temp += olVLine() + addNRepeat(" ", maxLengths[j] + (spaceBetween * 2));
+                    temp += olVLine() + addNRepeat(" ", length + (spaceBetween * 2));
                 }
 
                 temp += olVLine();

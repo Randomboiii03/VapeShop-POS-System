@@ -48,7 +48,7 @@ void checkoutDisplay(string paymentMode)
         spaceBetween++;
         maxWidth = prodListWidth + ((headerName.size() * spaceBetween) * 2) + (headerName.size() - 1); // Max width
 
-        if (maxWidth > bannerWidth && maxWidth > prodListWidth)
+        if (maxWidth >= bannerWidth && maxWidth >= prodListWidth)
         {
             break;
         }

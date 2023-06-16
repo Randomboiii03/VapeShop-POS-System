@@ -72,7 +72,7 @@ void productDisplay()
         spaceBetween += 2;
         maxWidth = prodListWidth + ((headerName.size() * spaceBetween) * 2) + (headerName.size() - 1); // Max width
 
-        if (maxWidth > bannerWidth && maxWidth > prodListWidth)
+        if (maxWidth >= bannerWidth && maxWidth >= prodListWidth)
         {
             break;
         }
@@ -177,7 +177,7 @@ void productDisplay()
 
                 temp += olVLine();
             }
-            else if (products.size() == 0)
+            else if (products.empty()) // When there is no product
             {
                 padding = centerPadding(maxHeight - newBanner.size() - 5, 1, 2);
 
@@ -193,12 +193,11 @@ void productDisplay()
                     temp = olVLine() + addNRepeat(" ", maxWidth) + olVLine();
                 }
             }
-            else // When there is no product
+            else // Empty space display
             {
-                for (int j = 0; j < headerName.size(); j++) // Header display
+                for (int length : maxLengths)
                 {
-                    padding = centerPadding(maxLengths[j], headerName[j].length(), 2);
-                    temp += olVLine() + addNRepeat(" ", padding.paddingLeft + spaceBetween) + headerName[j] + addNRepeat(" ", padding.paddingRight + spaceBetween);
+                    temp += olVLine() + addNRepeat(" ", length + (spaceBetween * 2));
                 }
 
                 temp += olVLine();

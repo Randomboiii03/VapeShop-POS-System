@@ -137,6 +137,7 @@ void pinCodeDisplay();
 void productDisplay();
 void productView(int prodIndex, vector<Product> products);
 void productSearch(string search);
+void productAdd();
 
 void saveProducts(const vector<Product> &products);
 vector<Product> loadProductsByCategory(const string &category);
@@ -147,6 +148,7 @@ vector<Product> searchProductsByName(const string &substring);
 bool containsCategory(const vector<string> &categories, const string &category);
 vector<string> getCategories();
 int getMaxLengthProduct(const vector<Product> &data, int columnIndex, string columnName);
+string checkCategory(string categ);
 
 // Cart related functions
 void cartDisplay();
