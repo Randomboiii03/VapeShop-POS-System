@@ -143,10 +143,10 @@ void deleteSales(int saleIndex, time_t currentDate)
     string temp = "Are you sure you want to delete this sale history? [Y/N]";
     centerText(temp, temp.length());
 
-    char ch = getch();
-
     while (true)
     {
+        char ch = getch();
+
         if (ch == 'y')
         {
             for (int i = 0; i < sale.size(); i++)

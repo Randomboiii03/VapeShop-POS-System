@@ -104,19 +104,19 @@ string getSalesTitle(time_t currentDate)
 
     switch (saleFilterIndex)
     {
-    case 0:
+    case 0: // All
         temp = "All Sales";
         break;
-    case 1:
+    case 1: // By Day
         temp = "Sales for " + months[date->tm_mon] + " " + splitString(ss.str(), '-')[2] + ", " + splitString(ss.str(), '-')[0];
         break;
-    case 2:
+    case 2: // By Week
         temp = "Sales from " + months[stoi(splitString(week[0], '-')[1])] + " " + splitString(week[0], '-')[2] + ", " + splitString(week[0], '-')[0] + " to " + months[stoi(splitString(week[6], '-')[1])] + " " + splitString(week[6], '-')[2] + ", " + splitString(week[6], '-')[0];
         break;
-    case 3:
+    case 3: // By Month
         temp = "Sales for " + months[date->tm_mon] + " " + splitString(ss.str(), '-')[0];
         break;
-    case 4:
+    case 4: // By Year
         temp = "Sales for year - " + splitString(ss.str(), '-')[0];
         break;
     }
