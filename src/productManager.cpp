@@ -10,7 +10,7 @@ void saveProducts(const vector<Product> &products)
     {
         for (const Product &product : products)
         {
-            outputFile << product.productID << "," << product.category << "," << product.brandName << "," << product.productName << "," << product.productDesc << "," << product.price << "," << product.stock << "," << product.isAvailable << "\n";
+            outputFile << product.productID << "," << product.category << "," << product.brandName << "," << product.productName << "," << product.price << "," << product.stock << "," << product.isAvailable << "\n";
         }
 
         outputFile.close();
@@ -45,9 +45,7 @@ vector<Product> loadAllProducts()
             getline(ss, product.brandName, ',');
 
             getline(ss, product.productName, ',');
-
-            getline(ss, product.productDesc, ',');
-
+            
             getline(ss, value, ',');
             product.price = stoi(value);
 

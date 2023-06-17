@@ -34,7 +34,6 @@ struct Product
     string category;
     string brandName;
     string productName;
-    string productDesc;
     float price;
     int stock;
     bool isAvailable;

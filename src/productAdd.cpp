@@ -148,7 +148,7 @@ void productAdd()
                         productID = max(productID, products[i].productID);
                     }
 
-                    Product product = {productID + 1, checkCategory(category), brand, name, "", stof(price), stoi(stocks), 1};
+                    Product product = {productID + 1, checkCategory(category), brand, name, stof(price), stoi(stocks), 1};
 
                     products.push_back(product);
                     saveProducts(products);
