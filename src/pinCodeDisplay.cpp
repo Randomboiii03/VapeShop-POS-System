@@ -5,9 +5,9 @@ using namespace std;
 void pinCodeDisplay()
 {
     vector<string> navigation, newBanner, newNavigation, content, options;
-    string temp;
+    string temp, label;
 
-    int bannerWidth, maxWidth, maxHeight, optListWidth = 0, spaceContent = 4;
+    int bannerWidth, maxWidth, maxHeight, optListWidth = 0, spaceContent = 4, padDetails = 0, minus = 0;
 
     Padding padding;
 
@@ -42,6 +42,7 @@ void pinCodeDisplay()
     spaceContent = padding.paddingRight; // Number of spaces between content and options
 
     temp = "Your Pin Code: ";
+    label = temp;
 
     if (accountType == "Admin") // If admin account type display pin code of admin
     {
@@ -63,12 +64,18 @@ void pinCodeDisplay()
     }
 
     padding = centerPadding(maxWidth, temp.length(), 2);
+    padDetails = padding.paddingLeft;
+
     content.push_back(olVLine() + addNRepeat(" ", padding.paddingLeft) + temp + addNRepeat(" ", padding.paddingRight) + olVLine());
 
     if (accountType == "Developer") // If developer account type display pin code of admin
     {
         temp = "Admin Pin Code: " + admin[0].pinCode;
-        content.push_back(olVLine() + addNRepeat(" ", padding.paddingLeft) + temp + addNRepeat(" ", padding.paddingRight) + olVLine());
+
+        padding = centerPadding(maxWidth, temp.length(), 2);
+        minus = splitString(temp, ':')[0].length() - label.length() + 2;
+
+        content.push_back(olVLine() + addNRepeat(" ", padDetails - minus) + temp + addNRepeat(" ", (padding.paddingLeft - padDetails) + padding.paddingRight + minus) + olVLine());
     }
 
     for (int i = 0; i < spaceContent; i++) // Space between enter pin code and options

@@ -55,7 +55,7 @@ void checkoutDisplay(string paymentMode)
 
     } while (true);
 
-    newBanner = bannerDisplay(maxWidth, bannerWidth, "Cart"); // Banner display function
+    newBanner = bannerDisplay(maxWidth, bannerWidth, "Checkout"); // Banner display function
 
     maxHeight = newBanner.size() + cart.size() + 7; // Max height
 
