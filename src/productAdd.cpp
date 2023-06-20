@@ -117,19 +117,22 @@ void productAdd()
     }
 
     setInputPos(labelRow, maxWidth, newBanner.size() + 3, padDetails, label);
-    cin >> name;
+    getline(cin, name);
 
     setInputPos(labelRow, maxWidth, newBanner.size() + 4, padDetails, label);
-    cin >> brand;
+    getline(cin, brand);
 
+    
     setInputPos(labelRow, maxWidth, newBanner.size() + 5, padDetails, label);
-    cin >> category;
+    getline(cin, category);
 
     setInputPos(labelRow, maxWidth, newBanner.size() + 6, padDetails, label + "   ");
     cin >> price;
 
     setInputPos(labelRow, maxWidth, newBanner.size() + 7, padDetails, label);
     cin >> stocks;
+
+    cin.ignore();
 
     while (true)
     {
