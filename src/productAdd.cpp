@@ -121,7 +121,6 @@ void productAdd()
 
     setInputPos(labelRow, maxWidth, newBanner.size() + 4, padDetails, label);
     getline(cin, brand);
-
     
     setInputPos(labelRow, maxWidth, newBanner.size() + 5, padDetails, label);
     getline(cin, category);

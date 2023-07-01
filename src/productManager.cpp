@@ -45,7 +45,7 @@ vector<Product> loadAllProducts()
             getline(ss, product.brandName, ',');
 
             getline(ss, product.productName, ',');
-            
+
             getline(ss, value, ',');
             product.price = stoi(value);
 
@@ -76,7 +76,7 @@ vector<Product> loadProductsByCategory(const string &category)
     {
         if (product.category == category)
         {
-            if ((accountType != "Admin" && !product.isAvailable) || product.stock <= 0)
+            if (accountType != "Admin" && (!product.isAvailable || product.stock <= 0))
             {
                 continue;
             }
@@ -126,7 +126,7 @@ void deleteProduct(int prodIndex, vector<Product> products)
     }
 }
 
-vector<Product> searchProductsByName(const string &substring)
+vector<Product> searchProducts(const string &substring)
 {
     vector<Product> results;
 
@@ -139,8 +139,25 @@ vector<Product> searchProductsByName(const string &substring)
         for (Product product : products)
         {
             string name = toLowercase(product.productName);
+            string cat = toLowercase(product.category);
+            string brand = toLowercase(product.brandName);
+            string price = toLowercase(to_string(product.price));
+            string status = product.isAvailable ? "Available" : "Not Available";
 
-            if (name.find(searchTerm) != string::npos)
+            if (product.stock <= 0)
+            {
+                status = "Out of Stock";
+            }
+
+            status = toLowercase(status);
+
+            if (name.find(searchTerm) != string::npos || cat.find(searchTerm) != string::npos ||
+                brand.find(searchTerm) != string::npos || price.find(searchTerm) != string::npos)
+            {
+                results.push_back(product);
+            }
+
+            if (accountType == "Admin" && status.find(searchTerm) != string::npos)
             {
                 results.push_back(product);
             }

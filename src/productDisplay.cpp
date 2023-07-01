@@ -165,6 +165,11 @@ void productDisplay()
                         break;
                     case 5:
                         detail = products[i - 2].isAvailable ? "Available" : "Not Available"; // Status
+
+                        if (products[i - 2].stock <= 0)
+                        {
+                            detail = "Out of Stock";
+                        }
                         break;
                     default:
                         // Invalid column index
@@ -274,6 +279,8 @@ void productDisplay()
         {
             temp = "Search: ";
             centerText(temp, temp.length());
+
+            cin.ignore();
 
             setInputPos(temp, temp.length(), 0, -1, temp);
             getline(cin, temp);

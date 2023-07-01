@@ -143,7 +143,7 @@ void saveProducts(const vector<Product> &products);
 vector<Product> loadProductsByCategory(const string &category);
 vector<Product> loadAllProducts();
 void deleteProduct(int prodIndex, vector<Product> products);
-vector<Product> searchProductsByName(const string &substring);
+vector<Product> searchProducts(const string &substring);
 
 bool containsCategory(const vector<string> &categories, const string &category);
 vector<string> getCategories();

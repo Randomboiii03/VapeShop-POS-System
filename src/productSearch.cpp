@@ -4,7 +4,7 @@ using namespace std;
 
 void productSearch(string searchTerm)
 {
-    vector<Product> products = searchProductsByName(searchTerm);
+    vector<Product> products = searchProducts(searchTerm);
 
     vector<string> navigation, headerName, newBanner, newNavigation, content, options;
     string temp;
@@ -163,6 +163,11 @@ void productSearch(string searchTerm)
                         break;
                     case 5:
                         detail = products[i - 2].isAvailable ? "Available" : "Not Available"; // Status
+
+                        if (products[i - 2].stock <= 0)
+                        {
+                            detail = "Out of Stock";
+                        }
                         break;
                     default:
                         // Invalid column index
