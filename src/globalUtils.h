@@ -47,6 +47,7 @@ struct Cart
 
 struct Sales
 {
+    int salesID;
     int productID;
     float price;
     int quantity;
@@ -179,7 +180,7 @@ vector<Sales> loadSales(time_t currentDate);
 void deleteSales(int saleIndex, time_t currentDate);
 
 string getSalesTitle(time_t currentDate);
-int getMaxLengthSales(const vector<Sales> &data, const vector<Product> &data2, int columnIndex, string headerName);
+int getMaxLengthSales(const vector<Sales> &data, int columnIndex, string headerName);
 vector<string> getWeekDates(time_t currentDate);
 
 #endif

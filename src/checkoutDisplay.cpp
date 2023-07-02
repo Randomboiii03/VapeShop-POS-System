@@ -281,13 +281,26 @@ void checkoutDisplay(string paymentMode)
 
             if (ch == 'y')
             {
+                auto now = chrono::system_clock::now();
+                time_t currentDate = chrono::system_clock::to_time_t(now); // Get the current system time
+
+                vector<Sales> saleRec = loadSales(currentDate);
+
+                int salesID = 0;
+
+                for (int i = 0; i < saleRec.size(); i++)
+                {
+                    salesID = max(salesID, saleRec[i].salesID);
+                }
+
                 for (auto &data : cart)
                 {
                     for (auto &product : products)
                     {
                         if (data.productID == product.productID)
                         {
-                            Sales sale = {data.productID, product.price, data.quantity, paymentMode, transactionNum, currentTime};
+
+                            Sales sale = {salesID + 1, data.productID, product.price, data.quantity, paymentMode, transactionNum, currentTime};
                             sales.push_back(sale);
 
                             product.stock -= data.quantity;
@@ -302,7 +315,7 @@ void checkoutDisplay(string paymentMode)
                 centerText(temp, temp.length());
 
                 addSales(sales); // Save sales
-                emptyCart(); // Empty cart
+                emptyCart();     // Empty cart
 
                 Sleep(2000);
                 cartDisplay();

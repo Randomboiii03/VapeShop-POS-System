@@ -10,7 +10,7 @@ void saveSales(const vector<Sales> &data)
     {
         for (const Sales &sales : data)
         {
-            outputFile << sales.productID << "," << sales.price << "," << sales.quantity << "," << sales.paymentMode << "," << sales.transactionNum << "," << sales.currentTime << "\n";
+            outputFile << sales.salesID << "," << sales.productID << "," << sales.price << "," << sales.quantity << "," << sales.paymentMode << "," << sales.transactionNum << "," << sales.currentTime << "\n";
         }
 
         outputFile.close();
@@ -36,6 +36,9 @@ vector<Sales> loadSales(time_t currentDate)
             Sales sale;
             stringstream ss(line);
             string value;
+
+            getline(ss, value, ',');
+            sale.salesID = stoi(value);
 
             getline(ss, value, ',');
             sale.productID = stoi(value);
@@ -107,7 +110,6 @@ vector<Sales> loadSales(time_t currentDate)
 
                 if (currentYear == saleYear)
                 {
-                    cout << "Year: " << saleYear << " - " << sale.currentTime << endl;
                     data.push_back(sale);
                 }
             }
@@ -127,8 +129,6 @@ vector<Sales> loadSales(time_t currentDate)
 
 void deleteSales(int saleIndex, time_t currentDate)
 {
-    vector<Sales> saleFiltered = loadSales(currentDate);
-
     saleFilterIndex = 0;
 
     vector<Sales> sale = loadSales(currentDate);
@@ -142,16 +142,15 @@ void deleteSales(int saleIndex, time_t currentDate)
 
         if (ch == 'y')
         {
-            for (int i = 0; i < sale.size(); i++)
+            for (int i = sale.size() - 1; i >= 0 ; i--)
             {
-                if (sale[i].currentTime == saleFiltered[saleIndex].currentTime && sale[i].productID == saleFiltered[saleIndex].productID)
+                if (sale[i].salesID == saleIndex)
                 {
-                    sale.erase(sale.begin() + saleIndex); // Delete history in sales
-                    saveSales(sale);
-
-                    break;
+                    sale.erase(sale.begin() + i); // Delete history in sales
                 }
             }
+
+            saveSales(sale);
 
             temp = "Sale history deleted successfully!";
             centerText(temp, temp.length());

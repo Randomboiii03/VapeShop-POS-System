@@ -11,7 +11,7 @@ void salesDisplay(time_t currentDate)
     string temp;
 
     vector<int> maxLengths;
-    int prodListWidth = 0, bannerWidth, maxWidth, maxHeight, spaceBetween = 0, count = 0, optListWidth = 0, saleFilterListWidth = 0, minus = 0, add = 8;
+    int prodListWidth = 0, bannerWidth, maxWidth, maxHeight, spaceBetween = 0, count = 0, optListWidth = 0, saleFilterListWidth = 0, minSalesID = 0, maxSalesID = 0, salesHeight = 0, salesID = 0, minus = 0, add = 8;
     float totalSales = 0;
 
     Padding padding;
@@ -21,7 +21,7 @@ void salesDisplay(time_t currentDate)
 
     navigation = navAdmin;
 
-    headerName = {"No", "Date", "Product", "Quantity", "Price", "Total", "Payment Mode", "Transaction Number"};
+    headerName = {"No", "Date", "Payment Mode", "Transaction Number", "Total Purchase"};
 
     saleFilters = {"[0] All", "[1] By Day", "[2] By Week", "[3] By Month", "[4] By Year"};
 
@@ -29,7 +29,7 @@ void salesDisplay(time_t currentDate)
 
     for (int i = 0; i < headerName.size(); i++)
     {
-        maxLengths.push_back(getMaxLengthSales(sale, products, i, headerName[i]));
+        maxLengths.push_back(getMaxLengthSales(sale, i, headerName[i]));
     }
 
     for (int length : maxLengths)
@@ -68,6 +68,32 @@ void salesDisplay(time_t currentDate)
         saleFilterListWidth += filter.length(); // Sale filter list width
     }
 
+    for (auto& sales : sale)
+    {
+        maxSalesID = max(maxSalesID, sales.salesID); // Max sales ID
+    }
+
+    minSalesID = maxSalesID;
+
+    for (auto& sales : sale)
+    {
+        minSalesID = min(minSalesID, sales.salesID); // Min sales ID
+    }
+
+    salesHeight = minSalesID;
+
+    int num = 1;
+
+    for (auto& sales : sale)
+    {
+        if (salesHeight != sales.salesID) {
+            salesHeight = sales.salesID;
+            num++;
+        }
+    }
+
+    salesHeight = num; // Total sales
+
     bannerWidth = banner[0].length() + 10; // Banner width
 
     do
@@ -84,7 +110,7 @@ void salesDisplay(time_t currentDate)
 
     newBanner = bannerDisplay(maxWidth, bannerWidth, getSalesTitle(currentDate)); // Banner display function
 
-    maxHeight = max(navigation.size() + 10, newBanner.size() + sale.size() + 7); // Max height
+    maxHeight = max(navigation.size() + 10, newBanner.size() + salesHeight + 7); // Max height
 
     for (int i = 0; i < maxHeight - newBanner.size(); i++) // Content display
     {
@@ -155,51 +181,45 @@ void salesDisplay(time_t currentDate)
         {
             if (sale.size() > 0) // Sales list display
             {
+                float pricePurchase = 0;
+
                 for (int j = 0; j < headerName.size(); j++)
                 {
                     string detail = "";
                     int minus = 0;
 
-                    for (int k = 0; k < products.size(); k++)
+                    for (int k = 0; k < sale.size(); k++)
                     {
-                        if (products[k].productID == sale[i - 2].productID)
+                        if (salesID < sale[k].salesID)
                         {
                             switch (j)
                             {
                             case 0:
-                                detail = to_string(i - 2); // Product number
+                                detail = to_string(sale[k].salesID);
                                 break;
                             case 1:
-                                detail = splitString(sale[i - 2].currentTime, ' ')[0]; // Date
+                                detail = splitString(sale[k].currentTime, ' ')[0];
                                 break;
                             case 2:
-                                detail = products[k].productName + " - " + products[k].category; // Product name and category
+                                detail = sale[k].paymentMode;
                                 break;
                             case 3:
-                                detail = to_string(sale[i - 2].quantity); // Product quantity
-                                break;
-                            case 4:
-                                detail = "₱ " + priceFormat(sale[i - 2].price); // Price
-                                minus = 2;                                      // For currency symbol
-                                break;
-                            case 5:
-                                totalSales += sale[i - 2].price * sale[i - 2].quantity;
-
-                                detail = "₱ " + priceFormat(sale[i - 2].price * sale[i - 2].quantity); // Total
-                                minus = 2;                                                             // For currency symbol
-                                break;
-                            case 6:
-                                detail = sale[i - 2].paymentMode; // Payment mode
-                                break;
-                            case 7:
-                                if (sale[i - 2].transactionNum.length() > 5) // Transaction number if more than 5 digits
+                                if (sale[k].transactionNum.length() > 5) // Transaction number if more than 5 digits
                                 {
-                                    detail = sale[i - 2].transactionNum.substr(0, 7) + "...";
+                                    detail = sale[k].transactionNum.substr(0, 7) + "...";
                                 }
                                 else
                                 {
-                                    detail = sale[i - 2].transactionNum;
+                                    detail = sale[k].transactionNum;
                                 }
+                                break;
+                            case 4:
+                                pricePurchase += sale[k].price * sale[k].quantity;
+
+                                detail = "₱ " + priceFormat(pricePurchase);
+                                minus = 2; // For currency symbol
+
+                                salesID = sale[k].salesID;
                                 break;
                             default:
                                 // Invalid column index
@@ -207,6 +227,10 @@ void salesDisplay(time_t currentDate)
                             }
 
                             break;
+                        }
+                        else
+                        {
+                            pricePurchase += sale[k].price * sale[k].quantity;
                         }
                     }
 
@@ -279,9 +303,10 @@ void salesDisplay(time_t currentDate)
             salesDisplay(currentDate);
         }
         else if (ch == 'v')
-        {            
+        {
             try
-            {
+            { 
+                cout << "Max: " << maxSalesID << "- Min: " << minSalesID << endl;
                 temp = "Choose sales number: ";
                 centerText(temp, temp.length());
 
@@ -290,7 +315,7 @@ void salesDisplay(time_t currentDate)
 
                 isOpen = false;
 
-                if (stoi(temp) < sale.size() && stoi(temp) >= 0)
+                if (stoi(temp) <= maxSalesID && stoi(temp) >= minSalesID)
                 {
                     salesView(stoi(temp), currentDate);
                 }
@@ -322,7 +347,7 @@ void salesDisplay(time_t currentDate)
                 setInputPos(temp, temp.length(), 0, -1, temp);
                 cin >> temp;
 
-                if (stoi(temp) < sale.size() && stoi(temp) >= 0)
+                if (stoi(temp) <= maxSalesID && stoi(temp) >= minSalesID)
                 {
                     deleteSales(stoi(temp), currentDate);
                 }

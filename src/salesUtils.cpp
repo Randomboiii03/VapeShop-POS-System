@@ -2,54 +2,48 @@
 
 using namespace std;
 
-int getMaxLengthSales(const vector<Sales> &data, const vector<Product> &data2, int columnIndex, string headerName)
+int getMaxLengthSales(const vector<Sales> &data, int columnIndex, string headerName)
 {
     int maxLength = 0;
+    int salesID = 0;
+    float pricePurchase = 0;
 
     // Check for the datas width
     for (const auto &sale : data)
     {
-        for (const auto &product : data2)
+        if (salesID != sale.salesID)
         {
-            if (sale.productID == product.productID)
+            switch (columnIndex)
             {
-                string detail = product.productName + " - " + product.category;
+            case 0:
+                maxLength = max(maxLength, static_cast<int>(to_string(salesID).length()));
+                break;
+            case 1:
+                maxLength = max(maxLength, static_cast<int>(splitString(sale.currentTime, ' ')[0].length()));
+                break;
+            case 2:
+                maxLength = max(maxLength, static_cast<int>(sale.paymentMode.length()));
+                break;
+            case 3:
+                maxLength = max(maxLength, static_cast<int>(maxLength, 10));
+                break;
+            case 4:
+                pricePurchase += sale.price * sale.quantity;
+                
+                maxLength = max(maxLength, static_cast<int>(priceFormat(pricePurchase).length() + 2));
 
-                vector<string> currentTime = splitString(sale.currentTime, ' ');
-
-                switch (columnIndex)
-                {
-                case 0:
-                    maxLength = max(maxLength, static_cast<int>(to_string(data.size()).length()));
-                    break;
-                case 1:
-                    maxLength = max(maxLength, static_cast<int>(currentTime[0].length()));
-                    break;
-                case 2:
-                    maxLength = max(maxLength, static_cast<int>(detail.length()));
-                    break;
-                case 3:
-                    maxLength = max(maxLength, static_cast<int>(to_string(sale.quantity).length()));
-                    break;
-                case 4:
-                    maxLength = max(maxLength, static_cast<int>(priceFormat(product.price).length() + 2));
-                    break;
-                case 5:
-                    maxLength = max(maxLength, static_cast<int>(priceFormat(product.price * sale.quantity).length() + 2));
-                    break;
-                case 6:
-                    maxLength = max(maxLength, static_cast<int>(sale.paymentMode.length()));
-                    break;
-                case 7:
-                    maxLength = max(maxLength, 10);
-                    break;
-                default:
-                    // Invalid column index
-                    break;
-                }
-
+                salesID = sale.salesID;
+                pricePurchase = sale.price * sale.quantity;
+                break;
+            default:
+                // Invalid column index
                 break;
             }
+            break;
+        }
+        else
+        {
+            pricePurchase += sale.price * sale.quantity;
         }
     }
 
@@ -111,7 +105,7 @@ string getSalesTitle(time_t currentDate)
         temp = "Sales for " + months[date->tm_mon] + " " + splitString(ss.str(), '-')[2] + ", " + splitString(ss.str(), '-')[0];
         break;
     case 2: // By Week
-        temp = "Sales from " + months[stoi(splitString(week[0], '-')[1])] + " " + splitString(week[0], '-')[2] + ", " + splitString(week[0], '-')[0] + " to " + months[stoi(splitString(week[6], '-')[1])] + " " + splitString(week[6], '-')[2] + ", " + splitString(week[6], '-')[0];
+        temp = "Sales from " + months[stoi(splitString(week[0], '-')[1]) - 1] + " " + splitString(week[0], '-')[2] + ", " + splitString(week[0], '-')[0] + " to " + months[stoi(splitString(week[6], '-')[1]) - 1] + " " + splitString(week[6], '-')[2] + ", " + splitString(week[6], '-')[0];
         break;
     case 3: // By Month
         temp = "Sales for " + months[date->tm_mon] + " " + splitString(ss.str(), '-')[0];
