@@ -87,27 +87,11 @@ void cartDisplay()
         }
         else if (i == (maxHeight - newBanner.size() - 4) && totalPrice != 0) // Total price display
         {
-            temp += olVLine();
+            temp = "Total Price: ₱ " + priceFormat(totalPrice);
 
-            vector<string> tPrice = {"", "", "", "Total Price:", "₱ " + priceFormat(totalPrice)};
-            int minus = 0;
+            padding = centerPadding(maxWidth, temp.length() - 2, 2);
 
-            for (int j = 0; j < headerName.size(); j++)
-            {
-                if (j == headerName.size() - 1)
-                {
-                    minus = 2;
-                }
-                else
-                {
-                    temp += " ";
-                }
-
-                padding = centerPadding(maxLengths[j], tPrice[j].length() - minus, 2);
-                temp += addNRepeat(" ", padding.paddingLeft + spaceBetween) + tPrice[j] + addNRepeat(" ", padding.paddingRight + spaceBetween);
-            }
-
-            temp += olVLine();
+            temp = olVLine() + addNRepeat(" ", padding.paddingLeft) + temp + addNRepeat(" ", padding.paddingRight) + olVLine();
         }
         else if (i == (maxHeight - newBanner.size() - 2)) // Options display
         {

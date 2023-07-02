@@ -95,7 +95,7 @@ void editQuantityInCart(int cartIndex, int maxHeight)
         temp = "Enter new quantity: ";
         centerText(temp, temp.length());
 
-        setInputPos(temp, temp.length(), maxHeight, -1, temp);
+        setInputPos(temp, temp.length(), maxHeight + 1, -1, temp);
         cin >> temp;
 
         if (checkStock(cartIndex, stoi(temp))) // Check stock is enough

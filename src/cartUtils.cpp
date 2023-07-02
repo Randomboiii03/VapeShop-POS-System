@@ -30,7 +30,7 @@ int getMaxLengthCart(const vector<Cart> &data, const vector<Product> &data2, int
                     maxLength = max(maxLength, static_cast<int>(priceFormat(product.price).length() + 2));
                     break;
                 case 4:
-                    maxLength = max(maxLength, static_cast<int>(priceFormat(product.price * cart.quantity).length() - 2));
+                    maxLength = max(maxLength, static_cast<int>(priceFormat(product.price * cart.quantity).length() + 2));
                     break;
                 default:
                     // Invalid column index
