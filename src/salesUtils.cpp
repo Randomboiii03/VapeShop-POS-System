@@ -29,7 +29,7 @@ int getMaxLengthSales(const vector<Sales> &data, int columnIndex, string headerN
                 break;
             case 4:
                 pricePurchase += sale.price * sale.quantity;
-                
+
                 maxLength = max(maxLength, static_cast<int>(priceFormat(pricePurchase).length() + 2));
 
                 salesID = sale.salesID;
@@ -44,6 +44,52 @@ int getMaxLengthSales(const vector<Sales> &data, int columnIndex, string headerN
         else
         {
             pricePurchase += sale.price * sale.quantity;
+        }
+    }
+
+    maxLength = max(maxLength, static_cast<int>(headerName.length())); // Check for the header width
+
+    return maxLength;
+}
+
+int getMaxLengthSalesView(const vector<Sales> &data, const vector<Product> &data2, int columnIndex, string headerName)
+{
+    int maxLength = 0;
+
+    // Check for the datas width
+    for (const auto &sale : data)
+    {
+        for (const auto &product : data2)
+        {
+            if (sale.productID == product.productID)
+            {
+                switch (columnIndex)
+                {
+                case 0:
+                    maxLength = max(maxLength, static_cast<int>(to_string(data.size()).length()));
+                    break;
+                case 1:
+                    maxLength = max(maxLength, static_cast<int>(product.productName.length()));
+                    break;
+                case 2:
+                    maxLength = max(maxLength, static_cast<int>(product.category.length()));
+                    break;
+                case 3:
+                    maxLength = max(maxLength, static_cast<int>(to_string(sale.quantity).length()));
+                    break;
+                case 4:
+                    maxLength = max(maxLength, static_cast<int>(priceFormat(product.price).length() + 2));
+                    break;
+                case 5:
+                    maxLength = max(maxLength, static_cast<int>(priceFormat(product.price * sale.quantity).length() + 2));
+                    break;
+                default:
+                    // Invalid column index
+                    break;
+                }
+
+                break;
+            }
         }
     }
 

@@ -10,8 +10,9 @@ void salesDisplay(time_t currentDate)
     vector<string> navigation, headerName, saleFilters, newBanner, newNavigation, content, options;
     string temp;
 
-    vector<int> maxLengths;
-    int prodListWidth = 0, bannerWidth, maxWidth, maxHeight, spaceBetween = 0, count = 0, optListWidth = 0, saleFilterListWidth = 0, minSalesID = 0, maxSalesID = 0, salesHeight = 0, salesID = 0, minus = 0, add = 8;
+    vector<int> maxLengths, salesIDs;
+    int prodListWidth = 0, bannerWidth, maxWidth, maxHeight, spaceBetween = 0, count = 0, optListWidth = 0, saleFilterListWidth = 0,
+        minSalesID = 0, maxSalesID = 0, salesHeight = 0, salesID = 0, minus = 0, add = 8;
     float totalSales = 0;
 
     Padding padding;
@@ -68,25 +69,27 @@ void salesDisplay(time_t currentDate)
         saleFilterListWidth += filter.length(); // Sale filter list width
     }
 
-    for (auto& sales : sale)
+    for (auto &sales : sale)
     {
         maxSalesID = max(maxSalesID, sales.salesID); // Max sales ID
     }
 
     minSalesID = maxSalesID;
 
-    for (auto& sales : sale)
+    for (auto &sales : sale)
     {
         minSalesID = min(minSalesID, sales.salesID); // Min sales ID
     }
 
-    salesHeight = minSalesID;
+    salesHeight = -1;
+    salesID = minSalesID;
 
-    int num = 1;
+    int num = 0;
 
-    for (auto& sales : sale)
+    for (auto &sales : sale)
     {
-        if (salesHeight != sales.salesID) {
+        if (salesHeight != sales.salesID)
+        {
             salesHeight = sales.salesID;
             num++;
         }
@@ -179,7 +182,7 @@ void salesDisplay(time_t currentDate)
         }
         else
         {
-            if (sale.size() > 0) // Sales list display
+            if (salesHeight > i - 2) // Sales list display
             {
                 float pricePurchase = 0;
 
@@ -190,12 +193,12 @@ void salesDisplay(time_t currentDate)
 
                     for (int k = 0; k < sale.size(); k++)
                     {
-                        if (salesID < sale[k].salesID)
+                        if (salesID == sale[k].salesID)
                         {
                             switch (j)
                             {
                             case 0:
-                                detail = to_string(sale[k].salesID);
+                                detail = to_string(salesID);
                                 break;
                             case 1:
                                 detail = splitString(sale[k].currentTime, ' ')[0];
@@ -215,22 +218,21 @@ void salesDisplay(time_t currentDate)
                                 break;
                             case 4:
                                 pricePurchase += sale[k].price * sale[k].quantity;
+                                totalSales += sale[k].price * sale[k].quantity;
 
                                 detail = "₱ " + priceFormat(pricePurchase);
                                 minus = 2; // For currency symbol
-
-                                salesID = sale[k].salesID;
                                 break;
                             default:
                                 // Invalid column index
                                 break;
                             }
-
-                            break;
                         }
-                        else
+                        else if (salesID < sale[k].salesID && j == 4)
                         {
-                            pricePurchase += sale[k].price * sale[k].quantity;
+                            salesID = sale[k].salesID;
+                            pricePurchase = 0;
+                            break;
                         }
                     }
 
@@ -240,7 +242,7 @@ void salesDisplay(time_t currentDate)
 
                 temp += olVLine();
             }
-            else // When there is no sales
+            else if (salesHeight == 0) // When there is no sales
             {
                 padding = centerPadding(maxHeight - newBanner.size() - 7, 1, 2);
 
@@ -255,6 +257,14 @@ void salesDisplay(time_t currentDate)
                 {
                     temp = olVLine() + addNRepeat(" ", maxWidth) + olVLine();
                 }
+            }
+            else {
+                for (int length : maxLengths)
+                {
+                    temp += olVLine() + addNRepeat(" ", length + (spaceBetween * 2));
+                }
+
+                temp += olVLine();
             }
         }
 
@@ -305,8 +315,7 @@ void salesDisplay(time_t currentDate)
         else if (ch == 'v')
         {
             try
-            { 
-                cout << "Max: " << maxSalesID << "- Min: " << minSalesID << endl;
+            {
                 temp = "Choose sales number: ";
                 centerText(temp, temp.length());
 
