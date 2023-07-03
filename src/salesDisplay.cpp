@@ -325,7 +325,7 @@ void salesDisplay(time_t currentDate)
 
                 isOpen = false;
 
-                if (stoi(temp) < sale.size() && stoi(temp) <= 0)
+                if (stoi(temp) < sale.size() && stoi(temp) >= 0)
                 {
                     salesView(sale[stoi(temp)].salesID, currentDate);
                 }
@@ -357,7 +357,7 @@ void salesDisplay(time_t currentDate)
                 setInputPos(temp, temp.length(), 0, -1, temp);
                 cin >> temp;
 
-                if (stoi(temp) < sale.size() && stoi(temp) <= 0)
+                if (stoi(temp) < sale.size() && stoi(temp) >= 0)
                 {
                     deleteSales(sale[stoi(temp)].salesID, currentDate);
                 }
