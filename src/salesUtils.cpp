@@ -16,7 +16,7 @@ int getMaxLengthSales(const vector<Sales> &data, int columnIndex, string headerN
             switch (columnIndex)
             {
             case 0:
-                maxLength = max(maxLength, static_cast<int>(to_string(salesID).length()));
+                maxLength = max(maxLength, static_cast<int>(to_string(data.size()).length()));
                 break;
             case 1:
                 maxLength = max(maxLength, static_cast<int>(splitString(sale.currentTime, ' ')[0].length()));

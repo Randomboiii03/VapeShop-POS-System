@@ -79,27 +79,15 @@ void checkoutDisplay(string paymentMode)
         }
         else if (i == (maxHeight - newBanner.size() - 4)) // Total Price display
         {
-            temp += olVLine();
+            temp = olVLine();
 
-            vector<string> tPrice = {currentTime, "", "Total Price:", "₱ " + priceFormat(totalPrice)};
-            int minus = 0;
+            padding = centerPadding(maxLengths[0], currentTime.length(), 2);
+            temp += addNRepeat(" ", padding.paddingLeft + spaceBetween) + currentTime + addNRepeat(" ", padding.paddingRight + spaceBetween);
 
-            for (int j = 0; j < headerName.size(); j++)
-            {
-                if (j == headerName.size() - 1)
-                {
-                    minus = 2;
-                }
-                else
-                {
-                    temp += " ";
-                }
+            string tPrice = "Total Price: ₱ " + priceFormat(totalPrice);
 
-                padding = centerPadding(maxLengths[j], tPrice[j].length() - minus, 2);
-                temp += addNRepeat(" ", padding.paddingLeft + spaceBetween) + tPrice[j] + addNRepeat(" ", padding.paddingRight + spaceBetween);
-            }
-
-            temp += olVLine();
+            padding = centerPadding(maxLengths[1] + maxLengths[2] + maxLengths[3] + 3, tPrice.length() - 2, 2);
+            temp += addNRepeat(" ", padding.paddingLeft + (spaceBetween * 3)) + tPrice + addNRepeat(" ", padding.paddingRight + (spaceBetween * 3)) + olVLine();
         }
         else if (i == (maxHeight - newBanner.size() - 2)) // Options display
         {

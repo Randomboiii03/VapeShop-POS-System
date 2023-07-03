@@ -20,6 +20,15 @@ void salesView(int salesID, time_t currentDate)
     system("cls");
     SetConsoleOutputCP(CP_UTF8);
 
+    for (auto &sales : sale)
+    {
+        if (sales.salesID == salesID)
+        {
+            saleFilter.push_back(sales);
+            date = splitString(sales.currentTime, ' ')[0];
+        }
+    }
+
     navigation = navAdmin;
 
     headerName = {"No", "Product Name", "Category", "Quantity", "Price", "Total"};
@@ -29,17 +38,8 @@ void salesView(int salesID, time_t currentDate)
                   getMaxLengthSalesView(saleFilter, products, 3, headerName[3]),
                   getMaxLengthSalesView(saleFilter, products, 4, headerName[4]),
                   getMaxLengthSalesView(saleFilter, products, 5, headerName[5])};
-
+    
     options = {"[Esc] Close Menu", "[M] Menu", "[B] Back"};
-
-    for (auto &sales : sale)
-    {
-        if (sales.salesID == salesID)
-        {
-            saleFilter.push_back(sales);
-            date = splitString(sales.currentTime, ' ')[0];
-        }
-    }
 
     for (int length : maxLengths)
     {

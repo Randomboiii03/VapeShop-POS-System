@@ -184,6 +184,6 @@ void pinCodeEditor()
         centerText(temp, temp.length());
 
         Sleep(2000);
-        pinCodeLogin();
+        pinCodeDisplay();
     }
 }

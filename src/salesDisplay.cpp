@@ -198,7 +198,7 @@ void salesDisplay(time_t currentDate)
                             switch (j)
                             {
                             case 0:
-                                detail = to_string(salesID);
+                                detail = to_string(i - 2);
                                 break;
                             case 1:
                                 detail = splitString(sale[k].currentTime, ' ')[0];
@@ -258,7 +258,8 @@ void salesDisplay(time_t currentDate)
                     temp = olVLine() + addNRepeat(" ", maxWidth) + olVLine();
                 }
             }
-            else {
+            else
+            {
                 for (int length : maxLengths)
                 {
                     temp += olVLine() + addNRepeat(" ", length + (spaceBetween * 2));
@@ -324,9 +325,9 @@ void salesDisplay(time_t currentDate)
 
                 isOpen = false;
 
-                if (stoi(temp) <= maxSalesID && stoi(temp) >= minSalesID)
+                if (stoi(temp) < sale.size() && stoi(temp) <= 0)
                 {
-                    salesView(stoi(temp), currentDate);
+                    salesView(sale[stoi(temp)].salesID, currentDate);
                 }
                 else
                 {
@@ -356,9 +357,9 @@ void salesDisplay(time_t currentDate)
                 setInputPos(temp, temp.length(), 0, -1, temp);
                 cin >> temp;
 
-                if (stoi(temp) <= maxSalesID && stoi(temp) >= minSalesID)
+                if (stoi(temp) < sale.size() && stoi(temp) <= 0)
                 {
-                    deleteSales(stoi(temp), currentDate);
+                    deleteSales(sale[stoi(temp)].salesID, currentDate);
                 }
                 else
                 {
