@@ -10,7 +10,7 @@ void addSales(const vector<Sales> &data)
     {
         for (const Sales &sales : data)
         {
-            outputFile << sales.productID << "," << sales.price << "," << sales.quantity << "," << sales.paymentMode << "," << sales.transactionNum << "," << sales.currentTime << "\n";
+            outputFile << sales.salesID << "," << sales.productID << "," << sales.price << "," << sales.quantity << "," << sales.paymentMode << "," << sales.transactionNum << "," << sales.currentTime << "\n";
         }
 
         outputFile.close();
