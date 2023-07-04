@@ -126,7 +126,7 @@ void pinCodeEditor()
             {
                 temp = "Old PIN code is incorrect. PIN code not changed.";
             }
-            else if (oldPincode != newPinCode)
+            else if (oldPincode == newPinCode)
             {
                 temp = "PIN code is already used. PIN code not changed.";
             }
@@ -134,7 +134,7 @@ void pinCodeEditor()
             {
                 temp = "New PIN code and confirmation do not match. PIN code not changed.";
             }
-            else if (newPinCode.length() == 6)
+            else if (newPinCode.length() != 6)
             {
                 temp = "PIN code must be 6 digits long.";
             }
