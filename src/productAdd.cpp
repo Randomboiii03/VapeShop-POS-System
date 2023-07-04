@@ -123,7 +123,7 @@ void productAdd()
 
     setInputPos(labelRow, maxWidth, newBanner.size() + 4, padDetails, label);
     getline(cin, brand);
-    
+
     setInputPos(labelRow, maxWidth, newBanner.size() + 5, padDetails, label);
     getline(cin, category);
 
@@ -132,7 +132,7 @@ void productAdd()
 
     setInputPos(labelRow, maxWidth, newBanner.size() + 7, padDetails, label);
     cin >> stocks;
-    
+
     while (true)
     {
         char ch = getch();
@@ -159,6 +159,8 @@ void productAdd()
                     centerText(temp, temp.length());
 
                     categories = getCategories();
+
+                    cin.ignore();
 
                     Sleep(2000);
                     productDisplay();

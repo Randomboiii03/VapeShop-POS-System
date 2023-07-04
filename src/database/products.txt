@@ -1,5 +1,5 @@
 10001,Drip Tips,510,510 Atomizer Mouth Drip Tips - Random na Kulay,568,98,1
-10002,Drip Tips,510,510 Epoxy Resin Wide Drip Tips - Random na Kulay,568,100,1
+10002,Drip Tips,abc,510 Epoxy Resin Wide Drip Tips - Random na Kulay,568,100,1
 10003,Drip Tips,510,510 Transparent Resin Drip Tips - Random na Kulay,568,100,1
 10004,Drip Tips,510,810 Epoxy Resin Drip Tips - Random na Kulay,568,100,1
 10005,Accessories,Aegis,Aegis M100 mini2 Silicone Case - Black - vapepens,568,100,1
