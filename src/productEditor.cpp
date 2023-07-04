@@ -163,7 +163,16 @@ void productEditor(int prodID, int editIndex)
                 centerText(temp, temp.length());
 
                 setInputPos(temp, temp.length(), 0, -1, temp);
-                cin >> detail;
+                
+                if (editIndex < 3)
+                {
+                    cin.ignore();
+
+                    getline(cin, detail);
+                }
+                else {
+                    cin >> detail;
+                }
             }
             else
             {
